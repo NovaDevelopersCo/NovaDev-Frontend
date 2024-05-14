@@ -54,8 +54,6 @@ const Autorization: FC<IAutorization> = ({ setIsLoggedIn, t, setToken }) => {
   }, [])
 
   const onFinish = (values: any) => {
-    console.log(values)
-
     autorizationApi
       .autorization(values)
       .then((res) => {
@@ -92,7 +90,7 @@ const Autorization: FC<IAutorization> = ({ setIsLoggedIn, t, setToken }) => {
     >
       <Form.Item
         label={t('login')}
-        name='email'
+        name='private_nickname'
         rules={[{ required: true, message: t('enter-your-username') }]}
       >
         <Input />
