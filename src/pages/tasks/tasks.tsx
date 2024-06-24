@@ -1,17 +1,12 @@
 import { Table } from 'antd'
 import { ColumnsType } from 'antd/es/table'
 import React, { FC, useContext } from 'react'
-import { ECountry, TDish } from '../../utils/typesFromBackend'
-import * as userAPI from '../../utils/api/user-api'
+import { ECountry, TTask } from '../../utils/typesFromBackend'
+import * as taskAPI from '../../utils/api/task-api'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import imageNoPhoto from '../../assets/images/no_photo.png'
-import { BASE_URL_CDN } from '../../utils/const'
+import { BASE_URL } from '../../utils/const'
 import { NotificationContext } from '../../components/notification-provider/notification-provider'
-
-interface InameTariffs {
-  text: string
-  value: string
-}
 
 interface IMenu {
   token: string
@@ -20,43 +15,29 @@ interface IMenu {
   language: ECountry
 }
 
-const Dishes: FC<IMenu> = ({ token, pathRest, t }) => {
+const Tasks: FC<IMenu> = ({ token, pathRest, t }) => {
   const { openNotification } = useContext(NotificationContext)
-
-  const [data, setData] = React.useState<TDish[]>([])
-  const [nameTariffs, setnameTariffs] = React.useState<InameTariffs[]>([])
+  const [data, setData] = React.useState<TTask[]>([])
   const location = useLocation()
-
   React.useEffect(() => {
-    userAPI
-      .getUsers(token)
+    taskAPI
+      .getTasks(token, +JSON.parse(atob(token.split('.')[1])).id)
       .then((res) => {
         setData(res)
-        const objectNames: { [key: string]: boolean } = {}
-        const resultArraynameTariffs: InameTariffs[] = []
-        res.forEach((dish: TDish) => {
-          // if (!objectNames[dish.category as TCategory]) {
-          //   objectNames[dish.price as string] = true
-          // }
-        })
-        for (const key of Object.keys(objectNames)) {
-          resultArraynameTariffs.push({ text: key, value: key })
-        }
-        setnameTariffs(resultArraynameTariffs)
       })
       .catch((e) => openNotification(e, 'topRight'))
     const currentPath = location.pathname
     window.localStorage.setItem('initialRoute', currentPath)
   }, [])
 
-  const columns: ColumnsType<TDish> = [
+  const columns: ColumnsType<TTask> = [
     {
       title: `${t('image')}`,
       dataIndex: 'image',
       key: 'image',
       render: (image: string) => (
         <img
-          src={`${BASE_URL_CDN}/${image}`}
+          src={`${BASE_URL}/${image}`}
           style={{ width: '100px', height: '100px', objectFit: 'contain' }}
           onError={(e) => {
             e.currentTarget.src = imageNoPhoto
@@ -68,42 +49,42 @@ const Dishes: FC<IMenu> = ({ token, pathRest, t }) => {
       title: `${t('name')}`,
       dataIndex: 'title',
       key: 'title',
-      render: (email, user) => (
-        <Link to={`/${pathRest}/dish/:${user.id}`}>{user.email}</Link>
+      render: (title: string) => (
+        <Link to={`/${pathRest}/dish/:${title}`}>{title}</Link>
       ),
       sorter: (a, b) => {
-        if (a.email !== undefined && b.email !== undefined) {
-          return a.email.localeCompare(b.email)
+        if (a.title !== undefined && b.title !== undefined) {
+          return a.title.localeCompare(b.title)
         }
         return 0
       }
     },
     {
-      title: `${t('category')}`,
-      dataIndex: 'category.title',
-      key: 'category.title',
-      render: (roles, user) => (
-        <Link to={`/${pathRest}/category/:${user.id}`}>
-          {user.id}
-        </Link>
+      title: `${t('description')}`,
+      dataIndex: 'description',
+      key: 'description',
+      render: (description: string) => (
+        <Link to={`/${pathRest}/category/:${description}`}>{description}</Link>
       ),
       sorter: (a, b) => {
-        if (a.id !== undefined && b.id !== undefined) {
-          return a.id.localeCompare(b.id)
+        if (a.description !== undefined && b.description !== undefined) {
+          return a.description.localeCompare(b.description)
         }
         return 0
       }
     },
-  // {
-  //  title: `${t('price')}`,
-  //  dataIndex: 'price',
-  //  key: 'price',
-  //  render: (price) => <p>{price}</p>,
-  //  sorter: (a, b) => a.price - b.price,
-  //  filters: [...nameTariffs],
-  //  onFilter: (value: string | number | boolean, record) =>
-  //    record.price === value
-  // }
+    {
+      title: `${t('price')}`,
+      dataIndex: 'progress',
+      key: 'progress',
+      render: (progress) => <p>{progress}</p>,
+      sorter: (a, b) => {
+        if (a.progress !== undefined && b.progress !== undefined) {
+          return a.progress.localeCompare(b.progress)
+        }
+        return 0
+      }
+    }
   ]
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -143,4 +124,4 @@ const Dishes: FC<IMenu> = ({ token, pathRest, t }) => {
     </div>
   )
 }
-export default Dishes
+export default Tasks

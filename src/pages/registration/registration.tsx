@@ -4,7 +4,7 @@
 import { Button, Form, Input } from 'antd'
 import { Dispatch, FC, SetStateAction, useContext, useEffect } from 'react'
 import { Link, useHistory } from 'react-router-dom'
-import * as autorizationApi from '../../utils/api/autorization-api'
+import * as registrationApi from '../../utils/api/registration-api'
 import { NotificationContext } from '../../components/notification-provider/notification-provider'
 import * as validateTokenApi from '../../utils/api/validate-token-api'
 import { useTelegram } from '../../services/hooks/use-telegram'
@@ -15,7 +15,7 @@ interface IAutorization {
   t: (arg0: string) => string
 }
 
-const Autorization: FC<IAutorization> = ({ setIsLoggedIn, t, setToken }) => {
+const Registration: FC<IAutorization> = ({ setIsLoggedIn, t, setToken }) => {
   const storedInitialRoute = localStorage.getItem('initialRoute')
   const { openNotification } = useContext(NotificationContext)
   const history = useHistory()
@@ -55,8 +55,8 @@ const Autorization: FC<IAutorization> = ({ setIsLoggedIn, t, setToken }) => {
     }
   }, [])
   const onFinish = (values: any) => {
-    autorizationApi
-      .autorization(values)
+    registrationApi
+      .registration(values)
       .then((res) => {
         localStorage.setItem('token', res.token)
         setToken(res.token)
@@ -87,11 +87,19 @@ const Autorization: FC<IAutorization> = ({ setIsLoggedIn, t, setToken }) => {
     <Form
       {...layout}
       name='basic'
-      className='max-w-[600px] flex justify-center flex-col'
+      className='flex justify-center flex-col'
+      style={{ maxWidth: 600 }}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
       autoComplete='off'
     >
+      <Form.Item
+        label={t('login')}
+        name='nickname'
+        rules={[{ required: true, message: t('enter-your-username') }]}
+      >
+        <Input defaultValue={tg?.initDataUnsafe?.user?.username ? tg.initDataUnsafe.user.username : ''} />
+      </Form.Item>
       <Form.Item
         label={t('email')}
         name='email'
@@ -99,7 +107,6 @@ const Autorization: FC<IAutorization> = ({ setIsLoggedIn, t, setToken }) => {
       >
         <Input />
       </Form.Item>
-
       <Form.Item
         label={t('password')}
         name='password'
@@ -108,9 +115,9 @@ const Autorization: FC<IAutorization> = ({ setIsLoggedIn, t, setToken }) => {
         <Input.Password />
       </Form.Item>
       <Form.Item wrapperCol={{ offset: 4, span: 16 }}>
-        {t('dont-have-an-account')}?{' '}
-        <Link to={'registration'} className='text-blue-500'>
-          {t('sign-up')}
+        {t('already-have-an-account')}?{' '}
+        <Link to={'autorization'} className='text-blue-500'>
+          {t('sign-in')}
         </Link>
       </Form.Item>
       <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
@@ -121,4 +128,4 @@ const Autorization: FC<IAutorization> = ({ setIsLoggedIn, t, setToken }) => {
     </Form>
   )
 }
-export default Autorization
+export default Registration

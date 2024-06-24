@@ -5,7 +5,6 @@ import Main from '../main/main'
 
 const App: FC = () => {
   const [token, setToken] = useState<string>('')
-  // const { pathRest } = useParams<{ pathRest: string }>()
   const pathRest = 'admin'
   const history = useHistory()
   if (
@@ -27,6 +26,9 @@ const App: FC = () => {
           <Redirect to={{ pathname: `/${pathRest}/autorization` }} />
         </Route>
         <Route path={`/${pathRest}/autorization`} exact={true}>
+          <Main token={token} pathRest={pathRest} setToken={setToken} />
+        </Route>
+        <Route path={`/${pathRest}/registration`} exact={true}>
           <Main token={token} pathRest={pathRest} setToken={setToken} />
         </Route>
         <Route path={'/admin'} exact>
