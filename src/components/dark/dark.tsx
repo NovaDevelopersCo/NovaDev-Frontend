@@ -1,7 +1,6 @@
-import { MoonOutlined, SunFilled } from '@ant-design/icons'
 import { Button } from 'antd'
 import React, { FC } from 'react'
-
+import { SunFilled, MoonOutlined } from '@ant-design/icons'
 interface IDark {
   style: Object
   dark: boolean
