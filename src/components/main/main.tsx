@@ -188,6 +188,8 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
                     setIsLoggedIn={setIsLoggedIn}
                     t={t}
                     setToken={setToken}
+                    dark={dark} 
+                    style={style} 
                   />
                 </Route>
                 <ProtectedRoute
