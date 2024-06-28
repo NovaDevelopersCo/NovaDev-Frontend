@@ -247,4 +247,5 @@ export interface TCustomer {
   id: string
   name: string
   email: string
-}
+  tg: string
+} 

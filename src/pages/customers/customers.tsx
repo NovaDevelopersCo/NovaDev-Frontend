@@ -60,6 +60,12 @@ const Customers: FC<ICustomers> = ({ token, pathRest, t, role }) => {
       sorter: (a, b) => a.email.localeCompare(b.email)
     },
     {
+      title: `${t('tg')}`,
+      dataIndex: 'tg',
+      key: 'tg',
+      sorter: (a, b) => a.tg.localeCompare(b.tg)
+    },
+    {
       title: `${t('actions')}`,
       key: 'actions',
       render: (_, customer) => (
