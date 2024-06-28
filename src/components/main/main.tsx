@@ -24,6 +24,7 @@ import Dark from '../dark/dark'
 import { Footer } from 'antd/es/layout/layout'
 import Registration from '../../pages/registration/registration'
 import { useTelegram } from '../../services/hooks/use-telegram'
+import UserInfo from '../../pages/user-info/user-info'
 
 const { Header, Sider, Content } = Layout
 
@@ -252,6 +253,14 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
                   pathRest={pathRest}
                 >
                   <AddRestaurants token={token} pathRest={pathRest} t={t} />
+                </ProtectedRoute>
+                <ProtectedRoute
+                    path={`/:${pathRest}/user`}
+                    exact
+                    isLoggedIn={isLoggedIn}
+                    pathRest={pathRest}
+                >
+                  <UserInfo />
                 </ProtectedRoute>
                 <Route path='*'>
                   <NotFound t={t} />
