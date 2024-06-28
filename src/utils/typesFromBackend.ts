@@ -248,4 +248,4 @@ export interface TCustomer {
   name: string
   email: string
   tg: string
-} 
+}
