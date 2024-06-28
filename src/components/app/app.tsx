@@ -19,6 +19,12 @@ const App: FC = () => {
     setToken(localStorage.getItem('token'))
   }, [token])
 
+  useEffect(() => {
+    fetch('https://novadev-backend.onrender.com/teams')
+    .then((response)=> response.json())
+    .then(response => console.log(response))
+  }, [])
+
   return (
     <div className='App'>
       <Switch>
