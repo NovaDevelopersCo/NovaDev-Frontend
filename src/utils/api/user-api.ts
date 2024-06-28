@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/naming-convention */
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
+
 import { BASE_URL } from '../const'
 import { handleResponse } from '../helpers'
 
