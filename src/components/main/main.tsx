@@ -24,6 +24,7 @@ import Dark from '../dark/dark'
 import { Footer } from 'antd/es/layout/layout'
 import Registration from '../../pages/registration/registration'
 import { useTelegram } from '../../services/hooks/use-telegram'
+import Customers from '../../pages/customers/customers'
 
 const { Header, Sider, Content } = Layout
 
@@ -31,10 +32,9 @@ interface IMain {
   token: string
   pathRest: string
   setToken: (token: any) => void
+  role: string
 }
-
-const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
-  // change to TRest
+const Main: FC<IMain> = ({ token, pathRest, setToken, role }) => {
   const { tg } = useTelegram()
   const [language, setLanguage] = useState<ECountry>(
     (localStorage.getItem('language') as ECountry) ?? ECountry.RU
@@ -45,9 +45,7 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
   const [width, setWidth] = useState<boolean>(false)
   const { t } = useTranslation()
 
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type, @typescript-eslint/no-unused-vars
   const changeLanguage = (lng: ECountry) => {
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     i18n.changeLanguage(lng)
     setLanguage(lng)
     localStorage.removeItem('formData')
@@ -56,14 +54,15 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
     background: dark ? '#000' : '#fff',
     color: dark ? '#fff' : '#000'
   }
+
   React.useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     i18n.changeLanguage(
       tg?.initDataUnsafe?.user?.language_code
         ? tg.initDataUnsafe.user.language_code
         : language
     )
   }, [])
+
   const [collapse, setCollapse] = useState(false)
   let flag = false
   if (typeof window !== 'undefined') {
@@ -79,6 +78,7 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
       }
     })
   }
+
   useEffect(() => {
     setDark(localStorage.getItem('dark') === 'true')
     window.innerWidth <= 768 ? setCollapse(true) : setCollapse(false)
@@ -218,6 +218,19 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
                   pathRest={pathRest}
                 >
                   <AddAdmin token={token} pathRest={pathRest} t={t} />
+                </ProtectedRoute>
+                <ProtectedRoute
+                  path={`/:${pathRest}/customers`}
+                  exact
+                  isLoggedIn={isLoggedIn}
+                  pathRest={pathRest}
+                >
+                  <Customers
+                    token={token}
+                    pathRest={pathRest}
+                    t={t}
+                    role={role}
+                  />
                 </ProtectedRoute>
                 <ProtectedRoute
                   path={`/:${pathRest}/dishes`}
