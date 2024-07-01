@@ -10,9 +10,14 @@ interface IAddAdmin {
   pathRest: string
   token: string
   t: (arg0: string) => string
+  dark: boolean
+  style: {
+    background: string
+    color: string
+  }
 }
 
-const AddAdmin: FC<IAddAdmin> = ({ token, pathRest, t }) => {
+const AddAdmin: FC<IAddAdmin> = ({ token, pathRest, t, dark }) => {
   const { openNotification } = useContext(NotificationContext)
   const [form] = Form.useForm()
   const history = useHistory()
@@ -24,6 +29,7 @@ const AddAdmin: FC<IAddAdmin> = ({ token, pathRest, t }) => {
   const [PathRest, setPathRest] = React.useState<{ [key: string]: string }>({})
   const [, setLogin] = React.useState('')
   const [, setPassword] = React.useState('')
+
   function handleChangePassword(e: React.ChangeEvent<HTMLInputElement>): void {
     setPassword(e.target.value)
   }
@@ -36,6 +42,7 @@ const AddAdmin: FC<IAddAdmin> = ({ token, pathRest, t }) => {
     // eslint-disable-next-line no-template-curly-in-string
     required: '${label} ' + `${t('it-is-necessary-to-fill-in')}!`
   }
+
   React.useEffect(() => {
     userAPI
       .getTasks(token, 1)
@@ -50,6 +57,7 @@ const AddAdmin: FC<IAddAdmin> = ({ token, pathRest, t }) => {
       })
       .catch((e) => openNotification(e, 'topRight'))
   }, [])
+
   const onFinish = (values: any): void => {
     const newLanguageRest: any = {
       nickname: values.nickname,
@@ -68,26 +76,31 @@ const AddAdmin: FC<IAddAdmin> = ({ token, pathRest, t }) => {
   const handleModalClose = (): void => {
     setIsModalVisible(false)
   }
+
+  const formStyle = {
+    paddingTop: '1.5rem',
+    backgroundColor: dark ? '#333' : '#fff',
+    color: dark ? '#fff' : '#000'
+  }
+
   return (
     <>
-      {
-        <Modal
-          title={t('alert')}
-          visible={isModalVisible}
-          footer={[
-            <Button key='ok' type='primary' onClick={handleModalClose}>
-              {t('close')}
-            </Button>
-          ]}
-        >
-          {t('field_must_not_empty')}
-        </Modal>
-      }
+      <Modal
+        title={t('alert')}
+        visible={isModalVisible}
+        footer={[
+          <Button key='ok' type='primary' onClick={handleModalClose}>
+            {t('close')}
+          </Button>
+        ]}
+      >
+        {t('field_must_not_empty')}
+      </Modal>
       <h4
         style={{
           marginBottom: '15px',
           marginTop: '0',
-          color: '#000',
+          color: dark ? '#fff' : '#000',
           fontSize: '1.75rem',
           fontWeight: '600',
           padding: '15px'
@@ -101,7 +114,7 @@ const AddAdmin: FC<IAddAdmin> = ({ token, pathRest, t }) => {
         validateMessages={validateMessages}
         name='dish'
         form={form}
-        style={{ paddingTop: '1.5rem' }}
+        style={formStyle}
       >
         <Form.Item
           label={t('login')}
@@ -183,4 +196,5 @@ const AddAdmin: FC<IAddAdmin> = ({ token, pathRest, t }) => {
     </>
   )
 }
+
 export default AddAdmin

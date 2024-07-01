@@ -1,6 +1,9 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
+/* eslint-disable @typescript-eslint/strict-boolean-expressions */
+/* eslint-disable @typescript-eslint/no-floating-promises */
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { Button, Form, Input } from 'antd'
 import { Dispatch, FC, SetStateAction, useContext, useEffect } from 'react'
 import { Link, useHistory } from 'react-router-dom'
@@ -17,7 +20,13 @@ interface IAutorization {
   style: React.CSSProperties
 }
 
-const Registration: FC<IAutorization> = ({ setIsLoggedIn, t, setToken, dark, style }) => {
+const Registration: FC<IAutorization> = ({
+  setIsLoggedIn,
+  t,
+  setToken,
+  dark,
+  style
+}) => {
   const storedInitialRoute = localStorage.getItem('initialRoute')
   const { openNotification } = useContext(NotificationContext)
   const history = useHistory()
@@ -90,7 +99,7 @@ const Registration: FC<IAutorization> = ({ setIsLoggedIn, t, setToken, dark, sty
       {...layout}
       name='basic'
       className='flex justify-center flex-col'
-      style={{ maxWidth: 600, ...style }}
+      style={{ maxWidth: 600, color: dark ? '#fff' : '#000', ...style }} // Применение цвета текста
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
       autoComplete='off'
@@ -101,7 +110,13 @@ const Registration: FC<IAutorization> = ({ setIsLoggedIn, t, setToken, dark, sty
         rules={[{ required: true, message: t('enter-your-username') }]}
         style={style} // Применение стиля
       >
-        <Input defaultValue={tg?.initDataUnsafe?.user?.username ? tg.initDataUnsafe.user.username : ''} />
+        <Input
+          defaultValue={
+            tg?.initDataUnsafe?.user?.username
+              ? tg.initDataUnsafe.user.username
+              : ''
+          }
+        />
       </Form.Item>
       <Form.Item
         label={t('email')}
@@ -121,7 +136,11 @@ const Registration: FC<IAutorization> = ({ setIsLoggedIn, t, setToken, dark, sty
       </Form.Item>
       <Form.Item wrapperCol={{ offset: 4, span: 16 }} style={style}>
         {t('already-have-an-account')}?{' '}
-        <Link to={'autorization'} className='text-blue-500'>
+        <Link
+          to={'autorization'}
+          className='text-blue-500'
+          style={{ color: dark ? '#fff' : '#000' }}
+        >
           {t('sign-in')}
         </Link>
       </Form.Item>

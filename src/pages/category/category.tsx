@@ -12,9 +12,14 @@ interface IEditorRest {
   token: string
   t: (arg0: string) => string
   pathRest: string
+  dark: boolean
+  style: {
+    background: string
+    color: string
+  }
 }
 
-const Admin: FC<IEditorRest> = ({ token, pathRest, t }) => {
+const Admin: FC<IEditorRest> = ({ token, pathRest, t, dark, style }) => {
   const { openNotification } = useContext(NotificationContext)
   const pathname = useLocation().pathname
   const match = useRouteMatch(pathname)
@@ -23,6 +28,7 @@ const Admin: FC<IEditorRest> = ({ token, pathRest, t }) => {
   const [isRest, setIsRest] = React.useState(false)
   const [value, setValue] = React.useState<string | number>(t('admin'))
   const [isModalVisible, setIsModalVisible] = React.useState(false)
+
   React.useEffect(() => {
     adminAPI
       .getAdmin(token, restId)
@@ -31,7 +37,7 @@ const Admin: FC<IEditorRest> = ({ token, pathRest, t }) => {
         setAdmin(res)
       })
       .catch((e) => openNotification(e, 'topRight'))
-  }, [])
+  }, [token, restId, openNotification])
 
   const handleModalClose = (): void => {
     setIsModalVisible(false)
@@ -43,10 +49,11 @@ const Admin: FC<IEditorRest> = ({ token, pathRest, t }) => {
         style={{
           marginBottom: '15px',
           marginTop: '0',
-          color: '#000',
+          color: dark ? '#fff' : '#000',
           fontSize: '1.75rem',
           fontWeight: '600',
-          padding: '15px'
+          padding: '15px',
+          ...style
         }}
       >
         {admin?.nickname ? admin.nickname : ''}
@@ -56,44 +63,40 @@ const Admin: FC<IEditorRest> = ({ token, pathRest, t }) => {
         options={[t('admin'), t('password')]}
         value={value}
         onChange={setValue}
-      />{' '}
-      {isRest ? (
-        value === t('admin') ? (
-          <AdminUpdate token={token} pathRest={pathRest} t={t} />
-        ) : (
-          ''
-        )
-      ) : (
-        ''
+        style={style}
+      />
+      {isRest && value === t('admin') && (
+        <AdminUpdate
+          token={token}
+          pathRest={pathRest}
+          t={t}
+          dark={dark}
+          style={style}
+        />
       )}
-      {isRest ? (
-        value === t('password') ? (
-          <AdminPassword
-            token={token}
-            pathRest={pathRest}
-            t={t}
-          ></AdminPassword>
-        ) : (
-          ''
-        )
-      ) : (
-        ''
+      {isRest && value === t('password') && (
+        <AdminPassword
+          token={token}
+          pathRest={pathRest}
+          t={t}
+          dark={dark}
+          style={style}
+        />
       )}
-      {
-        <Modal
-          title={t('alert')}
-          open={isModalVisible}
-          closable={false}
-          footer={[
-            <Button key='ok' type='primary' onClick={handleModalClose}>
-              {t('close')}
-            </Button>
-          ]}
-        >
-          {t('field_must_not_empty')}
-        </Modal>
-      }
+      <Modal
+        title={t('alert')}
+        open={isModalVisible}
+        closable={false}
+        footer={[
+          <Button key='ok' type='primary' onClick={handleModalClose}>
+            {t('close')}
+          </Button>
+        ]}
+      >
+        {t('field_must_not_empty')}
+      </Modal>
     </>
   )
 }
+
 export default Admin

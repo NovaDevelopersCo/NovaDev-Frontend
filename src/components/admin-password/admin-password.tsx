@@ -1,17 +1,29 @@
-import { Form, Button, Input } from 'antd'
+import { Popconfirm, Select, Form, Button, Input } from 'antd'
 import React, { FC, useContext } from 'react'
 import { useHistory, useLocation, useRouteMatch } from 'react-router-dom'
-import { TAdmin } from '../../utils/typesFromBackend'
+import { ELevelAccess, TAdmin, TRest } from '../../utils/typesFromBackend'
 import * as adminAPI from '../../utils/api/category-api'
 import { NotificationContext } from '../notification-provider/notification-provider'
+import * as userAPI from '../../utils/api/task-api'
 
 interface IGroupModifiersForDish {
-  pathRest: string
   token: string
+  pathRest: string
   t: (arg0: string) => string
+  dark: boolean
+  style: {
+    background: string
+    color: string
+  }
 }
 
-const AdminPassword: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
+const AdminPassword: FC<IGroupModifiersForDish> = ({
+  token,
+  pathRest,
+  t,
+  dark,
+  style
+}) => {
   const { openNotification } = useContext(NotificationContext)
   const [form] = Form.useForm()
   const history = useHistory()
@@ -26,6 +38,7 @@ const AdminPassword: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
   const restId = Object.keys(match?.params as string)[0]
   // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
   const [admin, setAdmin] = React.useState<TAdmin>({} as TAdmin)
+  const [PathRest, setPathRest] = React.useState<{ [key: string]: string }>({})
   const [formData, setFormData] = React.useState(() => {
     const storedFormDataString = localStorage.getItem('formDataAdmin')
     return storedFormDataString ? JSON.parse(storedFormDataString) : null
@@ -36,6 +49,21 @@ const AdminPassword: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
     const updateallValues = { ...allValues, _id: admin._id }
     setFormData(updateallValues)
   }
+
+  React.useEffect(() => {
+    userAPI
+      .getTasks(token, 1)
+      .then((res) => {
+        const nameRests: { [key: string]: string } = {}
+        res.rests.forEach((rest: TRest) => {
+          if (!nameRests[rest.titleRest] && rest.titleRest) {
+            nameRests[rest.titleRest] = rest._id
+          }
+        })
+        setPathRest(nameRests)
+      })
+      .catch((e) => openNotification(e, 'topRight'))
+  }, [])
 
   React.useEffect(() => {
     if (Object.keys(admin).length > 0 && formData) {
@@ -62,27 +90,57 @@ const AdminPassword: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
       : null
     if (parsedFormData && parsedFormData._id === admin._id) {
       form.setFieldsValue({
-        password: parsedFormData.password
+        nickname: parsedFormData.nickname
+      })
+      form.setFieldsValue({
+        level_access: parsedFormData.level_access
+      })
+      form.setFieldsValue({
+        rest_id: parsedFormData.rest_id
+      })
+    } else {
+      form.setFieldsValue({
+        nickname: admin.nickname
+      })
+      form.setFieldsValue({
+        level_access: admin.level_access
+      })
+      form.setFieldsValue({
+        rest_id: admin.rest_id
+          ? Object.keys(PathRest).find((k) => PathRest[k] === admin.rest_id)
+          : ''
       })
     }
   }, [admin])
+
   const validateMessages = {
     // eslint-disable-next-line no-template-curly-in-string
     required: '${label} ' + `${t('it-is-necessary-to-fill-in')}!`
   }
+
   const onFinish = (values: any): void => {
-    const passwordAdmin: any = {
+    const newLanguageRest: any = {
       _id: admin._id,
-      newPassword: values.password
+      nickname: values.nickname,
+      level_access: Number(values.level_access),
+      rest_id: values.rest_id ? PathRest[values.rest_id] : ''
     }
     adminAPI
-      .updateAdminPassword(token, passwordAdmin)
+      .updateAdmin(token, newLanguageRest)
       .then((res: TAdmin) => {
         localStorage.removeItem('formDataAdmin')
         history.push(`/${pathRest}/admins`)
       })
       .catch((e) => openNotification(e, 'topRight'))
   }
+
+  function confirm(): void {
+    adminAPI
+      .deleteAdmin(token, admin._id)
+      .then(() => history.push(`/${pathRest}/admins`))
+      .catch((e) => openNotification(e, 'topRight'))
+  }
+
   return (
     <Form
       {...layout}
@@ -90,43 +148,50 @@ const AdminPassword: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
       validateMessages={validateMessages}
       name='admin'
       form={form}
-      style={{ paddingTop: '1.5rem' }}
+      style={{ paddingTop: '1.5rem', ...style }} // Применение стиля
       onValuesChange={handleFormChange}
     >
-      <Form.Item
-        label={t('password')}
-        rules={[{ required: true }]}
-        name='password'
-      >
-        <Input.Password />
+      <Form.Item label={t('login')} name='nickname' style={style}>
+        <Input style={{ color: dark ? 'white' : 'black' }} />
       </Form.Item>
-      <Form.Item
-        label={t('сonfirm-password')}
-        name='confirm'
-        dependencies={['password']}
-        hasFeedback
-        rules={[
-          {
-            required: true
-          },
-          ({ getFieldValue }) => ({
-            async validator(_, value) {
-              if (!value || getFieldValue('password') === value) {
-                return await Promise.resolve()
-              }
-              return await Promise.reject(new Error(t('password-do-not-match')))
-            }
-          })
-        ]}
-      >
-        <Input.Password />
+      <Form.Item label={t('restaurant')} name='rest_id' style={style}>
+        <Select style={{ color: dark ? 'white' : 'black' }}>
+          <Select.Option value={''} key={'no-rest'}>
+            {t('no-restaurant')}
+          </Select.Option>
+          {Object.keys(PathRest).map((levelAccess: any, index: number) => (
+            <Select.Option value={levelAccess} key={index}>
+              {levelAccess}
+            </Select.Option>
+          ))}
+        </Select>
       </Form.Item>
-      <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 4 }}>
+      <Form.Item label={t('level_access')} name='level_access' style={style}>
+        <Select style={{ color: dark ? 'white' : 'black' }}>
+          {Object.values(ELevelAccess).map((levelAccess: ELevelAccess) => (
+            <Select.Option value={levelAccess} key={levelAccess}>
+              {levelAccess}
+            </Select.Option>
+          ))}
+        </Select>
+      </Form.Item>
+      <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 4 }} style={style}>
         <Button type='primary' htmlType='submit'>
           {t('save')}
         </Button>
       </Form.Item>
+      <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 4 }} style={style}>
+        <Popconfirm
+          title={t('you-sure-want-delete')}
+          onConfirm={confirm}
+          okText={t('yes')}
+          cancelText={t('no')}
+        >
+          <Button htmlType='button'>{t('delete')}</Button>
+        </Popconfirm>
+      </Form.Item>
     </Form>
   )
 }
+
 export default AdminPassword
