@@ -14,6 +14,8 @@ interface ILevelsAccess {
 }
 
 interface IAdmins {
+  dark: boolean
+  style: React.CSSProperties
   token: string
   pathRest: string
   t: (arg0: string) => string

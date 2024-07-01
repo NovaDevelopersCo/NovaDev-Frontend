@@ -185,6 +185,8 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
                 </Route>
                 <Route path={`/:${pathRest}/registration`}>
                   <Registration
+                    dark={dark}
+                    style={style}
                     setIsLoggedIn={setIsLoggedIn}
                     t={t}
                     setToken={setToken}
@@ -197,6 +199,8 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
                   pathRest={pathRest}
                 >
                   <Admins
+                    dark={dark}
+                    style={style}
                     token={token}
                     pathRest={pathRest}
                     t={t}
@@ -209,7 +213,7 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
                   isLoggedIn={isLoggedIn}
                   pathRest={pathRest}
                 >
-                  <Admin token={token} pathRest={pathRest} t={t} />
+                  <Admin token={token} pathRest={pathRest} t={t} dark={dark} style={style} />
                 </ProtectedRoute>
                 <ProtectedRoute
                   path={`/:${pathRest}/add/category`}
@@ -217,7 +221,7 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
                   isLoggedIn={isLoggedIn}
                   pathRest={pathRest}
                 >
-                  <AddAdmin token={token} pathRest={pathRest} t={t} />
+                  <AddAdmin token={token} pathRest={pathRest} t={t} dark={dark} style={style} />
                 </ProtectedRoute>
                 <ProtectedRoute
                   path={`/:${pathRest}/dishes`}
@@ -251,7 +255,7 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
                   isLoggedIn={isLoggedIn}
                   pathRest={pathRest}
                 >
-                  <AddRestaurants token={token} pathRest={pathRest} t={t} />
+                  <AddRestaurants token={token} pathRest={pathRest} t={t} dark={dark} style={style} />
                 </ProtectedRoute>
                 <Route path='*'>
                   <NotFound t={t} />

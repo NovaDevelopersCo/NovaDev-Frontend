@@ -20,9 +20,14 @@ interface IAddDish {
   pathRest: string
   token: string
   t: (arg0: string) => string
+  dark: boolean
+  style: {
+    background: string
+    color: string
+  }
 }
 
-const AddDish: FC<IAddDish> = ({ token, pathRest, t }) => {
+const AddDish: FC<IAddDish> = ({ token, pathRest, t, dark }) => {
   const { openNotification } = useContext(NotificationContext)
   const [form] = Form.useForm()
   const history = useHistory()
@@ -110,7 +115,7 @@ const AddDish: FC<IAddDish> = ({ token, pathRest, t }) => {
 
   const validateMessages = {
     // eslint-disable-next-line no-template-curly-in-string
-    required: '${label} ' + `${t('it-is-necessary-to-fill-in')}!`
+    required: '${label} ' + t('it-is-necessary-to-fill-in') + '!'
   }
 
   React.useEffect(() => {
@@ -144,31 +149,35 @@ const AddDish: FC<IAddDish> = ({ token, pathRest, t }) => {
     setIsModalVisible(false)
   }
 
+  const formStyle = {
+    paddingTop: '1.5rem',
+    backgroundColor: dark ? '#333' : '#fff',
+    color: dark ? '#fff' : '#000'
+  }
+
+  const h4Style = {
+    marginBottom: '15px',
+    marginTop: '0',
+    color: dark ? '#fff' : '#000',
+    fontSize: '1.75rem',
+    fontWeight: '600',
+    padding: '15px'
+  }
+
   return (
     <>
-      {
-        <Modal
-          title={t('alert')}
-          visible={isModalVisible}
-          footer={[
-            <Button key='ok' type='primary' onClick={handleModalClose}>
-              {t('close')}
-            </Button>
-          ]}
-        >
-          {t('field_must_not_empty')}
-        </Modal>
-      }
-      <h4
-        style={{
-          marginBottom: '15px',
-          marginTop: '0',
-          color: '#000',
-          fontSize: '1.75rem',
-          fontWeight: '600',
-          padding: '15px'
-        }}
+      <Modal
+        title={t('alert')}
+        visible={isModalVisible}
+        footer={[
+          <Button key='ok' type='primary' onClick={handleModalClose}>
+            {t('close')}
+          </Button>
+        ]}
       >
+        {t('field_must_not_empty')}
+      </Modal>
+      <h4 style={h4Style}>
         {t('add-dish')}
       </h4>
       <Form
@@ -177,7 +186,7 @@ const AddDish: FC<IAddDish> = ({ token, pathRest, t }) => {
         validateMessages={validateMessages}
         name='dish'
         form={form}
-        style={{ paddingTop: '1.5rem' }}
+        style={formStyle}
       >
         <Form.Item label={t('name')} rules={[{ required: true }]} name='title'>
           <Input onChange={handleChangeTitle} />
@@ -237,4 +246,5 @@ const AddDish: FC<IAddDish> = ({ token, pathRest, t }) => {
     </>
   )
 }
+
 export default AddDish

@@ -84,6 +84,7 @@ const Dish: FC<IRest> = ({ token, t, pathRest, language }) => {
     // eslint-disable-next-line no-template-curly-in-string
     required: '${label} ' + `${t('it-is-necessary-to-fill-in')}!`
   }
+
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   const onFinish = (values: any) => {
     const newLanguageDish: any = {}

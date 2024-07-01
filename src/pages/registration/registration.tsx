@@ -1,6 +1,9 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
+/* eslint-disable @typescript-eslint/strict-boolean-expressions */
+/* eslint-disable @typescript-eslint/no-floating-promises */
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { Button, Form, Input } from 'antd'
 import { Dispatch, FC, SetStateAction, useContext, useEffect } from 'react'
 import { Link, useHistory } from 'react-router-dom'
@@ -13,9 +16,17 @@ interface IAutorization {
   setIsLoggedIn: Dispatch<SetStateAction<boolean>>
   setToken: (token: any) => void
   t: (arg0: string) => string
+  dark: boolean
+  style: React.CSSProperties
 }
 
-const Registration: FC<IAutorization> = ({ setIsLoggedIn, t, setToken }) => {
+const Registration: FC<IAutorization> = ({
+  setIsLoggedIn,
+  t,
+  setToken,
+  dark,
+  style
+}) => {
   const storedInitialRoute = localStorage.getItem('initialRoute')
   const { openNotification } = useContext(NotificationContext)
   const history = useHistory()
@@ -88,7 +99,7 @@ const Registration: FC<IAutorization> = ({ setIsLoggedIn, t, setToken }) => {
       {...layout}
       name='basic'
       className='flex justify-center flex-col'
-      style={{ maxWidth: 600 }}
+      style={{ maxWidth: 600, color: dark ? '#fff' : '#000', ...style }} // Применение цвета текста
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
       autoComplete='off'
@@ -97,13 +108,21 @@ const Registration: FC<IAutorization> = ({ setIsLoggedIn, t, setToken }) => {
         label={t('login')}
         name='nickname'
         rules={[{ required: true, message: t('enter-your-username') }]}
+        style={style} // Применение стиля
       >
-        <Input defaultValue={tg?.initDataUnsafe?.user?.username ? tg.initDataUnsafe.user.username : ''} />
+        <Input
+          defaultValue={
+            tg?.initDataUnsafe?.user?.username
+              ? tg.initDataUnsafe.user.username
+              : ''
+          }
+        />
       </Form.Item>
       <Form.Item
         label={t('email')}
         name='email'
         rules={[{ required: true, message: t('enter-your-username') }]}
+        style={style} // Применение стиля
       >
         <Input />
       </Form.Item>
@@ -111,16 +130,21 @@ const Registration: FC<IAutorization> = ({ setIsLoggedIn, t, setToken }) => {
         label={t('password')}
         name='password'
         rules={[{ required: true, message: t('enter-your-password') }]}
+        style={style} // Применение стиля
       >
         <Input.Password />
       </Form.Item>
-      <Form.Item wrapperCol={{ offset: 4, span: 16 }}>
+      <Form.Item wrapperCol={{ offset: 4, span: 16 }} style={style}>
         {t('already-have-an-account')}?{' '}
-        <Link to={'autorization'} className='text-blue-500'>
+        <Link
+          to={'autorization'}
+          className='text-blue-500'
+          style={{ color: dark ? '#fff' : '#000' }}
+        >
           {t('sign-in')}
         </Link>
       </Form.Item>
-      <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+      <Form.Item wrapperCol={{ offset: 8, span: 16 }} style={style}>
         <Button type='primary' htmlType='submit'>
           {t('send')}
         </Button>
@@ -128,4 +152,5 @@ const Registration: FC<IAutorization> = ({ setIsLoggedIn, t, setToken }) => {
     </Form>
   )
 }
+
 export default Registration
