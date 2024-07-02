@@ -1,48 +1,50 @@
 
 import React, { FC, useState, useEffect } from 'react'
+import { Button, Form, Input } from 'antd'
+import { TUserInfo } from '../../utils/typesFromBackend'
 import { BASE_URL } from '../../utils/const'
-import styles from './user-info.module.css'
 
-interface User {
-    email: string
-    public_nickname: string
-    full_name: string
-    github: string
-    tg: string
-    phone: number
-    role: {
-        title: string
-    }
-    team: {
-        title: string
-    }
+interface IUserInfo {
+    t: (arg0: string) => string
 }
 
-const UserInfo: FC = () => {
-    const [user, setUser] = useState<User>({
-        email: '',
-        public_nickname: '',
-        full_name: '',
-        github: '',
-        tg: '',
-        phone: 0,
-        role: {
-            title: ''
+const UserInfo: FC<IUserInfo> = ({ t }) => {
+    // const getJWT = localStorage.getItem('token')
+    const [user, setUser] = useState<TUserInfo>({
+        id: 0,
+        auth: {
+            private_nickname: ''
         },
-        team: {
-            title: ''
-        }
+        info: {
+            public_nickname: '',
+            tg: 0
+        },
+        tasks: []
     })
     //
     useEffect(() => {
         const fetchUserData = async (): Promise<void> => {
             try {
-                const response = await fetch(`${BASE_URL}/users/email`)
-                if (!response.ok) {
-                    throw new Error('Failed to fetch user data')
+                const getJWT = localStorage.getItem('token')
+                if (getJWT) {
+                    const response = await fetch(`${BASE_URL}/users/me`, {
+                        method: 'GET',
+                        headers: {
+                            'Content-type': 'application/json',
+                            Authorization: `Bearer ${getJWT}`
+                        }
+                    })
+                    //
+                    if (!response.ok) {
+                        throw new Error('Failed to fetch user data')
+                    }
+                    //
+                    const userData = await response.json()
+                    setUser(userData)
+                    //
+                } else {
+                    throw new Error('Bearer токен отсутствует!')
                 }
-                const userData = await response.json()
-                setUser(userData)
             } catch (error) {
                 console.error('Произошла ошибка', error)
             }
@@ -55,78 +57,50 @@ const UserInfo: FC = () => {
         })
     }, [])
     //
-    const EmailChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        setUser({ ...user, email: e.target.value })
+    const IdChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+        const idValue = e.target.value
+        const idNum = idValue !== '' ? parseInt(idValue) : 0
+        setUser({ ...user, id: idNum })
     }
     //
-    const publicNicknameChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        setUser({ ...user, public_nickname: e.target.value })
+    const PrivateNicknameChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+        setUser({ ...user, auth: { ...user.auth, private_nickname: e.target.value } })
     }
     //
-    const fullNameChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        setUser({ ...user, full_name: e.target.value })
+    const PublicNicknameChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+        setUser({ ...user, info: { ...user.info, public_nickname: e.target.value } })
     }
     //
-    const GithubChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        setUser({ ...user, github: e.target.value })
-    }
-    //
-    const tgChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        setUser({ ...user, tg: e.target.value })
-    }
-    const phoneChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        const phoneValue = e.target.value
-        const phoneNum = phoneValue !== '' ? parseInt(phoneValue) : 0
-        //
-        setUser({ ...user, phone: phoneNum })
-    }
-    //
-    const roleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        setUser({ ...user, role: { title: e.target.value } })
-    }
-    //
-    const teamChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        setUser({ ...user, team: { title: e.target.value } })
+    const TgChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+        const tgIdValue = e.target.value
+        const tgIdNum = tgIdValue !== '' ? parseInt(tgIdValue) : 0
+        setUser({ ...user, info: { ...user.info, tg: tgIdNum } })
     }
     //
     return (
-        <div className={styles.container}>
-            <h1 className={styles.title}>Информация о пользователе</h1>
-            <div className={styles.inside__container}>
-                <div>
-                    <label>Email:</label>
-                    <input type="email" value={user.email} onChange={EmailChange} />
-                </div>
-                <div>
-                    <label>Public nickname:</label>
-                    <input type="text" value={user.public_nickname} onChange={publicNicknameChange} />
-                </div>
-                <div>
-                    <label>Full name:</label>
-                    <input type="text" value={user.full_name} onChange={fullNameChange} />
-                </div>
-                <div>
-                    <label>GitHub:</label>
-                    <input type="text" value={user.github} onChange={GithubChange} />
-                </div>
-                <div>
-                    <label>TG:</label>
-                    <input type="text" value={user.tg} onChange={tgChange} />
-                </div>
-                <div>
-                    <label>Phone:</label>
-                    <input type="text" value={user.phone} onChange={phoneChange} />
-                </div>
-                <div>
-                    <label>Role:</label>
-                    <input type="text" value={user.role.title} onChange={roleChange} />
-                </div>
-                <div>
-                    <label>Team:</label>
-                    <input type="text" value={user.team.title} onChange={teamChange} />
-                </div>
+        <div className='flex flex-col'>
+            <h1 className='text-xl font-semibold mb-5'>Информация о пользователе</h1>
+            <div className='flex flex-col gap-4'>
+                <Form.Item name='id' rules={[{ required: false, message: t('enter-your-id') }]}>
+                    <label className='text-base'>Id:</label>
+                    <Input className='w-64' type="number" value={user.id} onChange={IdChange} />
+                </Form.Item>
+                <Form.Item name='private_nickname' rules={[{ required: false, message: t('enter-your-private-nickname') }]}>
+                    <label className='text-base'>Private nickname:</label>
+                    <Input className='w-64' type="text" value={user.auth.private_nickname} onChange={PrivateNicknameChange} />
+                </Form.Item>
+                <Form.Item name='public_nickname' rules={[{ required: false, message: t('enter-your-public-nickname') }]}>
+                    <label className='text-base'>Public nickname:</label>
+                    <Input className='w-64' type="text" value={user.info.public_nickname} onChange={PublicNicknameChange} />
+                </Form.Item>
+                <Form.Item name='tg_id' rules={[{ required: false, message: t('enter-your-tg_id') }]}>
+                    <label className='text-base'>Tg Id:</label>
+                    <Input className='w-64' type="number" value={user.info.tg} onChange={TgChange} />
+                </Form.Item>
             </div>
-            <button className={styles.SaveButton}>Сохранить</button>
+            <Button className='flex justify-center items-center text-lg w-28 mt-5'>
+                <h4 className='p-2'>{t('Изменить')}</h4>
+            </Button>
         </div>
     )
 }

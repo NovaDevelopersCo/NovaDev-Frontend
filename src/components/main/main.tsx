@@ -260,7 +260,9 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
                     isLoggedIn={isLoggedIn}
                     pathRest={pathRest}
                 >
-                  <UserInfo />
+                  <UserInfo
+                    t={t}
+                  />
                 </ProtectedRoute>
                 <Route path='*'>
                   <NotFound t={t} />
