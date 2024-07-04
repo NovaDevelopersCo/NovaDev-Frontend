@@ -15,10 +15,13 @@
   .ant-form-item-label {
     background-color: #000 !important;
     color: #fff !important;
+    
   }
-  .ant-table-content {
-    background-color: #000 !important;
-    color: #fff !important;
+  .ant-table-wrapper {
+.ant-table{
+  background-color: #000 !important;
+  color: #fff !important;
+}
   }
 
   * {
