@@ -7,18 +7,24 @@
   height: auto !important;
   margin-top: 1.5rem;
 }
-
 .black {
   .ant-select-selector {
     background-color: #000 !important;
     color: #fff !important;
+  }
+  .ant-form-item-label {
+    background-color: #000 !important;
+    color: #fff !important;
+  }
+  .ant-table-content {
+    background-color: #000 !important;
+    color: #fff !important;
+  }
 
-    * {
-      color: #fff !important;
-    }
+  * {
+    color: #fff !important;
   }
 }
-
 :where(.css-dev-only-do-not-override-1ij74fp).ant-menu-light:not(
     .ant-menu-horizontal
   )

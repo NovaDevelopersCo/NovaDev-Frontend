@@ -178,6 +178,8 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
               <Switch>
                 <Route path={`/:${pathRest}/autorization`}>
                   <Autorization
+                    dark={dark}
+                    style={style}
                     setIsLoggedIn={setIsLoggedIn}
                     t={t}
                     setToken={setToken}
@@ -239,6 +241,8 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
                   pathRest={pathRest}
                 >
                   <Item
+                    dark={dark}
+                    style={style}
                     token={token}
                     pathRest={pathRest}
                     t={t}

@@ -8,14 +8,23 @@ import * as autorizationApi from '../../utils/api/autorization-api'
 import { NotificationContext } from '../../components/notification-provider/notification-provider'
 import * as validateTokenApi from '../../utils/api/validate-token-api'
 import { useTelegram } from '../../services/hooks/use-telegram'
+import clsx from 'clsx'
 
 interface IAutorization {
+  style: Object
+  dark: boolean
   setIsLoggedIn: Dispatch<SetStateAction<boolean>>
   setToken: (token: any) => void
   t: (arg0: string) => string
 }
 
-const Autorization: FC<IAutorization> = ({ setIsLoggedIn, t, setToken }) => {
+const Autorization: FC<IAutorization> = ({
+  setIsLoggedIn,
+  t,
+  setToken,
+  dark,
+  style
+}) => {
   const storedInitialRoute = localStorage.getItem('initialRoute')
   const { openNotification } = useContext(NotificationContext)
   const history = useHistory()
@@ -83,11 +92,14 @@ const Autorization: FC<IAutorization> = ({ setIsLoggedIn, t, setToken }) => {
     wrapperCol: { span: 14 }
   }
 
+  const theme = clsx(dark ? 'black' : 'white')
+
   return (
     <Form
       {...layout}
+      style={style}
       name='basic'
-      className='max-w-[600px] flex justify-center flex-col'
+      className={clsx(theme, 'max-w-[600px] flex justify-center flex-col')}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
       autoComplete='off'
