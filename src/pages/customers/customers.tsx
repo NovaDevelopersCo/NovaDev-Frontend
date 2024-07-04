@@ -1,11 +1,10 @@
-import { Table, Button } from 'antd'
+import { Button } from 'antd'
 import { ColumnsType } from 'antd/es/table'
 import React, { FC, useContext } from 'react'
 import * as customerAPI from '../../utils/api/customers-api'
 import { Link, useLocation, useHistory } from 'react-router-dom'
 import { NotificationContext } from '../../components/notification-provider/notification-provider'
 import { TCustomer } from '../../utils/typesFromBackend'
-
 interface ICustomers {
   token: string
   pathRest: string
@@ -90,12 +89,7 @@ const Customers: FC<ICustomers> = ({ token, pathRest, t, role }) => {
     }
   ]
 
-  return (
-    <div style={{ display: 'flex', flexDirection: 'column' }}>
-      <h2>{t('customers')}</h2>
-      <Table columns={columns} dataSource={data} />
-    </div>
-  )
+  return <></>
 }
 
 export default Customers

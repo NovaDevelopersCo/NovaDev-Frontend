@@ -220,6 +220,14 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
                   <AddAdmin token={token} pathRest={pathRest} t={t} />
                 </ProtectedRoute>
                 <ProtectedRoute
+                  path={`/:${pathRest}/add/customers`}
+                  exact
+                  isLoggedIn={isLoggedIn}
+                  pathRest={pathRest}
+                >
+                  <AddAdmin token={token} pathRest={pathRest} t={t} />
+                </ProtectedRoute>
+                <ProtectedRoute
                   path={`/:${pathRest}/dishes`}
                   exact
                   isLoggedIn={isLoggedIn}
