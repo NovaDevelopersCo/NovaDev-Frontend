@@ -16,9 +16,11 @@
     background-color: #000 !important;
     color: #fff !important;
   }
-  .ant-table-thead{
+
+  .ant-table-cell {
     background-color: #000 !important;
     color: #fff !important;
+    border: #fff;
   }
 
   * {

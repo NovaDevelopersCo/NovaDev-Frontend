@@ -199,6 +199,8 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
                   pathRest={pathRest}
                 >
                   <Admins
+                    dark={dark}
+                    style={style}
                     token={token}
                     pathRest={pathRest}
                     t={t}
@@ -234,6 +236,8 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
                   pathRest={pathRest}
                 >
                   <Users
+                    dark={dark}
+                    style={style}
                     token={token}
                     pathRest={pathRest}
                     t={t}
