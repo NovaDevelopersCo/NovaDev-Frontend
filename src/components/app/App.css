@@ -33,6 +33,9 @@
   .text-blue-500{
     color:#071de3 !important;
   }
+  .ant-form-item-explain-error{
+    color:#e3070e !important;
+  }
   * {
     color: #fff !important;
   }
