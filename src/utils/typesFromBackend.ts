@@ -4,23 +4,28 @@ export interface TButton {
   active: boolean
 }
 
-export interface TUserInfo {
-  id: number
-  auth: {
-    private_nickname: string
-  }
-  info: {
-    public_nickname: string
-    tg: number
-  }
-  tasks?: TTask[]
-}
-
 export interface TUser {
   id: number
-  nickname?: string
-  tg_id?: number
-  tasks?: TTask[]
+  role: {
+    id: number
+    title: string
+  }
+  image: string
+  public_nickname: string
+  full_name: string
+  email: string
+  phone: number
+  github: string
+  payment_info: string
+  tg: string
+  team: {
+    id: number
+    title: string
+  }
+  projects: {
+    id: number
+    title: string
+  }
 }
 
 export interface TTask {
