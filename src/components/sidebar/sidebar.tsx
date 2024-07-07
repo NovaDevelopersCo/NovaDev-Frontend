@@ -3,7 +3,6 @@ import { Menu } from 'antd'
 import {
   InfoCircleOutlined,
   LogoutOutlined,
-  ContainerOutlined,
   GroupOutlined,
   VerticalAlignTopOutlined
 } from '@ant-design/icons'
@@ -24,9 +23,6 @@ const Sidebar: FC<ISidebar> = ({
   t
 }) => {
   const history = useHistory()
-  const handleDishesClick = (): void => {
-    history.push(`/${pathRest}/dishes`)
-  }
   const handleCategoriesClick = (): void => {
     history.push(`/${pathRest}/categories`)
   }
@@ -66,10 +62,6 @@ const Sidebar: FC<ISidebar> = ({
         style={{ textAlign: 'left', ...style }}
         defaultSelectedKeys={['1']}
       >
-        <Menu.Item key='1' onClick={handleDishesClick}>
-          <ContainerOutlined />
-          <span>{t('dishes')}</span>
-        </Menu.Item>
         <Menu.Item key='2' onClick={handleCategoriesClick}>
           <GroupOutlined />
           <span>{t('categories')}</span>
