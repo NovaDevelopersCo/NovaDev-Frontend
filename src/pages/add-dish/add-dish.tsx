@@ -1,4 +1,4 @@
-import React, { FC, useContext } from 'react'
+import React, { FC, useContext, CSSProperties } from 'react'
 import { useHistory } from 'react-router-dom'
 import * as restaurantAPI from '../../utils/api/task-api'
 import { TRest, TCategory } from '../../utils/typesFromBackend'
@@ -9,6 +9,7 @@ import type { RcFile, UploadFile, UploadProps } from 'antd/es/upload/interface'
 import ImgCrop from 'antd-img-crop'
 import { NotificationContext } from '../../components/notification-provider/notification-provider'
 import * as adminAPI from '../../utils/api/category-api'
+import clsx from 'clsx'
 
 interface IFileList {
   url: string
@@ -17,12 +18,14 @@ interface IFileList {
 }
 
 interface IAddDish {
+  style: CSSProperties
+  dark: boolean
   pathRest: string
   token: string
   t: (arg0: string) => string
 }
 
-const AddDish: FC<IAddDish> = ({ token, pathRest, t }) => {
+const AddDish: FC<IAddDish> = ({ token, pathRest, t, style, dark }) => {
   const { openNotification } = useContext(NotificationContext)
   const [form] = Form.useForm()
   const history = useHistory()
@@ -143,7 +146,7 @@ const AddDish: FC<IAddDish> = ({ token, pathRest, t }) => {
   const handleModalClose = (): void => {
     setIsModalVisible(false)
   }
-
+  const theme = clsx(dark ? 'black' : 'white')
   return (
     <>
       {
@@ -160,24 +163,19 @@ const AddDish: FC<IAddDish> = ({ token, pathRest, t }) => {
         </Modal>
       }
       <h4
-        style={{
-          marginBottom: '15px',
-          marginTop: '0',
-          color: '#000',
-          fontSize: '1.75rem',
-          fontWeight: '600',
-          padding: '15px'
-        }}
+        className={clsx(theme, 'p-4 mt-0 mb-4 text-2xl font-semibold')}
+        style={style}
       >
         {t('add-dish')}
       </h4>
       <Form
+        className={theme}
         {...layout}
         onFinish={onFinish}
         validateMessages={validateMessages}
         name='dish'
         form={form}
-        style={{ paddingTop: '1.5rem' }}
+        style={style}
       >
         <Form.Item label={t('name')} rules={[{ required: true }]} name='title'>
           <Input onChange={handleChangeTitle} />

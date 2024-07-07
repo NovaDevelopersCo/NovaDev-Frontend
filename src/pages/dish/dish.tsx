@@ -5,15 +5,18 @@ import { useHistory, useLocation, useRouteMatch } from 'react-router-dom'
 import { TRest, ETariff, ECountry } from '../../utils/typesFromBackend'
 import { Form, Input, Button, Select, Popconfirm, Modal } from 'antd'
 import { NotificationContext } from '../../components/notification-provider/notification-provider'
+import clsx from 'clsx'
 
 interface IRest {
+  style: object
+  dark: boolean
   token: string
   t: (arg0: string) => string
   language: ECountry
   pathRest: string
 }
 
-const Dish: FC<IRest> = ({ token, t, pathRest, language }) => {
+const Dish: FC<IRest> = ({ token, t, pathRest, language, dark, style }) => {
   const { openNotification } = useContext(NotificationContext)
   const [form] = Form.useForm()
   const history = useHistory()
@@ -109,6 +112,8 @@ const Dish: FC<IRest> = ({ token, t, pathRest, language }) => {
     setIsModalVisible(false)
   }
 
+  const theme = clsx(dark ? 'black' : 'white')
+
   return (
     <>
       {
@@ -132,7 +137,8 @@ const Dish: FC<IRest> = ({ token, t, pathRest, language }) => {
           validateMessages={validateMessages}
           name='rest'
           form={form}
-          style={{ paddingTop: '1.5rem' }}
+          className={theme}
+          style={style}
           onValuesChange={handleFormChange}
         >
           <Form.Item
