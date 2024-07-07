@@ -6,8 +6,10 @@ import { Layout } from 'antd'
 import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons'
 import fullscreenIcon from '../../assets/images/fullscreen.svg'
 import Autorization from '../../pages/autorization/autorization'
-import { ECountry } from '../../utils/typesFromBackend'
+import Registration from '../../pages/registration/registration'
 import NotFound from '../../pages/not-found/not-found'
+import Customers from '../../pages/customers/customers'
+import { ECountry } from '../../utils/typesFromBackend'
 import { useTranslation } from 'react-i18next'
 import { NotificationProvider } from '../notification-provider/notification-provider'
 import i18n from '../i18n/i18n'
@@ -22,7 +24,6 @@ import AddAdmin from '../../pages/add-category/add-category'
 import Admin from '../../pages/category/category'
 import Dark from '../dark/dark'
 import { Footer } from 'antd/es/layout/layout'
-import Registration from '../../pages/registration/registration'
 import { useTelegram } from '../../services/hooks/use-telegram'
 
 const { Header, Sider, Content } = Layout
@@ -218,6 +219,14 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
                   pathRest={pathRest}
                 >
                   <AddAdmin token={token} pathRest={pathRest} t={t} />
+                </ProtectedRoute>
+                <ProtectedRoute
+                  path={`/${pathRest}/customers`}
+                  exact
+                  isLoggedIn={isLoggedIn}
+                  pathRest={pathRest}
+                >
+                  <Customers token={token} pathRest={pathRest} t={t} />
                 </ProtectedRoute>
                 <ProtectedRoute
                   path={`/:${pathRest}/add/customers`}
