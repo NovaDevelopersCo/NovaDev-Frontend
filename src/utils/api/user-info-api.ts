@@ -28,3 +28,31 @@ export const getUserData = async (user: any, setUser: any): Promise<void> => {
         console.error('Произошла ошибка', error)
     }
 }
+
+export const editUserData = async (user: any): Promise<void> => {
+    try {
+        const getJWT = localStorage.getItem('token')
+        if (getJWT) {
+            const response = await fetch(`${BASE_URL}/users/me`, {
+                method: 'PUT',
+                headers: {
+                    'Content-type': 'application/json',
+                    Authorization: `Bearer ${getJWT}`
+                },
+                body: JSON.stringify(user)
+            })
+            //
+            if (!response.ok) {
+                throw new Error('Failed to fetch user data')
+            }
+            //
+            // const userData = await response.json()
+            // setUser(userData)
+            //
+        } else {
+            throw new Error('Bearer токен отсутствует!')
+        }
+    } catch (error) {
+        console.error('Произошла ошибка', error)
+    }
+}
