@@ -45,10 +45,6 @@ export const editUserData = async (user: any): Promise<void> => {
             if (!response.ok) {
                 throw new Error('Failed to fetch user data')
             }
-            //
-            // const userData = await response.json()
-            // setUser(userData)
-            //
         } else {
             throw new Error('Bearer токен отсутствует!')
         }

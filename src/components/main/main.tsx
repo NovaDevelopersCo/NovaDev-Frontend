@@ -262,6 +262,7 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
                 >
                   <UserInfo
                     t={t}
+                    language={language}
                   />
                 </ProtectedRoute>
                 <Route path='*'>
