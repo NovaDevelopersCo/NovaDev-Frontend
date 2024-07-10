@@ -169,7 +169,8 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
             <Content
               style={{
                 ...style,
-                margin: '24px 16px',
+                display: 'flex',
+                justifyContent: 'center',
                 padding: 24,
                 minHeight: 'calc(100vh - 114px)'
               }}

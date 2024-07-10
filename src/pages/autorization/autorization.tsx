@@ -20,9 +20,9 @@ const Autorization: FC<IAutorization> = ({ setIsLoggedIn, t, setToken }) => {
   const { openNotification } = useContext(NotificationContext)
   const history = useHistory()
   const { tg } = useTelegram()
+
   useEffect(() => {
     const tokenDetailsString = localStorage.getItem('token')
-    // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
     if (tokenDetailsString) {
       validateTokenApi
         .validateToken(tokenDetailsString)
@@ -54,6 +54,7 @@ const Autorization: FC<IAutorization> = ({ setIsLoggedIn, t, setToken }) => {
         })
     }
   }, [])
+
   const onFinish = (values: any) => {
     autorizationApi
       .autorization(values)
@@ -79,15 +80,19 @@ const Autorization: FC<IAutorization> = ({ setIsLoggedIn, t, setToken }) => {
   }
 
   const layout = {
-    labelCol: { span: 4 },
-    wrapperCol: { span: 14 }
+    labelCol: { span: 6 },
+    wrapperCol: { span: 18 }
+  }
+
+  const tailLayout = {
+    wrapperCol: { span: 24 },
+    style: { display: 'flex', justifyContent: 'center' }
   }
 
   return (
     <Form
       {...layout}
       name='basic'
-      className='max-w-[600px] flex justify-center flex-col'
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
       autoComplete='off'
@@ -107,7 +112,8 @@ const Autorization: FC<IAutorization> = ({ setIsLoggedIn, t, setToken }) => {
       >
         <Input.Password />
       </Form.Item>
-      <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+
+      <Form.Item {...tailLayout}>
         <Button type='primary' htmlType='submit'>
           {t('send')}
         </Button>
@@ -115,4 +121,5 @@ const Autorization: FC<IAutorization> = ({ setIsLoggedIn, t, setToken }) => {
     </Form>
   )
 }
+
 export default Autorization
