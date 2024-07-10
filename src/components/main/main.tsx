@@ -261,6 +261,7 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
                     pathRest={pathRest}
                 >
                   <UserInfo
+                    token={token}
                     t={t}
                     language={language}
                   />

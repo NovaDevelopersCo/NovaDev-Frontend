@@ -2,15 +2,14 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { BASE_URL } from '../const'
 
-export const getUserData = async (user: any, setUser: any): Promise<void> => {
+export const getUserData = async (token: string, user: any, setUser: any): Promise<void> => {
     try {
-        const getJWT = localStorage.getItem('token')
-        if (getJWT) {
+        if (token) {
             const response = await fetch(`${BASE_URL}/users/me`, {
                 method: 'POST',
                 headers: {
                     'Content-type': 'application/json',
-                    Authorization: `Bearer ${getJWT}`
+                    Authorization: `Bearer ${token}`
                 }
             })
             //
@@ -29,17 +28,18 @@ export const getUserData = async (user: any, setUser: any): Promise<void> => {
     }
 }
 
-export const editUserData = async (user: any): Promise<void> => {
+export const editUserData = async (token: string, user: any): Promise<void> => {
     try {
-        const getJWT = localStorage.getItem('token')
-        if (getJWT) {
+        if (token) {
             const response = await fetch(`${BASE_URL}/users/me`, {
                 method: 'PUT',
                 headers: {
                     'Content-type': 'application/json',
-                    Authorization: `Bearer ${getJWT}`
+                    Authorization: `Bearer ${token}`
                 },
-                body: JSON.stringify(user)
+                body: JSON.stringify({
+                    ...user
+                })
             })
             //
             if (!response.ok) {

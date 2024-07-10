@@ -6,11 +6,12 @@ import { TUser, ECountry } from '../../utils/typesFromBackend'
 import { NotificationContext } from '../../components/notification-provider/notification-provider'
 
 interface IUserInfo {
+    token: string
     t: (arg0: string) => string
     language: ECountry
 }
 
-const UserInfo: FC<IUserInfo> = ({ t }) => {
+const UserInfo: FC<IUserInfo> = ({ token, t }) => {
     const { openNotification } = useContext(NotificationContext)
     //
     const [isEditing, setIsEditing] = useState(false)
@@ -47,7 +48,7 @@ const UserInfo: FC<IUserInfo> = ({ t }) => {
     //
     useEffect(() => {
         UserInfoAPI
-            .getUserData(user, setUser)
+            .getUserData(token, user, setUser)
             .then(() => {
                 console.log('Выполнено!')
             })
@@ -57,7 +58,7 @@ const UserInfo: FC<IUserInfo> = ({ t }) => {
     const onFinish = (e: React.FormEvent<HTMLFormElement>): void => {
         e.preventDefault()
         UserInfoAPI
-            .editUserData(user)
+            .editUserData(token, user)
             .then(() => {
                 console.log('Done')
             })
