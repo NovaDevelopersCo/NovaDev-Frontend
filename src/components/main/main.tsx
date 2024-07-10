@@ -179,6 +179,8 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
               <Switch>
                 <Route path={`/:${pathRest}/autorization`}>
                   <Autorization
+                    dark={dark}
+                    style={style}
                     setIsLoggedIn={setIsLoggedIn}
                     t={t}
                     setToken={setToken}
@@ -198,6 +200,8 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
                   pathRest={pathRest}
                 >
                   <Admins
+                    dark={dark}
+                    style={style}
                     token={token}
                     pathRest={pathRest}
                     t={t}
@@ -218,7 +222,13 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
                   isLoggedIn={isLoggedIn}
                   pathRest={pathRest}
                 >
-                  <AddAdmin token={token} pathRest={pathRest} t={t} />
+                  <AddAdmin
+                    token={token}
+                    pathRest={pathRest}
+                    t={t}
+                    dark={dark}
+                    style={style}
+                  />
                 </ProtectedRoute>
                 <ProtectedRoute
                   path={`/${pathRest}/customers`}
@@ -243,6 +253,8 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
                   pathRest={pathRest}
                 >
                   <Users
+                    dark={dark}
+                    style={style}
                     token={token}
                     pathRest={pathRest}
                     t={t}
@@ -256,6 +268,8 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
                   pathRest={pathRest}
                 >
                   <Item
+                    dark={dark}
+                    style={style}
                     token={token}
                     pathRest={pathRest}
                     t={t}
@@ -268,7 +282,13 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
                   isLoggedIn={isLoggedIn}
                   pathRest={pathRest}
                 >
-                  <AddRestaurants token={token} pathRest={pathRest} t={t} />
+                  <AddRestaurants
+                    dark={dark}
+                    style={style}
+                    token={token}
+                    pathRest={pathRest}
+                    t={t}
+                  />
                 </ProtectedRoute>
                 <Route path='*'>
                   <NotFound t={t} />
