@@ -5,7 +5,8 @@ import {
   LogoutOutlined,
   ContainerOutlined,
   GroupOutlined,
-  VerticalAlignTopOutlined
+  VerticalAlignTopOutlined,
+  UserOutlined
 } from '@ant-design/icons'
 import { useHistory } from 'react-router'
 
@@ -35,6 +36,9 @@ const Sidebar: FC<ISidebar> = ({
   }
   const handleRestClick = (): void => {
     history.push(`/${pathRest}/dishes`)
+  }
+  const handleUserInfoClick = (): void => {
+    history.push(`/${pathRest}/user`)
   }
 
   const handleLogout = (): void => {
@@ -82,7 +86,11 @@ const Sidebar: FC<ISidebar> = ({
           <VerticalAlignTopOutlined />
           <span> {t('back-menu')}</span>
         </Menu.Item>
-        <Menu.Item key='5' onClick={handleLogout}>
+        <Menu.Item key='5' onClick={handleUserInfoClick}>
+          <UserOutlined />
+          <span> {t('user-info')}</span>
+        </Menu.Item>
+        <Menu.Item key='6' onClick={handleLogout}>
           <LogoutOutlined />
           <span>{t('quit')}</span>
         </Menu.Item>
