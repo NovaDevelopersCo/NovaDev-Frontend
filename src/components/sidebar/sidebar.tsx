@@ -1,5 +1,5 @@
 import { Dispatch, FC, SetStateAction } from 'react'
-import { Menu } from 'antd'
+import { Menu, Button } from 'antd'
 import {
   InfoCircleOutlined,
   LogoutOutlined,
@@ -16,6 +16,7 @@ interface ISidebar {
   setIsLoggedIn: Dispatch<SetStateAction<boolean>>
   t: (arg0: string) => string
 }
+
 const Sidebar: FC<ISidebar> = ({
   collapse,
   style,
@@ -24,15 +25,19 @@ const Sidebar: FC<ISidebar> = ({
   t
 }) => {
   const history = useHistory()
+
   const handleDishesClick = (): void => {
     history.push(`/${pathRest}/dishes`)
   }
+
   const handleCategoriesClick = (): void => {
     history.push(`/${pathRest}/categories`)
   }
+
   const handleInstructionClick = (): void => {
     history.push(`/${pathRest}/blog`)
   }
+
   const handleRestClick = (): void => {
     history.push(`/${pathRest}/dishes`)
   }
@@ -63,7 +68,13 @@ const Sidebar: FC<ISidebar> = ({
       <Menu
         theme='light'
         mode='inline'
-        style={{ textAlign: 'left', ...style }}
+        style={{
+          textAlign: 'left',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          ...style
+        }}
         defaultSelectedKeys={['1']}
       >
         <Menu.Item key='1' onClick={handleDishesClick}>
@@ -80,13 +91,22 @@ const Sidebar: FC<ISidebar> = ({
         </Menu.Item>
         <Menu.Item key='4' onClick={handleRestClick}>
           <VerticalAlignTopOutlined />
-          <span> {t('back-menu')}</span>
-        </Menu.Item>
-        <Menu.Item key='5' onClick={handleLogout}>
-          <LogoutOutlined />
-          <span>{t('quit')}</span>
+          <span>{t('back-menu')}</span>
         </Menu.Item>
       </Menu>
+      <Button
+        type='primary'
+        onClick={handleLogout}
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          width: '75%',
+          backgroundColor: '#2d2d30',
+          margin: '1rem auto'
+        }}
+      >
+        <LogoutOutlined />
+      </Button>
     </>
   )
 }
