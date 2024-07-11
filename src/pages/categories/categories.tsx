@@ -74,13 +74,6 @@ const Categories: FC<IAdmins> = ({ token, pathRest, t }) => {
         }
         return 0
       }
-    },
-    {
-      title: `${t('quantity-dishes')}`,
-      dataIndex: 'items',
-      key: 'items',
-      render: (image, category) => <p>{category.items.length}</p>,
-      sorter: (a, b) => a.items.length - b.items.length
     }
   ]
   return (

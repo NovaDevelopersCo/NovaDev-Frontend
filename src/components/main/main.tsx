@@ -15,8 +15,6 @@ import ChoiseLanguage from '../choise-language/choise-language'
 import ProtectedRoute from '../protected-route/protected-route'
 import Sidebar from '../sidebar/sidebar'
 import Users from '../../pages/tasks/tasks'
-import AddRestaurants from '../../pages/add-dish/add-dish'
-import Item from '../../pages/dish/dish'
 import Admins from '../../pages/categories/categories'
 import AddAdmin from '../../pages/add-category/add-category'
 import Admin from '../../pages/category/category'
@@ -223,27 +221,6 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
                     t={t}
                     language={language}
                   />
-                </ProtectedRoute>
-                <ProtectedRoute
-                  path={`/:${pathRest}/dish/:dishId`}
-                  exact
-                  isLoggedIn={isLoggedIn}
-                  pathRest={pathRest}
-                >
-                  <Item
-                    token={token}
-                    pathRest={pathRest}
-                    t={t}
-                    language={language}
-                  />
-                </ProtectedRoute>
-                <ProtectedRoute
-                  path={`/:${pathRest}/add/dish`}
-                  exact
-                  isLoggedIn={isLoggedIn}
-                  pathRest={pathRest}
-                >
-                  <AddRestaurants token={token} pathRest={pathRest} t={t} />
                 </ProtectedRoute>
                 <Route path='*'>
                   <NotFound t={t} />
