@@ -25,14 +25,6 @@ export interface TCustomInputsOrder {
   name: string
   value: string
 }
-export interface TCartInitialState {
-  dishes: TDishInCart[]
-}
-export interface TDishInCart {
-  dish: TDish
-  quantity: number
-  id: string
-}
 export interface TOrderType {
   _id: string
   title: IMultiLang
@@ -119,7 +111,6 @@ export interface TRest {
   countTable: number
   currentCurrency: string
   titleTable: string
-  enableDishesQr: boolean
   tariff: ETariff
   adminCode: string
   waiterCode: string
@@ -214,20 +205,12 @@ export interface TCategory {
   id: string
   image: string
   title: string
-  items: TDish[]
 }
-export interface TDish {
-  id: string
-  email: string
-  description: string
-  roles: string[]
-  banned: boolean
-  image: any
-}
+
 export interface TSubCategories {
   subcategories: TSubCategories[] | []
   category: TCategory
-  dishes: TDish[] | []
+
 }
 export interface TCustomInput {
   _id: string
