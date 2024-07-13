@@ -25,11 +25,6 @@ const Sidebar: FC<ISidebar> = ({
 }) => {
   const history = useHistory()
 
-  const handleDishesClick = (): void => {
-    history.push(`/${pathRest}/dishes`)
-  }
-
-
   const handleCategoriesClick = (): void => {
     history.push(`/${pathRest}/categories`)
   }
