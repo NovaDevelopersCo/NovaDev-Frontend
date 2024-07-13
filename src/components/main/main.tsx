@@ -15,14 +15,11 @@ import ChoiseLanguage from '../choise-language/choise-language'
 import ProtectedRoute from '../protected-route/protected-route'
 import Sidebar from '../sidebar/sidebar'
 import Users from '../../pages/tasks/tasks'
-import AddRestaurants from '../../pages/add-dish/add-dish'
-import Item from '../../pages/dish/dish'
 import Admins from '../../pages/categories/categories'
 import AddAdmin from '../../pages/add-category/add-category'
 import Admin from '../../pages/category/category'
 import Dark from '../dark/dark'
 import { Footer } from 'antd/es/layout/layout'
-import Registration from '../../pages/registration/registration'
 import { useTelegram } from '../../services/hooks/use-telegram'
 
 const { Header, Sider, Content } = Layout
@@ -53,8 +50,8 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
     localStorage.removeItem('formData')
   }
   const style = {
-    background: dark ? '#000' : '#fff',
-    color: dark ? '#fff' : '#000'
+    background: dark ? '#0A0E14' : '#fff',
+    color: dark ? '#fff' : '#0A0E14'
   }
   React.useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
@@ -151,13 +148,15 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
                   style: style
                 }
               )}
-              <Dark dark={dark} style={style} setDark={setDark} />
-              <ChoiseLanguage
-                dark={dark}
-                style={style}
-                t={t}
-                changeLanguage={changeLanguage}
-              />
+              <div style={{ display: 'flex', gap: '30px' }}>
+                <Dark dark={dark} style={style} setDark={setDark} />
+                <ChoiseLanguage
+                  dark={dark}
+                  style={style}
+                  t={t}
+                  changeLanguage={changeLanguage}
+                />
+              </div>
               <div
                 className='fullscreen-btn'
                 onClick={handleClickFullScreen}
@@ -170,7 +169,8 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
             <Content
               style={{
                 ...style,
-                margin: '24px 16px',
+                display: 'flex',
+                justifyContent: 'center',
                 padding: 24,
                 minHeight: 'calc(100vh - 114px)'
               }}
@@ -178,8 +178,6 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
               <Switch>
                 <Route path={`/:${pathRest}/autorization`}>
                   <Autorization
-                    dark={dark}
-                    style={style}
                     setIsLoggedIn={setIsLoggedIn}
                     t={t}
                     setToken={setToken}
@@ -242,35 +240,6 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
                     pathRest={pathRest}
                     t={t}
                     language={language}
-                  />
-                </ProtectedRoute>
-                <ProtectedRoute
-                  path={`/:${pathRest}/dish/:dishId`}
-                  exact
-                  isLoggedIn={isLoggedIn}
-                  pathRest={pathRest}
-                >
-                  <Item
-                    dark={dark}
-                    style={style}
-                    token={token}
-                    pathRest={pathRest}
-                    t={t}
-                    language={language}
-                  />
-                </ProtectedRoute>
-                <ProtectedRoute
-                  path={`/:${pathRest}/add/dish`}
-                  exact
-                  isLoggedIn={isLoggedIn}
-                  pathRest={pathRest}
-                >
-                  <AddRestaurants
-                    dark={dark}
-                    style={style}
-                    token={token}
-                    pathRest={pathRest}
-                    t={t}
                   />
                 </ProtectedRoute>
                 <Route path='*'>
