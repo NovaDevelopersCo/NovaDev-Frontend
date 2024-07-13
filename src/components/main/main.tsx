@@ -50,8 +50,8 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
     localStorage.removeItem('formData')
   }
   const style = {
-    background: dark ? '#000' : '#fff',
-    color: dark ? '#fff' : '#000'
+    background: dark ? '#0A0E14' : '#fff',
+    color: dark ? '#fff' : '#0A0E14'
   }
   React.useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
@@ -148,13 +148,15 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
                   style: style
                 }
               )}
-              <Dark dark={dark} style={style} setDark={setDark} />
-              <ChoiseLanguage
-                dark={dark}
-                style={style}
-                t={t}
-                changeLanguage={changeLanguage}
-              />
+              <div style={{ display: 'flex', gap: '30px' }}>
+                <Dark dark={dark} style={style} setDark={setDark} />
+                <ChoiseLanguage
+                  dark={dark}
+                  style={style}
+                  t={t}
+                  changeLanguage={changeLanguage}
+                />
+              </div>
               <div
                 className='fullscreen-btn'
                 onClick={handleClickFullScreen}
@@ -167,7 +169,8 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
             <Content
               style={{
                 ...style,
-                margin: '24px 16px',
+                display: 'flex',
+                justifyContent: 'center',
                 padding: 24,
                 minHeight: 'calc(100vh - 114px)'
               }}
