@@ -88,7 +88,7 @@ const Tasks: FC<IMenu> = ({ token, pathRest, t }) => {
       <div
         style={{
           display: 'flex',
-          marginBottom: '1rem',
+          marginBottom: '1.0rem',
           alignItems: 'center',
           outline: 'none',
           padding: '0'
