@@ -252,5 +252,9 @@
   "dont-have-an-account": "Есептік жазбаңыз жоқ",
   "already-have-an-account": "Тіркелгі бар",
   "sign-in": "Кіру",
-  "sign-up": "Тіркелу"
+  "sign-up": "Тіркелу",
+  "your-list-advices-and-tips": "«Сіздің кеңестер мен амалдар тізіміңіз",
+  "advices-tips": "Кеңестер мен амалдар тізімі",
+  "title": "Аты",
+  "content": "Мазмұны"
 }
