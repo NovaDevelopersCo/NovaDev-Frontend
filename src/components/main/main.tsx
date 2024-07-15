@@ -183,6 +183,13 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
                     setToken={setToken}
                   />
                 </Route>
+                <Route path={`/:${pathRest}/registration`}>
+                  <Registration
+                    setIsLoggedIn={setIsLoggedIn}
+                    t={t}
+                    setToken={setToken}
+                  />
+                </Route>
                 <ProtectedRoute
                   path={`/:${pathRest}/categories`}
                   exact
@@ -190,6 +197,8 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
                   pathRest={pathRest}
                 >
                   <Admins
+                    dark={dark}
+                    style={style}
                     token={token}
                     pathRest={pathRest}
                     t={t}
@@ -210,7 +219,13 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
                   isLoggedIn={isLoggedIn}
                   pathRest={pathRest}
                 >
-                  <AddAdmin token={token} pathRest={pathRest} t={t} />
+                  <AddAdmin
+                    token={token}
+                    pathRest={pathRest}
+                    t={t}
+                    dark={dark}
+                    style={style}
+                  />
                 </ProtectedRoute>
                 <ProtectedRoute
                   path={`/:${pathRest}/dishes`}
@@ -219,6 +234,8 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
                   pathRest={pathRest}
                 >
                   <Users
+                    dark={dark}
+                    style={style}
                     token={token}
                     pathRest={pathRest}
                     t={t}

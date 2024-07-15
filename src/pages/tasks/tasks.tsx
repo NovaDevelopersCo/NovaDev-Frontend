@@ -7,15 +7,18 @@ import { Link, useLocation } from 'react-router-dom'
 import imageNoPhoto from '../../assets/images/no_photo.png'
 import { BASE_URL } from '../../utils/const'
 import { NotificationContext } from '../../components/notification-provider/notification-provider'
+import clsx from 'clsx'
 
 interface IMenu {
   token: string
   pathRest: string
   t: (arg0: string) => string
   language: ECountry
+  dark: boolean
+  style: object
 }
 
-const Tasks: FC<IMenu> = ({ token, pathRest, t }) => {
+const Tasks: FC<IMenu> = ({ token, pathRest, t, dark, style }) => {
   const { openNotification } = useContext(NotificationContext)
   const [data, setData] = React.useState<TTask[]>([])
   const location = useLocation()
@@ -83,6 +86,7 @@ const Tasks: FC<IMenu> = ({ token, pathRest, t }) => {
       }
     }
   ]
+  const theme = clsx(dark ? 'black' : 'white')
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
       <div
@@ -96,7 +100,12 @@ const Tasks: FC<IMenu> = ({ token, pathRest, t }) => {
       >
         <div style={{ display: 'block', marginRight: 'auto' }}></div>
       </div>
-      <Table columns={columns} dataSource={data} />
+      <Table
+        className={theme}
+        columns={columns}
+        dataSource={data}
+        style={style}
+      />
     </div>
   )
 }

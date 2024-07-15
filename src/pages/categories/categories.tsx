@@ -7,6 +7,7 @@ import { Link, NavLink, useLocation } from 'react-router-dom'
 import { NotificationContext } from '../../components/notification-provider/notification-provider'
 import imageNoPhoto from '../../assets/images/no_photo.png'
 import { BASE_URL } from '../../utils/const'
+import clsx from 'clsx'
 
 interface ILevelsAccess {
   text: string
@@ -18,9 +19,11 @@ interface IAdmins {
   pathRest: string
   t: (arg0: string) => string
   language: ECountry
+  dark: boolean
+  style: object
 }
 
-const Categories: FC<IAdmins> = ({ token, pathRest, t }) => {
+const Categories: FC<IAdmins> = ({ token, pathRest, t, dark, style }) => {
   const { openNotification } = useContext(NotificationContext)
 
   const [data, setData] = React.useState<TCategory[]>([])
@@ -76,6 +79,7 @@ const Categories: FC<IAdmins> = ({ token, pathRest, t }) => {
       }
     }
   ]
+  const theme = clsx(dark ? 'black' : 'white')
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
       <div
@@ -112,7 +116,12 @@ const Categories: FC<IAdmins> = ({ token, pathRest, t }) => {
           {t('add')}
         </NavLink>
       </div>
-      <Table columns={columns} dataSource={data} />
+      <Table
+        columns={columns}
+        dataSource={data}
+        style={style}
+        className={theme}
+      />
     </div>
   )
 }
