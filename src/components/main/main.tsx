@@ -22,6 +22,7 @@ import Dark from '../dark/dark'
 import { Footer } from 'antd/es/layout/layout'
 import { useTelegram } from '../../services/hooks/use-telegram'
 import AdvicesTips from '../../pages/advices-tips/advices-tips'
+import AddPost from '../../pages/add-post/add-post'
 
 const { Header, Sider, Content } = Layout
 
@@ -231,6 +232,14 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
                   pathRest={pathRest}
                 >
                   <AdvicesTips token={token} pathRest={pathRest} t={t} />
+                </ProtectedRoute>
+                <ProtectedRoute
+                  path={`/:${pathRest}/add/advice`}
+                  exact
+                  isLoggedIn={isLoggedIn}
+                  pathRest={pathRest}
+                >
+                  <AddPost token={token} pathRest={pathRest} t={t} />
                 </ProtectedRoute>
                 <Route path='*'>
                   <NotFound t={t} />
