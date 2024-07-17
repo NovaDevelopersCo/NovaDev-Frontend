@@ -89,10 +89,14 @@ const Autorization: FC<IAutorization> = ({
   }
 
   const layout = {
-    labelCol: { span: 4 },
-    wrapperCol: { span: 14 }
+    labelCol: { span: 6 },
+    wrapperCol: { span: 18 }
   }
 
+  const tailLayout = {
+    wrapperCol: { span: 24 },
+    style: { display: 'flex', justifyContent: 'center' }
+  }
   const theme = clsx(dark ? 'black' : 'white')
 
   return (
