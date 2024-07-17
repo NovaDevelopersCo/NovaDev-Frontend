@@ -6,26 +6,36 @@ export interface TButton {
 
 export interface TUser {
   id: number
-  role: {
-    id: number
-    title: string
-  }
-  image: string
+  role: TUserRole[]
+  info: TUserInfo[]
+  team: TUserTeam[]
+  projects: TUserProjects[]
+}
+
+export interface TUserInfo {
   public_nickname: string
   full_name: string
   email: string
-  phone: number
   github: string
   payment_info: string
   tg: string
-  team: {
-    id: number
-    title: string
-  }
-  projects: {
-    id: number
-    title: string
-  }
+  phone: number
+  image: string
+}
+
+export interface TUserRole {
+  id: number
+  title: string
+}
+
+export interface TUserTeam {
+  id: number
+  title: string
+}
+
+export interface TUserProjects {
+  id: number
+  title: string
 }
 
 export interface TTask {
