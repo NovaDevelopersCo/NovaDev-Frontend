@@ -21,6 +21,7 @@ import Admin from '../../pages/category/category'
 import Dark from '../dark/dark'
 import { Footer } from 'antd/es/layout/layout'
 import { useTelegram } from '../../services/hooks/use-telegram'
+import Registration from '../../pages/registration/registration'
 
 const { Header, Sider, Content } = Layout
 
@@ -61,6 +62,17 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
         : language
     )
   }, [])
+
+  useEffect(() => {
+    if (dark) {
+      document.body.style.backgroundColor = '#0A0E14'
+      document.body.style.color = '#fff'
+    } else {
+      document.body.style.backgroundColor = '#fff'
+      document.body.style.color = '#0A0E14'
+    }
+  }, [dark])
+
   const [collapse, setCollapse] = useState(false)
   let flag = false
   if (typeof window !== 'undefined') {
@@ -96,7 +108,7 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
     window.innerWidth <= 760 ? setCollapse(true) : setCollapse(false)
   }, [])
 
-  function handleClickFullScreen(): void {
+  const handleClickFullScreen = (): void => {
     if (document.fullscreenElement != null) {
       void document.exitFullscreen()
     } else {
@@ -178,8 +190,15 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
               <Switch>
                 <Route path={`/:${pathRest}/autorization`}>
                   <Autorization
-                    dark={dark}
+                    setIsLoggedIn={setIsLoggedIn}
+                    t={t}
+                    setToken={setToken}
                     style={style}
+                    dark={dark}
+                  />
+                </Route>
+                <Route path={`/:${pathRest}/registration`}>
+                  <Registration
                     setIsLoggedIn={setIsLoggedIn}
                     t={t}
                     setToken={setToken}
