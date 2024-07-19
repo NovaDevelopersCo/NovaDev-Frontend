@@ -24,7 +24,7 @@ export interface TUserInfo {
 }
 
 export interface TUserRole {
-  id: number
+  // id: number
   title: string
 }
 

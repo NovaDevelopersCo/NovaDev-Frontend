@@ -46,7 +46,7 @@ const UserInfo: FC<IUserInfo> = ({ token, t }) => {
     //
     return (
         <div>
-            <div className='flex gap-4 justify-center'>
+            <div className='flex gap-6 justify-center'>
                 <Button className='bg-gray-300' onClick={handleViewing}>
                     <h4 className='text-base'>{t('view-info')}</h4>
                 </Button>
@@ -55,108 +55,143 @@ const UserInfo: FC<IUserInfo> = ({ token, t }) => {
                 </Button>
             </div>
             { isEditing ? (
-                <div className='flex flex-col'>
-                    <h1 className='text-xl font-semibold mb-5'>{t('about-user-title')}</h1>
-                    <Form className='flex flex-col gap-4' onFinish={onFinish} >
+                <div className='flex flex-col mt-4'>
+                    <div className='flex items-center justify-center'>
+                        <h1 className='text-xl font-semibold mb-5'>{t('about-user-title')}</h1>
+                    </div>
+                    <Form className='flex flex-col gap-6' onFinish={onFinish} >
                         <Form.Item label={t('user-id')} rules={[{ required: false, message: t('enter-your-id') }]}>
                             <Input className='w-64' type="number" value={user.id} />
-                        </Form.Item>
-                        <Form.Item label={t('user-role-id')} rules={[{ required: false, message: t('enter-your-role-id') }]}>
-                            <Input className='w-64' type="number" value={user.role && user.role.length > 0 ? user.role[0].id : ''} />
                         </Form.Item>
                         <Form.Item label={t('user-role-title')} rules={[{ required: false, message: t('enter-your-role-title') }]}>
                             <Input className='w-64' type="text" value={user.role && user.role.length > 0 ? user.role[0].title : ''} />
                         </Form.Item>
-                        <Form.Item label={t('user-image-url')} rules={[{ required: false, message: t('enter-your-image-url') }]}>
-                            <Input className='w-64' type="text" value={user.info && user.info.length > 0 ? user.info[0].image : ''} />
-                        </Form.Item>
-                        <Form.Item label={t('user-public-nickname')} rules={[{ required: false, message: t('enter-your-public-nickname') }]}>
-                            <Input className='w-64' type="text" value={user.info && user.info.length > 0 ? user.info[0].public_nickname : ''} />
-                        </Form.Item>
-                        <Form.Item label={t('user-full-name')} rules={[{ required: false, message: t('enter-your-full-name') }]}>
-                            <Input className='w-64' type="text" value={user.info && user.info.length > 0 ? user.info[0].full_name : ''} />
-                        </Form.Item>
-                        <Form.Item label={t('user-email')} rules={[{ required: false, message: t('enter-your-email') }]}>
-                            <Input className='w-64' type="text" value={user.info && user.info.length > 0 ? user.info[0].image : ''} />
-                        </Form.Item>
-                        <Form.Item label={t('user-phone')} rules={[{ required: false, message: t('enter-your-phone') }]}>
-                            <Input className='w-64' type="number" value={user.info && user.info.length > 0 ? user.info[0].email : ''} />
-                        </Form.Item>
-                        <Form.Item label={t('user-github')} rules={[{ required: false, message: t('enter-your-github') }]}>
-                            <Input className='w-64' type="text" value={user.info && user.info.length > 0 ? user.info[0].github : ''} />
-                        </Form.Item>
-                        <Form.Item label={t('user-payment-info')} rules={[{ required: false, message: t('enter-your-payment-info') }]}>
-                            <Input className='w-64' type="text" value={user.info && user.info.length > 0 ? user.info[0].payment_info : ''} />
-                        </Form.Item>
-                        <Form.Item label={t('user-tg')} rules={[{ required: false, message: t('enter-your-tg') }]}>
-                            <Input className='w-64' type="text" value={user.info && user.info.length > 0 ? user.info[0].tg : ''} />
-                        </Form.Item>
-                        <Form.Item label={t('user-team-id')} rules={[{ required: false, message: t('enter-your-team-id') }]}>
-                            <Input className='w-64' type="number" value={user.team[0].id} />
-                        </Form.Item>
-                        <Form.Item label={t('user-team-title')} rules={[{ required: false, message: t('enter-your-team-title') }]}>
-                            <Input className='w-64' type="text" value={user.team[0].title} />
-                        </Form.Item>
-                        <Form.Item label={t('user-project-id')} rules={[{ required: false, message: t('enter-your-project-id') }]}>
-                            <Input className='w-64' type="number" value={user.projects && user.projects.length > 0 ? user.projects[0].id : ''} />
-                        </Form.Item>
-                        <Form.Item label={t('user-project-title')} rules={[{ required: false, message: t('enter-your-project-title') }]}>
-                            <Input className='w-64' type="text" value={user.projects && user.projects.length > 0 ? user.projects[0].title : ''} />
-                        </Form.Item>
-                        <Button className='flex justify-center items-center text-lg w-28 mt-5' htmlType='submit'>
-                            <h4 className='p-2'>{t('changed-data')}</h4>
-                        </Button>
+                        <div className='border-2 border-black rounded-md pl-2'>
+                            <div className='flex items-center justify-center mt-2'>
+                                <h4 className='text-lg font-semibold'>{t('base-info-title')}</h4>
+                            </div>
+                            <Form.Item label={t('user-image-url')} rules={[{ required: false, message: t('enter-your-image-url') }]}>
+                                <Input className='w-64' type="text" value={user.info && user.info.length > 0 ? user.info[0].image : ''} />
+                            </Form.Item>
+                            <Form.Item label={t('user-public-nickname')} rules={[{ required: false, message: t('enter-your-public-nickname') }]}>
+                                <Input className='w-64' type="text" value={user.info && user.info.length > 0 ? user.info[0].public_nickname : ''} />
+                            </Form.Item>
+                            <Form.Item label={t('user-full-name')} rules={[{ required: false, message: t('enter-your-full-name') }]}>
+                                <Input className='w-64' type="text" value={user.info && user.info.length > 0 ? user.info[0].full_name : ''} />
+                            </Form.Item>
+                            <Form.Item label={t('user-email')} rules={[{ required: false, message: t('enter-your-email') }]}>
+                                <Input className='w-64' type="text" value={user.info && user.info.length > 0 ? user.info[0].image : ''} />
+                            </Form.Item>
+                            <Form.Item label={t('user-phone')} rules={[{ required: false, message: t('enter-your-phone') }]}>
+                                <Input className='w-64' type="number" value={user.info && user.info.length > 0 ? user.info[0].email : ''} />
+                            </Form.Item>
+                            <Form.Item label={t('user-github')} rules={[{ required: false, message: t('enter-your-github') }]}>
+                                <Input className='w-64' type="text" value={user.info && user.info.length > 0 ? user.info[0].github : ''} />
+                            </Form.Item>
+                            <Form.Item label={t('user-payment-info')} rules={[{ required: false, message: t('enter-your-payment-info') }]}>
+                                <Input className='w-64' type="text" value={user.info && user.info.length > 0 ? user.info[0].payment_info : ''} />
+                            </Form.Item>
+                            <Form.Item label={t('user-tg')} rules={[{ required: false, message: t('enter-your-tg') }]}>
+                                <Input className='w-64' type="text" value={user.info && user.info.length > 0 ? user.info[0].tg : ''} />
+                            </Form.Item>
+                        </div>
+                        <div className='border-2 border-black rounded-md pl-2'>
+                            <div className='flex items-center justify-center mt-2'>
+                                <h4 className='text-lg font-semibold'>{t('team-info-title')}</h4>
+                            </div>
+                            <Form.Item label={t('user-team-id')} rules={[{ required: false, message: t('enter-your-team-id') }]}>
+                                <Input className='w-64' type="number" value={user.team[0].id} />
+                            </Form.Item>
+                            <Form.Item label={t('user-team-title')} rules={[{ required: false, message: t('enter-your-team-title') }]}>
+                                <Input className='w-64' type="text" value={user.team[0].title} />
+                            </Form.Item>
+                        </div>
+                        <div className='border-2 border-black rounded-md pl-2'>
+                            <div className='flex items-center justify-center mt-2'>
+                                <h4 className='text-lg font-semibold'>{t('projects-info-title')}</h4>
+                            </div>
+                            <Form.Item label={t('user-project-id')} rules={[{ required: false, message: t('enter-your-project-id') }]}>
+                                <Input className='w-64' type="number" value={user.projects && user.projects.length > 0 ? user.projects[0].id : ''} />
+                            </Form.Item>
+                            <Form.Item label={t('user-project-title')} rules={[{ required: false, message: t('enter-your-project-title') }]}>
+                                <Input className='w-64' type="text" value={user.projects && user.projects.length > 0 ? user.projects[0].title : ''} />
+                            </Form.Item>
+                        </div>
+                        <div className='flex justify-center'>
+                            <Button className='flex justify-center items-center text-lg w-28 mt-5' htmlType='submit'>
+                                <h4 className='p-2'>{t('changed-data')}</h4>
+                            </Button>
+                        </div>
                     </Form>
                 </div>
             ) : (
-                <div className='flex flex-col'>
-                    <h1 className='text-xl font-semibold mb-5'>{t('about-user-title')}</h1>
-                    <Form className='flex flex-col gap-1'>
+                <div className='flex flex-col mt-4'>
+                    <div className='flex items-center justify-center'>
+                        <h1 className='text-xl font-semibold mb-5'>{t('about-user-title')}</h1>
+                    </div>
+                    <Form className='flex flex-col gap-6'>
                         <Form.Item label={t('user-id')} >
                             <p className='text-base'>{user.id}</p>
-                        </Form.Item>
-                        <Form.Item label={t('user-role-id')} >
-                            <p className='text-base'>{user.role && user.role.length > 0 ? user.role[0].id : ''}</p>
                         </Form.Item>
                         <Form.Item label={t('user-role-title')} >
                             <p className='text-base'>{user.role && user.role.length > 0 ? user.role[0].title : ''}</p>
                         </Form.Item>
-                        <Form.Item label={t('user-image-url')} >
-                            <p className='text-base'>{user.info && user.info.length > 0 ? user.info[0].image : ''}</p>
-                        </Form.Item>
-                        <Form.Item label={t('user-public-nickname')} >
-                            <p className='text-base'>{user.info && user.info.length > 0 ? user.info[0].public_nickname : ''}</p>
-                        </Form.Item>
-                        <Form.Item label={t('user-full-name')} >
-                            <p className='text-base'>{user.info && user.info.length > 0 ? user.info[0].full_name : ''}</p>
-                        </Form.Item>
-                        <Form.Item label={t('user-email')} >
-                            <p className='text-base'>{user.info && user.info.length > 0 ? user.info[0].email : ''}</p>
-                        </Form.Item>
-                        <Form.Item label={t('user-phone')} >
-                            <p className='text-base'>{user.info && user.info.length > 0 ? user.info[0].phone : ''}</p>
-                        </Form.Item>
-                        <Form.Item label={t('user-github')} >
-                            <p className='text-base'>{user.info && user.info.length > 0 ? user.info[0].github : ''}</p>
-                        </Form.Item>
-                        <Form.Item label={t('user-payment-info')} >
-                            <p className='text-base'>{user.info && user.info.length > 0 ? user.info[0].payment_info : ''}</p>
-                        </Form.Item>
-                        <Form.Item label={t('user-tg')} >
-                            <p className='text-base'>{user.info && user.info.length > 0 ? user.info[0].tg : ''}</p>
-                        </Form.Item>
-                        <Form.Item label={t('user-team-id')} >
-                            <p className='text-base'>{user.team && user.team.length > 0 ? user.team[0].id : ''}</p>
-                        </Form.Item>
-                        <Form.Item label={t('user-team-title')} >
-                            <p className='text-base'>{user.team && user.team.length > 0 ? user.team[0].title : ''}</p>
-                        </Form.Item>
-                        <Form.Item label={t('user-project-id')} >
-                            <p className='text-base'>{user.projects && user.projects.length > 0 ? user.projects[0].id : ''}</p>
-                        </Form.Item>
-                        <Form.Item label={t('user-project-title')} >
-                            <p className='text-base'>{user.projects && user.projects.length > 0 ? user.projects[0].title : ''}</p>
-                        </Form.Item>
+                        <div className='border-2 border-black rounded-md pl-2'>
+                            <div className='flex items-center justify-center mt-2'>
+                                <h4 className='text-lg font-semibold'>{t('base-info-title')}</h4>
+                            </div>
+                            <Form.Item label={t('user-public-nickname')} >
+                                <p className='text-base'>{user.info && user.info.length > 0 ? user.info[0].public_nickname : ''}</p>
+                            </Form.Item>
+                            <Form.Item label={t('user-full-name')} >
+                                <p className='text-base'>{user.info && user.info.length > 0 ? user.info[0].full_name : ''}</p>
+                            </Form.Item>
+                            <Form.Item label={t('user-email')} >
+                                <p className='text-base'>{user.info && user.info.length > 0 ? user.info[0].email : ''}</p>
+                            </Form.Item>
+                            <Form.Item label={t('user-phone')} >
+                                <p className='text-base'>{user.info && user.info.length > 0 ? user.info[0].phone : ''}</p>
+                            </Form.Item>
+                            <Form.Item label={t('user-github')} >
+                                <p className='text-base'>{user.info && user.info.length > 0 ? user.info[0].github : ''}</p>
+                            </Form.Item>
+                            <Form.Item label={t('user-payment-info')} >
+                                <p className='text-base'>{user.info && user.info.length > 0 ? user.info[0].payment_info : ''}</p>
+                            </Form.Item>
+                            <Form.Item label={t('user-tg')} >
+                                <p className='text-base'>{user.info && user.info.length > 0 ? user.info[0].tg : ''}</p>
+                            </Form.Item>
+                        </div>
+                        <div className='border-2 border-black rounded-md pl-2'>
+                            <div className='flex items-center justify-center mt-2'>
+                                <h4 className='text-lg font-semibold'>{t('team-info-title')}</h4>
+                            </div>
+                            <Form.Item label={t('user-team-id')} >
+                                <p className='text-base'>{user.team && user.team.length > 0 ? user.team[0].id : ''}</p>
+                            </Form.Item>
+                            <Form.Item label={t('user-team-title')} >
+                                <p className='text-base'>{user.team && user.team.length > 0 ? user.team[0].title : ''}</p>
+                            </Form.Item>
+                        </div>
+                        <div className='border-2 border-black rounded-md pl-2'>
+                            <div className='flex items-center justify-center mt-2'>
+                                <h4 className='text-lg font-semibold'>{t('projects-info-title')}</h4>
+                            </div>
+                            <Form.Item label={t('user-project-id')} >
+                                <p className='text-base'>{user.projects && user.projects.length > 0 ? user.projects[0].id : ''}</p>
+                            </Form.Item>
+                            <Form.Item label={t('user-project-title')} >
+                                <p className='text-base'>{user.projects && user.projects.length > 0 ? user.projects[0].title : ''}</p>
+                            </Form.Item>
+                        </div>
+                        <div className='border-2 border-black rounded-md pl-2'>
+                            <div className='flex items-center justify-center mt-2'>
+                                <h4 className='text-lg font-semibold'>{t('user-profile-image')}</h4>
+                            </div>
+                            <Form.Item label={t('user-image-url')} rules={[{ required: false, message: t('enter-your-image-url') }]}>
+                                <img src={user.info && user.info.length > 0 ? user.info[0].image : ''} alt="Profile photo" />
+                            </Form.Item>
+                        </div>
                     </Form>
                 </div>
             )
