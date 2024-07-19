@@ -7,18 +7,39 @@
   height: auto !important;
   margin-top: 1.5rem;
 }
-
 .black {
   .ant-select-selector {
+    background-color: #0a0e14 !important;
+    color: #fff !important;
+  }
+  .ant-form-item-label {
     background-color: #000 !important;
     color: #fff !important;
-
-    * {
-      color: #fff !important;
-    }
+  }
+  .ant-form-item-control-input-content{
+    color: #000000 !important;
+  }
+  .ant-table-cell {
+    background-color: #000 !important;
+    color: #fff !important;
+    border: #fff;
+  }
+  .ant-input{
+    color:#000 !important;
+  }
+  .ant-form-item-control-input-content{
+    color:#ffffff !important;
+  }
+  .text-blue-500{
+    color:#071de3 !important;
+  }
+  .ant-form-item-explain-error{
+    color:#e3070e !important;
+  }
+  * {
+    color: #fff !important;
   }
 }
-
 :where(.css-dev-only-do-not-override-1ij74fp).ant-menu-light:not(
     .ant-menu-horizontal
   )

@@ -5,14 +5,17 @@ import { Form, Input, Button, Select, Modal } from 'antd'
 import { NotificationContext } from '../../components/notification-provider/notification-provider'
 import * as adminAPI from '../../utils/api/category-api'
 import * as userAPI from '../../utils/api/task-api'
+import clsx from 'clsx'
 
 interface IAddAdmin {
   pathRest: string
   token: string
   t: (arg0: string) => string
+  style: Object
+  dark: boolean
 }
 
-const AddAdmin: FC<IAddAdmin> = ({ token, pathRest, t }) => {
+const AddAdmin: FC<IAddAdmin> = ({ token, pathRest, t, dark, style }) => {
   const { openNotification } = useContext(NotificationContext)
   const [form] = Form.useForm()
   const history = useHistory()
@@ -68,6 +71,7 @@ const AddAdmin: FC<IAddAdmin> = ({ token, pathRest, t }) => {
   const handleModalClose = (): void => {
     setIsModalVisible(false)
   }
+  const theme = clsx(dark ? 'black' : 'white')
   return (
     <>
       {
@@ -83,19 +87,11 @@ const AddAdmin: FC<IAddAdmin> = ({ token, pathRest, t }) => {
           {t('field_must_not_empty')}
         </Modal>
       }
-      <h4
-        style={{
-          marginBottom: '15px',
-          marginTop: '0',
-          color: '#000',
-          fontSize: '1.75rem',
-          fontWeight: '600',
-          padding: '15px'
-        }}
-      >
+      <h4 className={clsx(theme, 'p-4 mt-0 mb-4 text-2xl font-semibold')}>
         {t('add-admin')}
       </h4>
       <Form
+        className={theme}
         {...layout}
         onFinish={onFinish}
         validateMessages={validateMessages}

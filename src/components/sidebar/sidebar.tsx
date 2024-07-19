@@ -1,9 +1,8 @@
 import { Dispatch, FC, SetStateAction } from 'react'
-import { Menu } from 'antd'
+import { Menu, Button } from 'antd'
 import {
   InfoCircleOutlined,
   LogoutOutlined,
-  ContainerOutlined,
   GroupOutlined,
   VerticalAlignTopOutlined,
   UserOutlined
@@ -17,6 +16,7 @@ interface ISidebar {
   setIsLoggedIn: Dispatch<SetStateAction<boolean>>
   t: (arg0: string) => string
 }
+
 const Sidebar: FC<ISidebar> = ({
   collapse,
   style,
@@ -25,15 +25,15 @@ const Sidebar: FC<ISidebar> = ({
   t
 }) => {
   const history = useHistory()
-  const handleDishesClick = (): void => {
-    history.push(`/${pathRest}/dishes`)
-  }
+
   const handleCategoriesClick = (): void => {
     history.push(`/${pathRest}/categories`)
   }
+
   const handleInstructionClick = (): void => {
     history.push(`/${pathRest}/blog`)
   }
+
   const handleRestClick = (): void => {
     history.push(`/${pathRest}/dishes`)
   }
@@ -55,25 +55,27 @@ const Sidebar: FC<ISidebar> = ({
       >
         {!collapse ? (
           <p>
-            <a href='https://github.com/Zoomish'>Zoomish</a>{' '}
-            <span className='font-medium'>ToDo</span>
+            <a href='https://github.com/Zoomish'>Bynarys</a>{' '}
+            <span className='font-medium'>Dev</span>
           </p>
         ) : (
           <a className='font-medium' href='https://github.com/Zoomish'>
-            Z
+            ByDEV
           </a>
         )}
       </div>
       <Menu
         theme='light'
         mode='inline'
-        style={{ textAlign: 'left', ...style }}
+        style={{
+          textAlign: 'left',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          ...style
+        }}
         defaultSelectedKeys={['1']}
       >
-        <Menu.Item key='1' onClick={handleDishesClick}>
-          <ContainerOutlined />
-          <span>{t('dishes')}</span>
-        </Menu.Item>
         <Menu.Item key='2' onClick={handleCategoriesClick}>
           <GroupOutlined />
           <span>{t('categories')}</span>
@@ -95,6 +97,19 @@ const Sidebar: FC<ISidebar> = ({
           <span>{t('quit')}</span>
         </Menu.Item>
       </Menu>
+      <Button
+        type='primary'
+        onClick={handleLogout}
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          width: '75%',
+          backgroundColor: '#2d2d30',
+          margin: '1rem auto'
+        }}
+      >
+        <LogoutOutlined />
+      </Button>
     </>
   )
 }

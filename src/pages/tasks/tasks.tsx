@@ -3,19 +3,22 @@ import { ColumnsType } from 'antd/es/table'
 import React, { FC, useContext } from 'react'
 import { ECountry, TTask } from '../../utils/typesFromBackend'
 import * as taskAPI from '../../utils/api/task-api'
-import { Link, NavLink, useLocation } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import imageNoPhoto from '../../assets/images/no_photo.png'
 import { BASE_URL } from '../../utils/const'
 import { NotificationContext } from '../../components/notification-provider/notification-provider'
+import clsx from 'clsx'
 
 interface IMenu {
   token: string
   pathRest: string
   t: (arg0: string) => string
   language: ECountry
+  dark: boolean
+  style: object
 }
 
-const Tasks: FC<IMenu> = ({ token, pathRest, t }) => {
+const Tasks: FC<IMenu> = ({ token, pathRest, t, dark, style }) => {
   const { openNotification } = useContext(NotificationContext)
   const [data, setData] = React.useState<TTask[]>([])
   const location = useLocation()
@@ -49,9 +52,6 @@ const Tasks: FC<IMenu> = ({ token, pathRest, t }) => {
       title: `${t('name')}`,
       dataIndex: 'title',
       key: 'title',
-      render: (title: string) => (
-        <Link to={`/${pathRest}/dish/:${title}`}>{title}</Link>
-      ),
       sorter: (a, b) => {
         if (a.title !== undefined && b.title !== undefined) {
           return a.title.localeCompare(b.title)
@@ -86,41 +86,26 @@ const Tasks: FC<IMenu> = ({ token, pathRest, t }) => {
       }
     }
   ]
+  const theme = clsx(dark ? 'black' : 'white')
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
       <div
         style={{
           display: 'flex',
-          marginBottom: '1rem',
+          marginBottom: '1.0rem',
           alignItems: 'center',
           outline: 'none',
           padding: '0'
         }}
       >
-        <div style={{ display: 'block', marginRight: 'auto' }}>
-          <h2 style={{ fontWeight: 600, marginBottom: '0' }}>{t('dishes')}</h2>
-          <p style={{ marginBottom: '0' }}>{t('your-list-of-dishes')}</p>
-        </div>
-        <NavLink
-          to={`/${pathRest}/add/dish`}
-          style={{
-            color: '#fff',
-            backgroundColor: '#2bc155',
-            borderColor: '#2bc155',
-            width: '145px',
-            height: '61px',
-            borderRadius: '0.375rem',
-            fontWeight: '500',
-            fontSize: '1rem',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center'
-          }}
-        >
-          {t('add')}
-        </NavLink>
+        <div style={{ display: 'block', marginRight: 'auto' }}></div>
       </div>
-      <Table columns={columns} dataSource={data} />
+      <Table
+        className={theme}
+        columns={columns}
+        dataSource={data}
+        style={style}
+      />
     </div>
   )
 }

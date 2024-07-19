@@ -3,35 +3,26 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { Button, Form, Input } from 'antd'
 import { Dispatch, FC, SetStateAction, useContext, useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
-import * as autorizationApi from '../../utils/api/autorization-api'
+import { Link, useHistory } from 'react-router-dom'
+import * as registrationApi from '../../utils/api/registration-api'
 import { NotificationContext } from '../../components/notification-provider/notification-provider'
 import * as validateTokenApi from '../../utils/api/validate-token-api'
 import { useTelegram } from '../../services/hooks/use-telegram'
-import clsx from 'clsx'
 
 interface IAutorization {
-  style: Object
-  dark: boolean
   setIsLoggedIn: Dispatch<SetStateAction<boolean>>
   setToken: (token: any) => void
   t: (arg0: string) => string
 }
 
-const Autorization: FC<IAutorization> = ({
-  setIsLoggedIn,
-  t,
-  setToken,
-  dark,
-  style
-}) => {
+const Registration: FC<IAutorization> = ({ setIsLoggedIn, t, setToken }) => {
   const storedInitialRoute = localStorage.getItem('initialRoute')
   const { openNotification } = useContext(NotificationContext)
   const history = useHistory()
   const { tg } = useTelegram()
-
   useEffect(() => {
     const tokenDetailsString = localStorage.getItem('token')
+    // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
     if (tokenDetailsString) {
       validateTokenApi
         .validateToken(tokenDetailsString)
@@ -63,10 +54,9 @@ const Autorization: FC<IAutorization> = ({
         })
     }
   }, [])
-
   const onFinish = (values: any) => {
-    autorizationApi
-      .autorization(values)
+    registrationApi
+      .registration(values)
       .then((res) => {
         localStorage.setItem('token', res.token)
         setToken(res.token)
@@ -89,34 +79,40 @@ const Autorization: FC<IAutorization> = ({
   }
 
   const layout = {
-    labelCol: { span: 6 },
-    wrapperCol: { span: 18 }
+    labelCol: { span: 4 },
+    wrapperCol: { span: 14 }
   }
-
-  const tailLayout = {
-    wrapperCol: { span: 24 },
-    style: { display: 'flex', justifyContent: 'center' }
-  }
-  const theme = clsx(dark ? 'black' : 'white')
 
   return (
     <Form
       {...layout}
-      style={style}
       name='basic'
-      className={clsx(theme, 'max-w-[600px] flex justify-center flex-col')}
+      className='flex justify-center flex-col'
+      style={{ maxWidth: 600 }}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
       autoComplete='off'
     >
       <Form.Item
+        label={t('login')}
+        name='nickname'
+        rules={[{ required: true, message: t('enter-your-username') }]}
+      >
+        <Input
+          defaultValue={
+            tg?.initDataUnsafe?.user?.username
+              ? tg.initDataUnsafe.user.username
+              : ''
+          }
+        />
+      </Form.Item>
+      <Form.Item
         label={t('email')}
-        name='private_nickname'
+        name='email'
         rules={[{ required: true, message: t('enter-your-username') }]}
       >
         <Input />
       </Form.Item>
-
       <Form.Item
         label={t('password')}
         name='password'
@@ -124,8 +120,13 @@ const Autorization: FC<IAutorization> = ({
       >
         <Input.Password />
       </Form.Item>
-
-      <Form.Item {...tailLayout}>
+      <Form.Item wrapperCol={{ offset: 4, span: 16 }}>
+        {t('already-have-an-account')}?{' '}
+        <Link to={'autorization'} className='text-blue-500'>
+          {t('sign-in')}
+        </Link>
+      </Form.Item>
+      <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
         <Button type='primary' htmlType='submit'>
           {t('send')}
         </Button>
@@ -133,5 +134,4 @@ const Autorization: FC<IAutorization> = ({
     </Form>
   )
 }
-
-export default Autorization
+export default Registration
