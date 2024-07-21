@@ -21,7 +21,7 @@
   "generation-qr": "Qr кодын құру",
   "change-colors": "Түстерді өзгерту",
   "telegram-bot": "Телеграм бот",
-  "manual": "Нұсқаулық",
+  "manual": "Кеңестер мен амалдар",
   "back-menu": "Мәзірге оралу",
   "quit": "Шығу",
   "image": "Cурет",
@@ -252,5 +252,10 @@
   "dont-have-an-account": "Есептік жазбаңыз жоқ",
   "already-have-an-account": "Тіркелгі бар",
   "sign-in": "Кіру",
-  "sign-up": "Тіркелу"
+  "sign-up": "Тіркелу",
+  "your-list-advices-and-tips": "«Сіздің кеңестер мен амалдар тізіміңіз",
+  "advices-tips": "Кеңестер мен амалдар тізімі",
+  "title": "Аты",
+  "content": "Мазмұны",
+  "add-post": "Пост қосу"
 }

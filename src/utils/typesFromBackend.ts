@@ -226,3 +226,14 @@ export interface TAdmin {
   password: string
   rest_id?: string
 }
+export interface TCustomer {
+  id: string
+  name: string
+  email: string
+  tg: string
+}
+export interface TAdvice {
+  id: string
+  title: string
+  content: string
+}
