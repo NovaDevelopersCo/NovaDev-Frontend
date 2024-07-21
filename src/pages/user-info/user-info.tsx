@@ -97,17 +97,6 @@ const UserInfo: FC<IUserInfo> = ({ token, t }) => {
                         </div>
                         <div className='border-2 border-black rounded-md pl-2'>
                             <div className='flex items-center justify-center mt-2'>
-                                <h4 className='text-lg font-semibold'>{t('team-info-title')}</h4>
-                            </div>
-                            <Form.Item label={t('user-team-id')} rules={[{ required: false, message: t('enter-your-team-id') }]}>
-                                <Input className='w-64' type="number" value={user.team[0].id} />
-                            </Form.Item>
-                            <Form.Item label={t('user-team-title')} rules={[{ required: false, message: t('enter-your-team-title') }]}>
-                                <Input className='w-64' type="text" value={user.team[0].title} />
-                            </Form.Item>
-                        </div>
-                        <div className='border-2 border-black rounded-md pl-2'>
-                            <div className='flex items-center justify-center mt-2'>
                                 <h4 className='text-lg font-semibold'>{t('projects-info-title')}</h4>
                             </div>
                             <Form.Item label={t('user-project-id')} rules={[{ required: false, message: t('enter-your-project-id') }]}>
@@ -121,6 +110,24 @@ const UserInfo: FC<IUserInfo> = ({ token, t }) => {
                             <Button className='flex justify-center items-center text-lg w-28 mt-5' htmlType='submit'>
                                 <h4 className='p-2'>{t('changed-data')}</h4>
                             </Button>
+                        </div>
+                    </Form>
+                    <Form className='mt-6'>
+                        <div className='border-2 border-black rounded-md pl-2'>
+                            <div className='flex items-center justify-center mt-2 mb-2'>
+                                <h4 className='text-lg font-semibold'>{t('team-info-title')}</h4>
+                            </div>
+                            <Form.Item label={t('user-team-id')} >
+                                <p className='text-base'>{user.team && user.team.length > 0 ? user.team[0].id : ''}</p>
+                            </Form.Item>
+                            <Form.Item label={t('user-team-title')} >
+                                <p className='text-base'>{user.team && user.team.length > 0 ? user.team[0].title : ''}</p>
+                            </Form.Item>
+                            <div className='flex justify-center mb-2'>
+                                <Button className='flex justify-center items-center text-lg w-28 mt-5' htmlType='submit'>
+                                    <h4 className='p-2'>{t('changed-data')}</h4>
+                                </Button>
+                            </div>
                         </div>
                     </Form>
                 </div>
@@ -164,17 +171,6 @@ const UserInfo: FC<IUserInfo> = ({ token, t }) => {
                         </div>
                         <div className='border-2 border-black rounded-md pl-2'>
                             <div className='flex items-center justify-center mt-2'>
-                                <h4 className='text-lg font-semibold'>{t('team-info-title')}</h4>
-                            </div>
-                            <Form.Item label={t('user-team-id')} >
-                                <p className='text-base'>{user.team && user.team.length > 0 ? user.team[0].id : ''}</p>
-                            </Form.Item>
-                            <Form.Item label={t('user-team-title')} >
-                                <p className='text-base'>{user.team && user.team.length > 0 ? user.team[0].title : ''}</p>
-                            </Form.Item>
-                        </div>
-                        <div className='border-2 border-black rounded-md pl-2'>
-                            <div className='flex items-center justify-center mt-2'>
                                 <h4 className='text-lg font-semibold'>{t('projects-info-title')}</h4>
                             </div>
                             <Form.Item label={t('user-project-id')} >
@@ -190,6 +186,19 @@ const UserInfo: FC<IUserInfo> = ({ token, t }) => {
                             </div>
                             <Form.Item label={t('user-image-url')} rules={[{ required: false, message: t('enter-your-image-url') }]}>
                                 <img src={user.info && user.info.length > 0 ? user.info[0].image : ''} alt="Profile photo" />
+                            </Form.Item>
+                        </div>
+                    </Form>
+                    <Form className='mt-6'>
+                        <div className='border-2 border-black rounded-md pl-2'>
+                            <div className='flex items-center justify-center mt-2'>
+                                <h4 className='text-lg font-semibold'>{t('team-info-title')}</h4>
+                            </div>
+                            <Form.Item label={t('user-team-id')} >
+                                <p className='text-base'>{user.team && user.team.length > 0 ? user.team[0].id : ''}</p>
+                            </Form.Item>
+                            <Form.Item label={t('user-team-title')} >
+                                <p className='text-base'>{user.team && user.team.length > 0 ? user.team[0].title : ''}</p>
                             </Form.Item>
                         </div>
                     </Form>
