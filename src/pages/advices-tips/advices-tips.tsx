@@ -4,17 +4,20 @@ import { FC, useContext, useEffect, useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { NotificationContext } from '../../components/notification-provider/notification-provider'
 import { TAdvice } from '../../utils/typesFromBackend'
+import clsx from 'clsx'
 
 interface ICustomers {
   token: string
   pathRest: string
   t: (arg0: string) => string
+  dark: boolean
+  style: object
 }
 
-const AdvicesTips: FC<ICustomers> = ({ token, pathRest, t }) => {
+const AdvicesTips: FC<ICustomers> = ({ token, pathRest, t, dark, style }) => {
   const { openNotification } = useContext(NotificationContext)
   const [data, setData] = useState<TAdvice[]>([])
-
+  const theme = clsx(dark ? 'black' : 'white')
   useEffect(() => {
     fetch(`${pathRest}/customers`, {
       method: 'GET',
@@ -88,7 +91,12 @@ const AdvicesTips: FC<ICustomers> = ({ token, pathRest, t }) => {
           {t('add')}
         </NavLink>
       </div>
-      <Table columns={columns} dataSource={data} rowKey='id' />
+      <Table
+        className={theme}
+        columns={columns}
+        dataSource={data}
+        rowKey='id'
+      />
     </div>
   )
 }

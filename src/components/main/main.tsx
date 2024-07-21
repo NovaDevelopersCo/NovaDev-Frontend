@@ -262,7 +262,13 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
                   isLoggedIn={isLoggedIn}
                   pathRest={pathRest}
                 >
-                  <AdvicesTips token={token} pathRest={pathRest} t={t} />
+                  <AdvicesTips
+                    style={style}
+                    dark={dark}
+                    token={token}
+                    pathRest={pathRest}
+                    t={t}
+                  />
                 </ProtectedRoute>
                 <ProtectedRoute
                   path={`/:${pathRest}/add/advice`}
