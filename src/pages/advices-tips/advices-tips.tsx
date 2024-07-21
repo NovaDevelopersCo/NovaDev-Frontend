@@ -22,13 +22,14 @@ const AdvicesTips: FC<ICustomers> = ({ token, pathRest, t }) => {
         Authorization: `Bearer ${token}`
       }
     })
-      .then((response) => {
+      .then(async (response) => {
         if (!response.ok) {
           throw new Error('Network response was not ok')
         }
-        return response.json()
+        const res: TAdvice[] = await response.json()
+        return res
       })
-      .then((res: TAdvice[]) => setData(res))
+      .then((res) => setData(res))
       .catch((e: Error) => openNotification(e.message, 'topRight'))
   }, [pathRest, token, openNotification])
 
@@ -63,7 +64,9 @@ const AdvicesTips: FC<ICustomers> = ({ token, pathRest, t }) => {
         }}
       >
         <div style={{ display: 'block', marginRight: 'auto' }}>
-          <h2 style={{ fontWeight: 600, marginBottom: '0' }}>{t('advices-tips')}</h2>
+          <h2 style={{ fontWeight: 600, marginBottom: '0' }}>
+            {t('advices-tips')}
+          </h2>
           <p style={{ marginBottom: '0' }}>{t('your-list-advices-and-tips')}</p>
         </div>
         <NavLink

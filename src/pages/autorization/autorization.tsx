@@ -102,7 +102,6 @@ const Autorization: FC<IAutorization> = ({
   return (
     <Form
       {...layout}
-      style={style}
       name='basic'
       className={clsx(theme, 'max-w-[600px] flex justify-center flex-col')}
       onFinish={onFinish}
