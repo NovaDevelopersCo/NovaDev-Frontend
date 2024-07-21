@@ -195,7 +195,7 @@ const UserInfo: FC<IUserInfo> = ({ token, t }) => {
                     </Form>
                 </div>
             )
-            }
+        }
         </div>
     )
 }

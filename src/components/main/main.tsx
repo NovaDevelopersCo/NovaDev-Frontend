@@ -239,14 +239,6 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
                   />
                 </ProtectedRoute>
                 <ProtectedRoute
-                  path={`/:${pathRest}/add/dish`}
-                  exact
-                  isLoggedIn={isLoggedIn}
-                  pathRest={pathRest}
-                >
-                  <AddRestaurants token={token} pathRest={pathRest} t={t} />
-                </ProtectedRoute>
-                <ProtectedRoute
                     path={`/:${pathRest}/user`}
                     exact
                     isLoggedIn={isLoggedIn}
