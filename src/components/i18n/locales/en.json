@@ -21,7 +21,7 @@
   "generation-qr": "Generation qr code",
   "change-colors": "Change colors",
   "telegram-bot": "Telegram bot",
-  "manual": "Manual",
+  "manual": "Advices and tips",
   "back-menu": "Go back to the menu",
   "quit": "Quit",
   "image": "Image",
@@ -252,5 +252,10 @@
   "dont-have-an-account": "Don't have an account",
   "already-have-an-account": "Already have an account",
   "sign-in": "Sign in",
-  "sign-up": "Sign Up"
+  "sign-up": "Sign Up",
+  "your-list-advices-and-tips": "List of advices and tips",
+  "advices-tips": "Advices and tips",
+  "title": "Title",
+  "content": "Content",
+  "add-post": "Add post"
 }

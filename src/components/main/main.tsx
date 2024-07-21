@@ -21,6 +21,8 @@ import Admin from '../../pages/category/category'
 import Dark from '../dark/dark'
 import { Footer } from 'antd/es/layout/layout'
 import { useTelegram } from '../../services/hooks/use-telegram'
+import AdvicesTips from '../../pages/advices-tips/advices-tips'
+import AddPost from '../../pages/add-post/add-post'
 
 const { Header, Sider, Content } = Layout
 
@@ -169,8 +171,6 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
             <Content
               style={{
                 ...style,
-                display: 'flex',
-                justifyContent: 'center',
                 padding: 24,
                 minHeight: 'calc(100vh - 114px)'
               }}
@@ -236,6 +236,22 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
                     t={t}
                     language={language}
                   />
+                </ProtectedRoute>
+                <ProtectedRoute
+                  path={`/:${pathRest}/blog`}
+                  exact
+                  isLoggedIn={isLoggedIn}
+                  pathRest={pathRest}
+                >
+                  <AdvicesTips token={token} pathRest={pathRest} t={t} />
+                </ProtectedRoute>
+                <ProtectedRoute
+                  path={`/:${pathRest}/add/advice`}
+                  exact
+                  isLoggedIn={isLoggedIn}
+                  pathRest={pathRest}
+                >
+                  <AddPost token={token} pathRest={pathRest} t={t} />
                 </ProtectedRoute>
                 <Route path='*'>
                   <NotFound t={t} />

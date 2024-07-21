@@ -21,7 +21,7 @@
   "generation-qr": "Генерация QR кода",
   "change-colors": "Изменение цветов",
   "telegram-bot": "Телеграм бот",
-  "manual": "Инструкция",
+  "manual": "Советы и подсказки",
   "back-menu": "Вернуться в меню",
   "quit": "Выйти",
   "image": "Изображение",
@@ -252,5 +252,10 @@
   "dont-have-an-account": " Пока нет аккаунта",
   "already-have-an-account": "Уже есть аккаунт",
   "sign-in": "Войти",
-  "sign-up": "Зарегестрироваться"
+  "sign-up": "Зарегестрироваться",
+  "your-list-advices-and-tips": "Список советов и подсказок",
+  "advices-tips": "Советы и подсказки",
+  "title": "Название",
+  "content": "Содержание",
+  "add-post": "Добавить пост"
 }

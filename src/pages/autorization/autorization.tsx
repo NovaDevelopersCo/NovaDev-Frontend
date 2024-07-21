@@ -108,6 +108,7 @@ const Autorization: FC<IAutorization> = ({
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
       autoComplete='off'
+      style={{ maxWidth: '550px', margin: ' 0 auto' }}
     >
       <Form.Item
         label={t('email')}
