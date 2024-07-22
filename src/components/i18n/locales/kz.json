@@ -2,6 +2,7 @@
   "menu": "Мәзір",
   "dishes": "Тағамдар",
   "categories": "Санаттар",
+  "customers": "Тұтынушылар",
   "about-user-title": "Пайдаланушы туралы ақпарат",
   "base-info-title": "Негізгі ақпарат",
   "team-info-title": "Команда туралы ақпарат",
@@ -291,5 +292,8 @@
   "dont-have-an-account": "Есептік жазбаңыз жоқ",
   "already-have-an-account": "Тіркелгі бар",
   "sign-in": "Кіру",
-  "sign-up": "Тіркелу"
+  "sign-up": "Тіркелу",
+  "your-list-customers": "Тұтынушылар тізімі",
+  "tg": "Жеделхат"
+
 }
