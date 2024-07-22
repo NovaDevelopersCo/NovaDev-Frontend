@@ -276,7 +276,13 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
                   isLoggedIn={isLoggedIn}
                   pathRest={pathRest}
                 >
-                  <AddPost token={token} pathRest={pathRest} t={t} />
+                  <AddPost
+                    token={token}
+                    pathRest={pathRest}
+                    t={t}
+                    style={style}
+                    dark={dark}
+                  />
                 </ProtectedRoute>
                 <Route path='*'>
                   <NotFound t={t} />

@@ -5,14 +5,17 @@ import { Form, Input, Button, Modal } from 'antd'
 import { NotificationContext } from '../../components/notification-provider/notification-provider'
 import * as adminAPI from '../../utils/api/category-api'
 import * as userAPI from '../../utils/api/task-api'
+import clsx from 'clsx'
 
 interface IAddPost {
   pathRest: string
   token: string
   t: (arg0: string) => string
+  dark: boolean
+  style: object
 }
 
-const AddPost: FC<IAddPost> = ({ token, pathRest, t }) => {
+const AddPost: FC<IAddPost> = ({ token, pathRest, t, dark, style }) => {
   const { openNotification } = useContext(NotificationContext)
   const [form] = Form.useForm()
   const history = useHistory()
@@ -20,6 +23,7 @@ const AddPost: FC<IAddPost> = ({ token, pathRest, t }) => {
     labelCol: { span: 4 },
     wrapperCol: { span: 14 }
   }
+  const theme = clsx(dark ? 'black' : 'white')
   const [isModalVisible, setIsModalVisible] = React.useState(false)
   const [PathRest, setPathRest] = React.useState<{ [key: string]: string }>({})
   const [, setLogin] = React.useState('')
@@ -77,6 +81,7 @@ const AddPost: FC<IAddPost> = ({ token, pathRest, t }) => {
     <>
       {
         <Modal
+          className={theme}
           title={t('alert')}
           visible={isModalVisible}
           footer={[
@@ -89,6 +94,7 @@ const AddPost: FC<IAddPost> = ({ token, pathRest, t }) => {
         </Modal>
       }
       <h4
+         className={theme}
         style={{
           marginBottom: '15px',
           marginTop: '0',
@@ -101,6 +107,7 @@ const AddPost: FC<IAddPost> = ({ token, pathRest, t }) => {
         {t('add-post')}
       </h4>
       <Form
+        className={theme}
         {...layout}
         onFinish={onFinish}
         validateMessages={validateMessages}
@@ -109,6 +116,7 @@ const AddPost: FC<IAddPost> = ({ token, pathRest, t }) => {
         style={{ paddingTop: '1.5rem' }}
       >
         <Form.Item
+          className={theme}
           label={t('login')}
           rules={[
             { required: true },

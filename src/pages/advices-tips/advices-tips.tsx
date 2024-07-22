@@ -74,6 +74,7 @@ const AdvicesTips: FC<ICustomers> = ({ token, pathRest, t, dark, style }) => {
         </div>
         <NavLink
           to={`/${pathRest}/add/advice`}
+          className={theme}
           style={{
             color: '#fff',
             backgroundColor: '#2bc155',
