@@ -2,7 +2,7 @@
 import React, { FC, useState, useEffect, useContext } from 'react'
 import * as UserInfoAPI from '../../utils/api/user-info-api'
 import { Button, Form, Input } from 'antd'
-import { TUser, ECountry } from '../../utils/typesFromBackend'
+import { TUser, ECountry, TUserTeam } from '../../utils/typesFromBackend'
 import { NotificationContext } from '../../components/notification-provider/notification-provider'
 
 interface IUserInfo {
@@ -43,6 +43,18 @@ const UserInfo: FC<IUserInfo> = ({ token, t }) => {
             })
             .catch((e) => openNotification(e, 'topRight'))
     }
+    //
+    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+    const [userTeam, setUserTeam] = React.useState<TUserTeam>({} as TUserTeam)
+    //
+    useEffect(() => {
+        UserInfoAPI
+            .getUserTeam(token, userTeam, setUserTeam)
+            .then(() => {
+                console.log('Выполнено!')
+            })
+            .catch((e) => openNotification(e, 'topRight'))
+    }, [])
     //
     return (
         <div>
@@ -112,16 +124,16 @@ const UserInfo: FC<IUserInfo> = ({ token, t }) => {
                             </Button>
                         </div>
                     </Form>
-                    <Form className='mt-6'>
-                        <div className='border-2 border-black rounded-md pl-2'>
+                    <Form className='mt-8'>
+                        <div className='border-2 border-black rounded-md pl-2 pr-2'>
                             <div className='flex items-center justify-center mt-2 mb-2'>
                                 <h4 className='text-lg font-semibold'>{t('team-info-title')}</h4>
                             </div>
                             <Form.Item label={t('user-team-id')} >
-                                <p className='text-base'>{user.team && user.team.length > 0 ? user.team[0].id : ''}</p>
+                                <Input value={userTeam.id} disabled={true} />
                             </Form.Item>
                             <Form.Item label={t('user-team-title')} >
-                                <p className='text-base'>{user.team && user.team.length > 0 ? user.team[0].title : ''}</p>
+                                <Input value={userTeam.title} />
                             </Form.Item>
                             <div className='flex justify-center mb-2'>
                                 <Button className='flex justify-center items-center text-lg w-28 mt-5' htmlType='submit'>
@@ -189,16 +201,16 @@ const UserInfo: FC<IUserInfo> = ({ token, t }) => {
                             </Form.Item>
                         </div>
                     </Form>
-                    <Form className='mt-6'>
+                    <Form className='mt-8'>
                         <div className='border-2 border-black rounded-md pl-2'>
                             <div className='flex items-center justify-center mt-2'>
                                 <h4 className='text-lg font-semibold'>{t('team-info-title')}</h4>
                             </div>
                             <Form.Item label={t('user-team-id')} >
-                                <p className='text-base'>{user.team && user.team.length > 0 ? user.team[0].id : ''}</p>
+                                <p className='text-base'>{userTeam.id}</p>
                             </Form.Item>
                             <Form.Item label={t('user-team-title')} >
-                                <p className='text-base'>{user.team && user.team.length > 0 ? user.team[0].title : ''}</p>
+                                <p className='text-base'>{userTeam.title}</p>
                             </Form.Item>
                         </div>
                     </Form>
