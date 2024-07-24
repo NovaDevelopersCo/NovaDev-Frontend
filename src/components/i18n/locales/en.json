@@ -257,5 +257,12 @@
   "advices-tips": "Advices and tips",
   "title": "Title",
   "content": "Content",
-  "add-post": "Add post"
+  "add-post": "Add post",
+  "profile": "Profile",
+  "your-profile": "Your Profile",
+  "upload-photo": "Upload photo",
+  "nickname": "Nickname",
+  "team": "Team",
+  "project": "Project",
+  "change-information-about-me": "Change information about me"
 }
