@@ -234,7 +234,13 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
                   isLoggedIn={isLoggedIn}
                   pathRest={pathRest}
                 >
-                  <Customers token={token} pathRest={pathRest} t={t} />
+                  <Customers
+                    token={token}
+                    pathRest={pathRest}
+                    t={t}
+                    dark={dark}
+                    style={style}
+                  />
                 </ProtectedRoute>
                 <ProtectedRoute
                   path={`/:${pathRest}/add/customers`}
@@ -250,12 +256,6 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
                     style={style}
                   />
                 </ProtectedRoute>
-                <ProtectedRoute
-                  path={`/:${pathRest}/dishes`}
-                  exact
-                  isLoggedIn={isLoggedIn}
-                  pathRest={pathRest}
-                >
                   <Users
                     dark={dark}
                     style={style}
@@ -264,7 +264,6 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
                     t={t}
                     language={language}
                   />
-                </ProtectedRoute>
                 <Route path='*'>
                   <NotFound t={t} />
                 </Route>

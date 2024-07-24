@@ -5,14 +5,17 @@ import * as customerAPI from '../../utils/api/customers-api'
 import { Link, useHistory, NavLink } from 'react-router-dom'
 import { NotificationContext } from '../../components/notification-provider/notification-provider'
 import { TCustomer } from '../../utils/typesFromBackend'
+import clsx from 'clsx'
 
 interface ICustomers {
   token: string
   pathRest: string
   t: (arg0: string) => string
+  dark: boolean
+  style: object
 }
 
-const Customers: FC<ICustomers> = ({ token, pathRest, t }) => {
+const Customers: FC<ICustomers> = ({ token, pathRest, t, dark, style }) => {
   const { openNotification } = useContext(NotificationContext)
   const [data, setData] = useState<TCustomer[]>([])
   const history = useHistory()
@@ -34,7 +37,7 @@ const Customers: FC<ICustomers> = ({ token, pathRest, t }) => {
       )
       .catch((e: Error) => openNotification(e.message, 'topRight'))
   }
-
+  const theme = clsx(dark ? 'black' : 'white')
   const columns: ColumnsType<TCustomer> = [
     {
       title: `${t('name')}`,
@@ -83,6 +86,7 @@ const Customers: FC<ICustomers> = ({ token, pathRest, t }) => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
       <div
+        className={theme}
         style={{
           display: 'flex',
           marginBottom: '1rem',
@@ -91,13 +95,17 @@ const Customers: FC<ICustomers> = ({ token, pathRest, t }) => {
           padding: '0'
         }}
       >
-        <div style={{ display: 'block', marginRight: 'auto' }}>
+        <div
+          className={theme}
+          style={{ display: 'block', marginRight: 'auto' }}
+        >
           <h2 style={{ fontWeight: 600, marginBottom: '0' }}>
             {t('customers')}
           </h2>
           <p style={{ marginBottom: '0' }}>{t('your-list-customers')}</p>
         </div>
         <NavLink
+          className={theme}
           to={`/${pathRest}/add/category`}
           style={{
             color: '#fff',
@@ -116,7 +124,7 @@ const Customers: FC<ICustomers> = ({ token, pathRest, t }) => {
           {t('add')}
         </NavLink>
       </div>
-      <Table columns={columns} dataSource={data} />
+      <Table columns={columns} dataSource={data} className={theme} />
     </div>
   )
 }
