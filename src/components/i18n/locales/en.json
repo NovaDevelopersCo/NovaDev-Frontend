@@ -1,8 +1,7 @@
 {
   "menu": "Menu",
   "dishes": "Dishes",
-  "categories": "Categories",
-  "customers": "Customers",
+  "categories": "Admin List",
   "modifiers": "Modifiers",
   "group-modifiers": "Group modifiers",
   "orders": "Orders",
@@ -22,7 +21,7 @@
   "generation-qr": "Generation qr code",
   "change-colors": "Change colors",
   "telegram-bot": "Telegram bot",
-  "manual": "Manual",
+  "manual": "Advices and tips",
   "back-menu": "Go back to the menu",
   "quit": "Quit",
   "image": "Image",
@@ -234,9 +233,9 @@
   "tariff": "Tariff",
   "list-of-restaurants": "List of establishments",
   "list-of-admins": "List of administrators",
-  "restaurants": "Establishments",
-  "restaurant": "Establishment",
-  "no-restaurant": "No establishment",
+  "restaurants": "Projects",
+  "restaurant": "Projects",
+  "no-restaurant": "No projects",
   "admins": "Admins",
   "path": "Path",
   "add-rest": "Adding an establishment",
@@ -254,6 +253,9 @@
   "already-have-an-account": "Already have an account",
   "sign-in": "Sign in",
   "sign-up": "Sign Up",
-  "your-list-customers": "Your list of customers",
-  "tg": "Telegram"
+  "your-list-advices-and-tips": "List of advices and tips",
+  "advices-tips": "Advices and tips",
+  "title": "Title",
+  "content": "Content",
+  "add-post": "Add post"
 }

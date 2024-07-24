@@ -6,10 +6,8 @@ import { Layout } from 'antd'
 import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons'
 import fullscreenIcon from '../../assets/images/fullscreen.svg'
 import Autorization from '../../pages/autorization/autorization'
-import Registration from '../../pages/registration/registration'
-import NotFound from '../../pages/not-found/not-found'
-import Customers from '../../pages/customers/customers'
 import { ECountry } from '../../utils/typesFromBackend'
+import NotFound from '../../pages/not-found/not-found'
 import { useTranslation } from 'react-i18next'
 import { NotificationProvider } from '../notification-provider/notification-provider'
 import i18n from '../i18n/i18n'
@@ -23,6 +21,10 @@ import Admin from '../../pages/category/category'
 import Dark from '../dark/dark'
 import { Footer } from 'antd/es/layout/layout'
 import { useTelegram } from '../../services/hooks/use-telegram'
+import Registration from '../../pages/registration/registration'
+import AdvicesTips from '../../pages/advices-tips/advices-tips'
+import AddPost from '../../pages/add-post/add-post'
+import Customers from '../../pages/customers/customers'
 
 const { Header, Sider, Content } = Layout
 
@@ -52,8 +54,8 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
     localStorage.removeItem('formData')
   }
   const style = {
-    background: dark ? '#000' : '#fff',
-    color: dark ? '#fff' : '#000'
+    background: dark ? '#0A0E14' : '#fff',
+    color: dark ? '#fff' : '#0A0E14'
   }
   React.useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
@@ -63,6 +65,17 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
         : language
     )
   }, [])
+
+  useEffect(() => {
+    if (dark) {
+      document.body.style.backgroundColor = '#0A0E14'
+      document.body.style.color = '#fff'
+    } else {
+      document.body.style.backgroundColor = '#fff'
+      document.body.style.color = '#0A0E14'
+    }
+  }, [dark])
+
   const [collapse, setCollapse] = useState(false)
   let flag = false
   if (typeof window !== 'undefined') {
@@ -98,7 +111,7 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
     window.innerWidth <= 760 ? setCollapse(true) : setCollapse(false)
   }, [])
 
-  function handleClickFullScreen(): void {
+  const handleClickFullScreen = (): void => {
     if (document.fullscreenElement != null) {
       void document.exitFullscreen()
     } else {
@@ -150,13 +163,15 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
                   style: style
                 }
               )}
-              <Dark dark={dark} style={style} setDark={setDark} />
-              <ChoiseLanguage
-                dark={dark}
-                style={style}
-                t={t}
-                changeLanguage={changeLanguage}
-              />
+              <div style={{ display: 'flex', gap: '30px' }}>
+                <Dark dark={dark} style={style} setDark={setDark} />
+                <ChoiseLanguage
+                  dark={dark}
+                  style={style}
+                  t={t}
+                  changeLanguage={changeLanguage}
+                />
+              </div>
               <div
                 className='fullscreen-btn'
                 onClick={handleClickFullScreen}
@@ -169,7 +184,6 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
             <Content
               style={{
                 ...style,
-                margin: '24px 16px',
                 padding: 24,
                 minHeight: 'calc(100vh - 114px)'
               }}
@@ -177,11 +191,11 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
               <Switch>
                 <Route path={`/:${pathRest}/autorization`}>
                   <Autorization
-                    dark={dark}
-                    style={style}
                     setIsLoggedIn={setIsLoggedIn}
                     t={t}
                     setToken={setToken}
+                    style={style}
+                    dark={dark}
                   />
                 </Route>
                 <Route path={`/:${pathRest}/registration`}>
@@ -264,6 +278,34 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
                     t={t}
                     language={language}
                   />
+                <ProtectedRoute
+                  path={`/:${pathRest}/blog`}
+                  exact
+                  isLoggedIn={isLoggedIn}
+                  pathRest={pathRest}
+                >
+                  <AdvicesTips
+                    style={style}
+                    dark={dark}
+                    token={token}
+                    pathRest={pathRest}
+                    t={t}
+                  />
+                </ProtectedRoute>
+                <ProtectedRoute
+                  path={`/:${pathRest}/add/advice`}
+                  exact
+                  isLoggedIn={isLoggedIn}
+                  pathRest={pathRest}
+                >
+                  <AddPost
+                    token={token}
+                    pathRest={pathRest}
+                    t={t}
+                    style={style}
+                    dark={dark}
+                  />
+                </ProtectedRoute>
                 <Route path='*'>
                   <NotFound t={t} />
                 </Route>

@@ -13,15 +13,6 @@ export const getTasks = async (token: string, id: number) => {
   }).then(async (res) => await handleResponse(res))
 }
 
-export const getDish = async (id: string) => {
-  return await fetch(`${BASE_URL}/items/${id}`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  }).then(async (res) => await handleResponse(res))
-}
-
 export const updateRestaurant = async (token: string, data: any) => {
   return await fetch(`${BASE_URL}/rest/update`, {
     method: 'PUT',
@@ -32,16 +23,6 @@ export const updateRestaurant = async (token: string, data: any) => {
     body: JSON.stringify({
       ...data
     })
-  }).then(async (res) => await handleResponse(res))
-}
-
-export const createDish = async (token: string, formData: any) => {
-  return await fetch(`${BASE_URL}/items`, {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${token}`
-    },
-    body: formData
   }).then(async (res) => await handleResponse(res))
 }
 
