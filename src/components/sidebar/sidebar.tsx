@@ -36,6 +36,9 @@ const Sidebar: FC<ISidebar> = ({
   const handleRestClick = (): void => {
     history.push(`/${pathRest}/dishes`)
   }
+  const handleCustomersClick = (): void => {
+    history.push(`/${pathRest}/customers`)
+  }
 
   const handleLogout = (): void => {
     localStorage.removeItem('token')
@@ -80,7 +83,11 @@ const Sidebar: FC<ISidebar> = ({
           <InfoCircleOutlined />
           <span>{t('manual')}</span>
         </Menu.Item>
-        <Menu.Item key='4' onClick={handleRestClick}>
+        <Menu.Item key='4' onClick={handleCustomersClick}>
+          <InfoCircleOutlined />
+          <span>{t('customers')}</span>
+        </Menu.Item>
+        <Menu.Item key='5' onClick={handleRestClick}>
           <VerticalAlignTopOutlined />
           <span>{t('back-menu')}</span>
         </Menu.Item>
