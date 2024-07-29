@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/consistent-type-assertions */
 import React, { useState, useEffect, FC } from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-
 import { Layout } from 'antd'
 import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons'
 import fullscreenIcon from '../../assets/images/fullscreen.svg'
@@ -25,6 +24,7 @@ import Registration from '../../pages/registration/registration'
 import AdvicesTips from '../../pages/advices-tips/advices-tips'
 import Profile from '../../pages/profile/profile'
 import AddPost from '../../pages/add-post/add-post'
+import Customers from '../../pages/customers/customers'
 
 const { Header, Sider, Content } = Layout
 
@@ -243,11 +243,33 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
                   />
                 </ProtectedRoute>
                 <ProtectedRoute
-                  path={`/:${pathRest}/dishes`}
+                  path={`/${pathRest}/customers`}
                   exact
                   isLoggedIn={isLoggedIn}
                   pathRest={pathRest}
                 >
+                  <Customers
+                    token={token}
+                    pathRest={pathRest}
+                    t={t}
+                    dark={dark}
+                    style={style}
+                  />
+                </ProtectedRoute>
+                <ProtectedRoute
+                  path={`/:${pathRest}/add/customers`}
+                  exact
+                  isLoggedIn={isLoggedIn}
+                  pathRest={pathRest}
+                >
+                  <AddAdmin
+                    token={token}
+                    pathRest={pathRest}
+                    t={t}
+                    dark={dark}
+                    style={style}
+                  />
+                </ProtectedRoute>
                   <Users
                     dark={dark}
                     style={style}
@@ -256,7 +278,6 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
                     t={t}
                     language={language}
                   />
-                </ProtectedRoute>
                 <ProtectedRoute
                   path={`/:${pathRest}/blog`}
                   exact
