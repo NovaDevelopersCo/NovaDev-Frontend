@@ -237,3 +237,10 @@ export interface TAdvice {
   title: string
   content: string
 }
+export interface TProfileData {
+  picture: string
+  name: string
+  github: string
+  team: string
+  project: string
+}

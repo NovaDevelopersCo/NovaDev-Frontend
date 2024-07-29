@@ -23,6 +23,7 @@ import { Footer } from 'antd/es/layout/layout'
 import { useTelegram } from '../../services/hooks/use-telegram'
 import Registration from '../../pages/registration/registration'
 import AdvicesTips from '../../pages/advices-tips/advices-tips'
+import Profile from '../../pages/profile/profile'
 import AddPost from '../../pages/add-post/add-post'
 
 const { Header, Sider, Content } = Layout
@@ -269,6 +270,14 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
                     pathRest={pathRest}
                     t={t}
                   />
+                </ProtectedRoute>
+                <ProtectedRoute
+                  path={`/:${pathRest}/profile`}
+                  exact
+                  isLoggedIn={isLoggedIn}
+                  pathRest={pathRest}
+                >
+                  <Profile token={token} pathRest={pathRest} t={t} />
                 </ProtectedRoute>
                 <ProtectedRoute
                   path={`/:${pathRest}/add/advice`}

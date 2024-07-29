@@ -257,5 +257,12 @@
   "advices-tips": "Кеңестер мен амалдар тізімі",
   "title": "Аты",
   "content": "Мазмұны",
-  "add-post": "Пост қосу"
+  "add-post": "Пост қосу",
+  "profile": "Профиль",
+  "your-profile": "Сіздің профиліңіз",
+  "upload-photo": "Фото жүктеп салыңыз",
+  "nickname": "Аты",
+  "team": "Команда",
+  "project": "Жоба",
+  "change-information-about-me": "Өзіңіз туралы ақпаратты өзгертіңіз"
 }

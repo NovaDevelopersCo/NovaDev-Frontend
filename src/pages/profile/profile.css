@@ -1,0 +1,71 @@
+.image-box {
+  position: relative;
+  width: 8rem;
+  height: 8rem;
+  margin-bottom: 1rem;
+  border-radius: 9999px;
+  border: 2px solid #d1d5db;
+  overflow: hidden;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  background-color: #f3f4f6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #9ca3af;
+}
+
+.add-image {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0);
+  color: transparent;
+  transition: all 300ms;
+  cursor: pointer;
+}
+
+.image-box:hover .add-image {
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+}
+
+.item {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.25rem;
+}
+
+.title {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.button {
+  width: 100%;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  background-color: #3b82f6;
+  color: white;
+  border-radius: 0.25rem;
+  transition-property: background-color, border-color, color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.button:hover {
+  background-color: #2563eb;
+}
