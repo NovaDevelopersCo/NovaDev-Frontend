@@ -33,6 +33,9 @@ const Sidebar: FC<ISidebar> = ({
   const handleCustomersClick = (): void => {
     history.push(`/${pathRest}/customers`)
   }
+  const handleUsersClick = (): void => {
+    history.push(`/${pathRest}/users`)
+  }
   const handleInstructionClick = (): void => {
     history.push(`/${pathRest}/blog`)
   }
@@ -87,6 +90,10 @@ const Sidebar: FC<ISidebar> = ({
           <TeamOutlined />
           <span>{t('customers')}</span>
         </Menu.Item>
+        <Menu.Item key='8' onClick={handleUsersClick}>
+          <TeamOutlined />
+          <span>{t('users')}</span>
+        </Menu.Item>
         <Menu.Item key='3' onClick={handleInstructionClick}>
           <InfoCircleOutlined />
           <span>{t('manual')}</span>
@@ -99,7 +106,7 @@ const Sidebar: FC<ISidebar> = ({
           <UserOutlined />
           <span> {t('user-info')}</span>
         </Menu.Item>
-        <Menu.Item key='6' onClick={handleLogout}>
+        <Menu.Item key='7' onClick={handleLogout}>
           <LogoutOutlined />
           <span>{t('quit')}</span>
         </Menu.Item>

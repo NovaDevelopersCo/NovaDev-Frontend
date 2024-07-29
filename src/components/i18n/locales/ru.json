@@ -3,6 +3,7 @@
   "dishes": "Блюда",
   "categories": "Категории",
   "customers": "Клиенты",
+  "users": "Пользователи",
   "about-user-title": "Информация о пользователе",
   "base-info-title": "Базовая информация",
   "team-info-title": "Информация о команде",
@@ -250,6 +251,14 @@
   "password": "Пароль",
   "login": "Логин",
   "email": "Почта",
+  "role-title": "Роль",
+  "public-nickname": "Имя пользователя",
+  "full-name": "Полное имя",
+  "phone": "Номер телефона",
+  "github": "GitHub",
+  "payment-info": "Платежная информация",
+  "team-title": "Команда",
+  "projects-title": "Проекты",
   "isDelivery": "Это доставка?",
   "verify-client-old-18": "Нужна ли проверка, что возраст клиента больше 18 лет?",
   "choise-language": "Выберите язык",
@@ -294,5 +303,6 @@
   "sign-in": "Войти",
   "sign-up": "Зарегестрироваться",
   "tg": "Телеграм",
-  "your-list-customers": "Ваш список клиентов"
+  "your-list-customers": "Ваш список клиентов",
+  "your-list-users": "Ваш список пользователей"
 }

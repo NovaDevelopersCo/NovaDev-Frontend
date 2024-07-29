@@ -250,6 +250,14 @@
   "password": "Құпия сөз",
   "login": "Кіру",
   "email": "Электрондық пошта",
+  "role-title": "Рөлі",
+  "public-nickname": "Пайдаланушының лақап аты",
+  "full-name": "Толық аты-жөні",
+  "phone": "Телефон",
+  "github": "GitHub",
+  "payment-info": "Төлем туралы ақпарат",
+  "team-title": "Команда",
+  "projects-title": "Жобалар",
   "isDelivery": "Бұл жеткізу ме?",
   "verify-client-old-18": "Клиенттің жасы 18 жастан асқанын тексеру керек пе?",
   "choise-language": "Тілді таңдаңыз",
@@ -294,6 +302,7 @@
   "sign-in": "Кіру",
   "sign-up": "Тіркелу",
   "your-list-customers": "Тұтынушылар тізімі",
+  "your-list-users": "Пайдаланушылар тізімі",
   "tg": "Жеделхат"
 
 }

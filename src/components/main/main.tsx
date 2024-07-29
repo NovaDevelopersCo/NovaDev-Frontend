@@ -8,6 +8,7 @@ import fullscreenIcon from '../../assets/images/fullscreen.svg'
 import Autorization from '../../pages/autorization/autorization'
 import NotFound from '../../pages/not-found/not-found'
 import Customers from '../../pages/customers/customers'
+import AllUsers from '../../pages/users/users'
 import { ECountry } from '../../utils/typesFromBackend'
 import { useTranslation } from 'react-i18next'
 import { NotificationProvider } from '../notification-provider/notification-provider'
@@ -245,6 +246,14 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
                     dark={dark}
                     style={style}
                   />
+                </ProtectedRoute>
+                <ProtectedRoute
+                  path={`/${pathRest}/users`}
+                  exact
+                  isLoggedIn={isLoggedIn}
+                  pathRest={pathRest}
+                >
+                  <AllUsers token={token} pathRest={pathRest} t={t} />
                 </ProtectedRoute>
                 <ProtectedRoute
                   path={`/:${pathRest}/dishes`}
