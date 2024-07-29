@@ -91,8 +91,7 @@ const Sidebar: FC<ISidebar> = ({
           <InfoCircleOutlined />
           <span>{t('customers')}</span>
         </Menu.Item>
-        <Menu.Item key='5' onClick={handleRestClick}>
-        <Menu.Item key='6' onClick={handleProfileClick}>
+        <Menu.Item key='5' onClick={handleProfileClick}>
           <UserOutlined />
           <span>{t('profile')}</span>
         </Menu.Item>
