@@ -146,3 +146,27 @@ export const editUserTeam = async (token: string, userTeam: any): Promise<void> 
         console.error('Произошла ошибка', error)
     }
 }
+
+export const fetchUserById = async (token: string, id: number): Promise<TUser | null> => {
+    try {
+        if (token) {
+            const response = await fetch(`${BASE_URL}/users/${id}`, {
+                method: 'GET',
+                headers: {
+                    'Content-type': 'application/json',
+                    Authorization: `Bearer ${token}`
+                }
+            })
+
+            if (!response.ok) {
+                throw new Error('Failed to fetch ')
+            }
+
+            return await response.json() ?? null
+        }
+        return null
+    } catch (error) {
+        console.error('Произошла ошибка', error)
+        return null
+    }
+}

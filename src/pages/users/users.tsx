@@ -2,9 +2,10 @@ import { Button, Table } from 'antd'
 import { ColumnsType } from 'antd/es/table'
 import { FC, useContext, useEffect, useState } from 'react'
 import * as UserInfoAPI from '../../utils/api/user-info-api'
-import { Link, useHistory, NavLink } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import { NotificationContext } from '../../components/notification-provider/notification-provider'
 import { TUser } from '../../utils/typesFromBackend'
+import UpdateUserModal from '../../components/update-user-modal/update-user-modal'
 
 interface IUsers {
   token: string
@@ -15,7 +16,8 @@ interface IUsers {
 const AllUsers: FC<IUsers> = ({ token, pathRest, t }) => {
   const { openNotification } = useContext(NotificationContext)
   const [users, setUsers] = useState<TUser[]>([])
-  const history = useHistory()
+  // const history = useHistory()
+  const [updatingUserId, setUpdatingUserId] = useState<null | number>(null)
 
   useEffect(() => {
     UserInfoAPI
@@ -35,6 +37,10 @@ const AllUsers: FC<IUsers> = ({ token, pathRest, t }) => {
         )
       )
       .catch((e: Error) => openNotification(e.message, 'topRight'))
+  }
+
+  const handleCancel = (): void => {
+    setUpdatingUserId(null)
   }
 
   const columns: ColumnsType<TUser> = [
@@ -275,61 +281,67 @@ const AllUsers: FC<IUsers> = ({ token, pathRest, t }) => {
       title: `${t('actions')}`,
       key: 'actions',
       render: (_: any, user: TUser): JSX.Element => (
-        <>
+        <div className='flex flex-col justify-center gap-1'>
           <Button
             type='primary'
-            onClick={() =>
-              history.push(`/${pathRest}/user/update/${user.id}`)
-            }
+            onClick={() => {
+              console.log(user)
+              setUpdatingUserId(user.id)
+            }}
           >
             {t('update')}
           </Button>
           <Button danger onClick={() => handleDelete(user.id)}>
             {t('delete')}
           </Button>
-        </>
+        </div>
       )
     }
   ]
 
+  console.log(users)
+
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', overflowY: 'auto' }}>
-      <div
-        style={{
-          display: 'flex',
-          marginBottom: '1rem',
-          alignItems: 'center',
-          outline: 'none',
-          padding: '0'
-        }}
-      >
-        <div style={{ display: 'block', marginRight: 'auto' }}>
-          <h2 style={{ fontWeight: 600, marginBottom: '0' }}>
-            {t('users')}
-          </h2>
-          <p style={{ marginBottom: '0' }}>{t('your-list-users')}</p>
-        </div>
-        <NavLink
-          to={`/${pathRest}/add/user`}
+    <>
+      <div style={{ display: 'flex', flexDirection: 'column', overflowY: 'auto' }}>
+        <div
           style={{
-            color: '#fff',
-            backgroundColor: '#2bc155',
-            borderColor: '#2bc155',
-            width: '145px',
-            height: '61px',
-            borderRadius: '0.375rem',
-            fontWeight: '500',
-            fontSize: '1rem',
             display: 'flex',
+            marginBottom: '1rem',
             alignItems: 'center',
-            justifyContent: 'center'
+            outline: 'none',
+            padding: '0'
           }}
         >
-          {t('add')}
-        </NavLink>
+          <div style={{ display: 'block', marginRight: 'auto' }}>
+            <h2 style={{ fontWeight: 600, marginBottom: '0' }}>
+              {t('users')}
+            </h2>
+            <p style={{ marginBottom: '0' }}>{t('your-list-users')}</p>
+          </div>
+          <NavLink
+            to={`/${pathRest}/add/user`}
+            style={{
+              color: '#fff',
+              backgroundColor: '#2bc155',
+              borderColor: '#2bc155',
+              width: '145px',
+              height: '61px',
+              borderRadius: '0.375rem',
+              fontWeight: '500',
+              fontSize: '1rem',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}
+          >
+            {t('add')}
+          </NavLink>
+        </div>
+        <Table columns={columns} dataSource={users} />
       </div>
-      <Table columns={columns} dataSource={users} />
-    </div>
+      <UpdateUserModal token={token} userId={updatingUserId} onCancel={handleCancel}/>
+    </>
   )
 }
 
