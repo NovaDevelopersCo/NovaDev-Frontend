@@ -4,7 +4,6 @@ import {
   InfoCircleOutlined,
   LogoutOutlined,
   GroupOutlined,
-  VerticalAlignTopOutlined,
   UserOutlined,
   TeamOutlined
 } from '@ant-design/icons'
@@ -40,9 +39,6 @@ const Sidebar: FC<ISidebar> = ({
     history.push(`/${pathRest}/blog`)
   }
 
-  const handleRestClick = (): void => {
-    history.push(`/${pathRest}/dishes`)
-  }
   const handleUserInfoClick = (): void => {
     history.push(`/${pathRest}/user`)
   }
@@ -98,17 +94,9 @@ const Sidebar: FC<ISidebar> = ({
           <InfoCircleOutlined />
           <span>{t('manual')}</span>
         </Menu.Item>
-        <Menu.Item key='4' onClick={handleRestClick}>
-          <VerticalAlignTopOutlined />
-          <span> {t('back-menu')}</span>
-        </Menu.Item>
         <Menu.Item key='5' onClick={handleUserInfoClick}>
           <UserOutlined />
           <span> {t('user-info')}</span>
-        </Menu.Item>
-        <Menu.Item key='7' onClick={handleLogout}>
-          <LogoutOutlined />
-          <span>{t('quit')}</span>
         </Menu.Item>
       </Menu>
       <Button
