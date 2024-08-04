@@ -24,8 +24,23 @@ const UpdateUserModal: FC<IUpdateUserModalProps> = ({ onCancel, token, userId })
         }
     }, [token, userId])
 
+    const onFinish = (e: React.FormEvent<HTMLFormElement>): void => {
+        e.preventDefault()
+        if (userId !== null) {
+            UserInfoAPI
+                .editUserDataById(token, user, userId)
+                .then(() => {
+                    console.log('Done')
+                })
+                .catch((e) => openNotification(e, 'topRight'))
+        } else {
+            console.error('userId is null')
+            openNotification('User ID cannot be null', 'topRight')
+        }
+    }
+
     return <Modal title="Update Form Modal" open={!!userId} onCancel={onCancel} footer={[<Button key="cancel" onClick={onCancel}>{t('cancel')}</Button>]}>
-    <Form className='mb-8'>
+    <Form className='mt-4 mb-8' onFinish={onFinish}>
         <Form.Item label={t('user-id')} rules={[{ required: false, message: t('enter-user-id') }]}>
             <Input type="number" value={user?.id} />
         </Form.Item>
@@ -67,7 +82,7 @@ const UpdateUserModal: FC<IUpdateUserModalProps> = ({ onCancel, token, userId })
             </Button>
         </div>
     </Form>
-    <Form className='mb-8'>
+    <Form className='mb-8' onFinish={onFinish}>
         <Form.Item label={t('user-role-title')} rules={[{ required: false, message: t('enter-user-role-title') }]}>
             {/* @ts-expect-error role is object */}
             <Input type="text" value={user?.role?.title} />
@@ -78,7 +93,7 @@ const UpdateUserModal: FC<IUpdateUserModalProps> = ({ onCancel, token, userId })
             </Button>
         </div>
     </Form>
-    <Form className='mb-8'>
+    <Form className='mb-8' onFinish={onFinish}>
         <Form.Item label={t('user-project-title')} rules={[{ required: false, message: t('enter-user-project-title') }]}>
             {/* @ts-expect-error role is object */}
             <Input type="text" value={user?.projects?.title} />
@@ -89,7 +104,7 @@ const UpdateUserModal: FC<IUpdateUserModalProps> = ({ onCancel, token, userId })
             </Button>
         </div>
     </Form>
-    <Form>
+    <Form onFinish={onFinish}>
         <Form.Item label={t('user-team-title')} rules={[{ required: false, message: t('enter-user-team-title') }]}>
             {/* @ts-expect-error role is object */}
             <Input type="text" value={user?.team?.title ?? ''} />

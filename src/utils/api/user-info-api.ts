@@ -87,6 +87,31 @@ export const editUserData = async (token: string, user: any): Promise<void> => {
     }
 }
 
+export const editUserDataById = async (token: string, user: any, userId: number): Promise<void> => {
+    try {
+        if (token) {
+            const response = await fetch(`${BASE_URL}/users/${userId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-type': 'application/json',
+                    Authorization: `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    ...user
+                })
+            })
+            //
+            if (!response.ok) {
+                throw new Error('Failed to fetch user data')
+            }
+        } else {
+            throw new Error('Bearer токен отсутствует!')
+        }
+    } catch (error) {
+        console.error('Произошла ошибка', error)
+    }
+}
+
 export const getUserTeam = async (token: string, userTeam: any, setUserTeam: any): Promise<void> => {
     try {
         if (token) {
