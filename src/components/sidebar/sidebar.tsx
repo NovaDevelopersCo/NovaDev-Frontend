@@ -5,7 +5,8 @@ import {
   LogoutOutlined,
   GroupOutlined,
   VerticalAlignTopOutlined,
-  UserOutlined
+  UserOutlined,
+  TeamOutlined
 } from '@ant-design/icons'
 import { useHistory } from 'react-router'
 
@@ -88,7 +89,7 @@ const Sidebar: FC<ISidebar> = ({
           <span>{t('manual')}</span>
         </Menu.Item>
         <Menu.Item key='4' onClick={handleCustomersClick}>
-          <InfoCircleOutlined />
+        <TeamOutlined />
           <span>{t('customers')}</span>
         </Menu.Item>
         <Menu.Item key='5' onClick={handleProfileClick}>
