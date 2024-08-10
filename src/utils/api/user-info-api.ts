@@ -44,9 +44,9 @@ export const getUserData = async (token: string, user: any, setUser: any): Promi
             if (data && Object.keys(data).length > 0) {
                 const formattedData: TUser = {
                     id: data.id,
-                    role: [data.role],
-                    info: [data.info],
-                    team: [data.team],
+                    role: data.role,
+                    info: data.info,
+                    team: data.team,
                     projects: Array.isArray(data.projects) ? data.projects.map((project: any) => ({ id: project.id, title: project.title })) : []
                 }
 
@@ -87,7 +87,7 @@ export const editUserData = async (token: string, user: any): Promise<void> => {
     }
 }
 
-export const editUserDataById = async (token: string, user: any, userId: number): Promise<void> => {
+export const editUserDataById = async (token: string, formData: any, userId: number): Promise<void> => {
     try {
         if (token) {
             const response = await fetch(`${BASE_URL}/users/${userId}`, {
@@ -97,7 +97,7 @@ export const editUserDataById = async (token: string, user: any, userId: number)
                     Authorization: `Bearer ${token}`
                 },
                 body: JSON.stringify({
-                    ...user
+                    ...formData
                 })
             })
             //
@@ -147,17 +147,117 @@ export const getUserTeam = async (token: string, userTeam: any, setUserTeam: any
     }
 }
 
-export const editUserTeam = async (token: string, userTeam: any): Promise<void> => {
+export const editUserTeam = async (token: string, formTeamData: any): Promise<void> => {
     try {
         if (token) {
-            const response = await fetch(`${BASE_URL}/users/me`, {
+            const response = await fetch(`${BASE_URL}/teams/add`, {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json',
+                    Authorization: `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    ...formTeamData
+                })
+            })
+            //
+            if (!response.ok) {
+                throw new Error('Failed to fetch user data')
+            }
+        } else {
+            throw new Error('Bearer токен отсутствует!')
+        }
+    } catch (error) {
+        console.error('Произошла ошибка', error)
+    }
+}
+
+export const deleteUserTeam = async (token: string, formTeamData: any, userId: number): Promise<void> => {
+    try {
+        if (token) {
+            const response = await fetch(`${BASE_URL}/teams/cut`, {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json',
+                    Authorization: `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    ...formTeamData
+                })
+            })
+            //
+            if (!response.ok) {
+                throw new Error('Failed to fetch user data')
+            }
+        } else {
+            throw new Error('Bearer токен отсутствует!')
+        }
+    } catch (error) {
+        console.error('Произошла ошибка', error)
+    }
+}
+
+export const editUserRole = async (token: string, formRoleData: any, userId: number): Promise<void> => {
+    try {
+        if (token) {
+            const response = await fetch(`${BASE_URL}/users/${userId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-type': 'application/json',
                     Authorization: `Bearer ${token}`
                 },
                 body: JSON.stringify({
-                    ...userTeam
+                    ...formRoleData
+                })
+            })
+            //
+            if (!response.ok) {
+                throw new Error('Failed to fetch user data')
+            }
+        } else {
+            throw new Error('Bearer токен отсутствует!')
+        }
+    } catch (error) {
+        console.error('Произошла ошибка', error)
+    }
+}
+
+export const editUserProject = async (token: string, formProjectsData: any, userId: number): Promise<void> => {
+    try {
+        if (token) {
+            const response = await fetch(`${BASE_URL}/project/add`, {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json',
+                    Authorization: `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    ...formProjectsData
+                })
+            })
+            //
+            if (!response.ok) {
+                throw new Error('Failed to fetch user data')
+            }
+        } else {
+            throw new Error('Bearer токен отсутствует!')
+        }
+    } catch (error) {
+        console.error('Произошла ошибка', error)
+    }
+}
+
+export const deleteUserProject = async (token: string, formProjectsData: any, userId: number): Promise<void> => {
+    try {
+        if (token) {
+            const response = await fetch(`${BASE_URL}/project/cut`, {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json',
+                    Authorization: `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    ...formProjectsData
                 })
             })
             //

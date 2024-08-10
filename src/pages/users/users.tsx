@@ -60,7 +60,6 @@ const AllUsers: FC<IUsers> = ({ token, pathRest, t }) => {
       key: 'role_title',
       render: (title: string, user: TUser): JSX.Element => {
         if (user?.role) {
-          // @ts-expect-error role is object
           return <span>{user.role.title}</span>
         } else {
           return <span>No role found</span>
@@ -68,7 +67,6 @@ const AllUsers: FC<IUsers> = ({ token, pathRest, t }) => {
       },
       sorter: (a: TUser, b: TUser): number => {
         if (a.role && b.role) {
-            // @ts-expect-error role is object
             return a.role.title.localeCompare(b.role.title)
         }
         return 0
@@ -81,7 +79,6 @@ const AllUsers: FC<IUsers> = ({ token, pathRest, t }) => {
       // eslint-disable-next-line @typescript-eslint/naming-convention
       render: (public_nickname: string, user: TUser): JSX.Element => {
         if (user?.info) {
-          // @ts-expect-error role is object
           return <span>{user.info.public_nickname}</span>
         } else {
           return <span>No public_nickname found</span>
@@ -89,7 +86,6 @@ const AllUsers: FC<IUsers> = ({ token, pathRest, t }) => {
       },
       sorter: (a: TUser, b: TUser): number => {
         if (a.info && b.info) {
-            // @ts-expect-error role is object
             return a.info.public_nickname.localeCompare(b.info.public_nickname)
         }
         return 0
@@ -102,7 +98,6 @@ const AllUsers: FC<IUsers> = ({ token, pathRest, t }) => {
       // eslint-disable-next-line @typescript-eslint/naming-convention
       render: (full_name: string, user: TUser): JSX.Element => {
         if (user?.info) {
-          // @ts-expect-error role is object
           return <span>{user.info.full_name}</span>
         } else {
           return <span>No full_name found</span>
@@ -110,7 +105,6 @@ const AllUsers: FC<IUsers> = ({ token, pathRest, t }) => {
       },
       sorter: (a: TUser, b: TUser): number => {
         if (a.info && b.info) {
-            // @ts-expect-error role is object
             return a.info.full_name.localeCompare(b.info.full_name)
         }
         return 0
@@ -122,7 +116,6 @@ const AllUsers: FC<IUsers> = ({ token, pathRest, t }) => {
       key: 'email',
       render: (email: string, user: TUser): JSX.Element => {
         if (user?.info) {
-          // @ts-expect-error role is object
           return <span>{user.info.email}</span>
         } else {
           return <span>No email found</span>
@@ -130,7 +123,6 @@ const AllUsers: FC<IUsers> = ({ token, pathRest, t }) => {
       },
       sorter: (a: TUser, b: TUser): number => {
         if (a.info && b.info) {
-            // @ts-expect-error role is object
             return a.info.email.localeCompare(b.info.email)
         }
         return 0
@@ -142,7 +134,6 @@ const AllUsers: FC<IUsers> = ({ token, pathRest, t }) => {
       key: 'phone',
       render: (phone: number, user: TUser): JSX.Element => {
         if (user?.info) {
-          // @ts-expect-error role is object
           return <span>{user.info.phone}</span>
         } else {
           return <span>No phone found</span>
@@ -162,7 +153,6 @@ const AllUsers: FC<IUsers> = ({ token, pathRest, t }) => {
       key: 'github',
       render: (github: string, user: TUser): JSX.Element => {
         if (user?.info) {
-          // @ts-expect-error role is object
           return <span>{user.info.github}</span>
         } else {
           return <span>No github found</span>
@@ -170,7 +160,6 @@ const AllUsers: FC<IUsers> = ({ token, pathRest, t }) => {
       },
       sorter: (a: TUser, b: TUser): number => {
         if (a.info && b.info) {
-            // @ts-expect-error role is object
             return a.info.github.localeCompare(b.info.github)
         }
         return 0
@@ -183,7 +172,6 @@ const AllUsers: FC<IUsers> = ({ token, pathRest, t }) => {
       // eslint-disable-next-line @typescript-eslint/naming-convention
       render: (payment_info: string, user: TUser): JSX.Element => {
         if (user?.info) {
-          // @ts-expect-error role is object
           return <span>{user.info.payment_info}</span>
         } else {
           return <span>No payment_info found</span>
@@ -191,7 +179,6 @@ const AllUsers: FC<IUsers> = ({ token, pathRest, t }) => {
       },
       sorter: (a: TUser, b: TUser): number => {
         if (a.info && b.info) {
-            // @ts-expect-error role is object
             return a.info.payment_info.localeCompare(b.info.payment_info)
         }
         return 0
@@ -203,7 +190,6 @@ const AllUsers: FC<IUsers> = ({ token, pathRest, t }) => {
       key: 'tg',
       render: (tg: string, user: TUser): JSX.Element => {
         if (user?.info) {
-          // @ts-expect-error role is object
           return <span>{user.info.tg}</span>
         } else {
           return <span>No tg found</span>
@@ -211,7 +197,6 @@ const AllUsers: FC<IUsers> = ({ token, pathRest, t }) => {
       },
       sorter: (a: TUser, b: TUser): number => {
         if (a.info && b.info) {
-            // @ts-expect-error role is object
             return a.info.tg.localeCompare(b.info.tg)
         }
         return 0
@@ -223,7 +208,6 @@ const AllUsers: FC<IUsers> = ({ token, pathRest, t }) => {
       key: 'image',
       render: (image: string, user: TUser): JSX.Element => {
         if (user?.info) {
-          // @ts-expect-error role is object
           return <span>{user.info.image}</span>
         } else {
           return <span>No image found</span>
@@ -231,7 +215,6 @@ const AllUsers: FC<IUsers> = ({ token, pathRest, t }) => {
       },
       sorter: (a: TUser, b: TUser): number => {
         if (a.info && b.info) {
-            // @ts-expect-error role is object
             return a.info.image.localeCompare(b.info.image)
         }
         return 0
@@ -243,7 +226,6 @@ const AllUsers: FC<IUsers> = ({ token, pathRest, t }) => {
       key: 'team_title',
       render: (title: string, user: TUser): JSX.Element => {
         if (user?.team) {
-          // @ts-expect-error role is object
           return <span>{user.team.title}</span>
         } else {
           return <span>No team_title found</span>
@@ -251,7 +233,6 @@ const AllUsers: FC<IUsers> = ({ token, pathRest, t }) => {
       },
       sorter: (a: TUser, b: TUser): number => {
         if (a.team && b.team) {
-            // @ts-expect-error role is object
             return a.team.title.localeCompare(b.team.title)
         }
         return 0
