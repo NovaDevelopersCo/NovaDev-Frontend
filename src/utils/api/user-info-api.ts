@@ -172,7 +172,7 @@ export const editUserTeam = async (token: string, formTeamData: any): Promise<vo
     }
 }
 
-export const deleteUserTeam = async (token: string, formTeamData: any, userId: number): Promise<void> => {
+export const deleteUserTeam = async (token: string, formTeamData: any): Promise<void> => {
     try {
         if (token) {
             const response = await fetch(`${BASE_URL}/teams/cut`, {
@@ -222,7 +222,7 @@ export const editUserRole = async (token: string, formRoleData: any, userId: num
     }
 }
 
-export const editUserProject = async (token: string, formProjectsData: any, userId: number): Promise<void> => {
+export const editUserProject = async (token: string, formProjectsData: any): Promise<void> => {
     try {
         if (token) {
             const response = await fetch(`${BASE_URL}/project/add`, {
@@ -247,7 +247,7 @@ export const editUserProject = async (token: string, formProjectsData: any, user
     }
 }
 
-export const deleteUserProject = async (token: string, formProjectsData: any, userId: number): Promise<void> => {
+export const deleteUserProject = async (token: string, formProjectsData: any): Promise<void> => {
     try {
         if (token) {
             const response = await fetch(`${BASE_URL}/project/cut`, {

@@ -59,11 +59,8 @@ const AllUsers: FC<IUsers> = ({ token, pathRest, t }) => {
       dataIndex: 'role_title',
       key: 'role_title',
       render: (title: string, user: TUser): JSX.Element => {
-        if (user?.role) {
-          return <span>{user.role.title}</span>
-        } else {
-          return <span>No role found</span>
-        }
+        const userRoleTitle = user?.role?.title ?? 'No user role title found'
+        return <span>{userRoleTitle}</span>
       },
       sorter: (a: TUser, b: TUser): number => {
         if (a.role && b.role) {
@@ -78,11 +75,8 @@ const AllUsers: FC<IUsers> = ({ token, pathRest, t }) => {
       key: 'public_nickname',
       // eslint-disable-next-line @typescript-eslint/naming-convention
       render: (public_nickname: string, user: TUser): JSX.Element => {
-        if (user?.info) {
-          return <span>{user.info.public_nickname}</span>
-        } else {
-          return <span>No public_nickname found</span>
-        }
+        const userPublicNickname = user?.info?.public_nickname ?? 'No public_nickname found'
+        return <span>{userPublicNickname}</span>
       },
       sorter: (a: TUser, b: TUser): number => {
         if (a.info && b.info) {
@@ -97,11 +91,8 @@ const AllUsers: FC<IUsers> = ({ token, pathRest, t }) => {
       key: 'full_name',
       // eslint-disable-next-line @typescript-eslint/naming-convention
       render: (full_name: string, user: TUser): JSX.Element => {
-        if (user?.info) {
-          return <span>{user.info.full_name}</span>
-        } else {
-          return <span>No full_name found</span>
-        }
+        const userFullName = user?.info?.full_name ?? 'No full_name found'
+        return <span>{userFullName}</span>
       },
       sorter: (a: TUser, b: TUser): number => {
         if (a.info && b.info) {
@@ -115,11 +106,8 @@ const AllUsers: FC<IUsers> = ({ token, pathRest, t }) => {
       dataIndex: 'email',
       key: 'email',
       render: (email: string, user: TUser): JSX.Element => {
-        if (user?.info) {
-          return <span>{user.info.email}</span>
-        } else {
-          return <span>No email found</span>
-        }
+        const userEmail = user?.info?.email ?? 'No email found'
+        return <span>{userEmail}</span>
       },
       sorter: (a: TUser, b: TUser): number => {
         if (a.info && b.info) {
@@ -133,11 +121,8 @@ const AllUsers: FC<IUsers> = ({ token, pathRest, t }) => {
       dataIndex: 'phone',
       key: 'phone',
       render: (phone: number, user: TUser): JSX.Element => {
-        if (user?.info) {
-          return <span>{user.info.phone}</span>
-        } else {
-          return <span>No phone found</span>
-        }
+        const userPhone = user?.info?.phone ?? 'No phone found'
+        return <span>{userPhone}</span>
       },
       sorter: (a: TUser, b: TUser): number => {
         if (a.info && b.info) {
@@ -152,11 +137,8 @@ const AllUsers: FC<IUsers> = ({ token, pathRest, t }) => {
       dataIndex: 'github',
       key: 'github',
       render: (github: string, user: TUser): JSX.Element => {
-        if (user?.info) {
-          return <span>{user.info.github}</span>
-        } else {
-          return <span>No github found</span>
-        }
+        const userGithub = user?.info?.github ?? 'No github found'
+        return <span>{userGithub}</span>
       },
       sorter: (a: TUser, b: TUser): number => {
         if (a.info && b.info) {
@@ -171,11 +153,8 @@ const AllUsers: FC<IUsers> = ({ token, pathRest, t }) => {
       key: 'payment_info',
       // eslint-disable-next-line @typescript-eslint/naming-convention
       render: (payment_info: string, user: TUser): JSX.Element => {
-        if (user?.info) {
-          return <span>{user.info.payment_info}</span>
-        } else {
-          return <span>No payment_info found</span>
-        }
+        const userPaymentInfo = user?.info?.payment_info ?? 'No payment info found'
+        return <span>{userPaymentInfo}</span>
       },
       sorter: (a: TUser, b: TUser): number => {
         if (a.info && b.info) {
@@ -189,11 +168,8 @@ const AllUsers: FC<IUsers> = ({ token, pathRest, t }) => {
       dataIndex: 'tg',
       key: 'tg',
       render: (tg: string, user: TUser): JSX.Element => {
-        if (user?.info) {
-          return <span>{user.info.tg}</span>
-        } else {
-          return <span>No tg found</span>
-        }
+        const userTg = user?.info?.tg ?? 'No tg found'
+        return <span>{userTg}</span>
       },
       sorter: (a: TUser, b: TUser): number => {
         if (a.info && b.info) {
@@ -207,11 +183,8 @@ const AllUsers: FC<IUsers> = ({ token, pathRest, t }) => {
       dataIndex: 'image',
       key: 'image',
       render: (image: string, user: TUser): JSX.Element => {
-        if (user?.info) {
-          return <span>{user.info.image}</span>
-        } else {
-          return <span>No image found</span>
-        }
+        const userImage = user?.info?.image ?? 'No image found'
+        return <span>{userImage}</span>
       },
       sorter: (a: TUser, b: TUser): number => {
         if (a.info && b.info) {
@@ -243,16 +216,21 @@ const AllUsers: FC<IUsers> = ({ token, pathRest, t }) => {
       dataIndex: 'projects_title',
       key: 'projects_title',
       render: (title: string, user: TUser): JSX.Element => {
-        if (user?.projects) {
-          // @ts-expect-error role is object
-          return <span>{user.projects.title}</span>
+        if (user?.projects && user.projects.length > 0) {
+          return (
+            <div>
+              {user.projects.map((project, index) => {
+                return <div key={index}>{project.title || 'No title'}</div>
+              })}
+            </div>
+          )
         } else {
           return <span>No projects_title found</span>
         }
       },
       sorter: (a: TUser, b: TUser): number => {
         if (a.projects && b.projects) {
-            // @ts-expect-error role is object
+            // @ts-expect-error projects is object
             return a.projects.title.localeCompare(b.projects.title)
         }
         return 0
