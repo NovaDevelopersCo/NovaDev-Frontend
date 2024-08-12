@@ -48,6 +48,8 @@
   "changed-team": "Сменить команду",
   "leave-project": "Покинуть проект",
   "changed-project": "Сменить проект",
+  "user-delete-title": "Удаление пользователя",
+  "confirm-user-delete": "Подтвердите удаление пользователя",
   "something-went-wrong": "Что-то пошло не так",
   "parent-category": "Родительская категория",
   "change-active": "Изменить активность?",

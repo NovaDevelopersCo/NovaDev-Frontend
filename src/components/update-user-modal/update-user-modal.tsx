@@ -16,7 +16,7 @@ const UpdateUserModal: FC<IUpdateUserModalProps> = ({ onCancel, token, userId })
     const { openNotification } = useContext(NotificationContext)
     const [userIdNumber, setUserIdNumber] = useState<number | null>(null)
     const [userRoleTitle, setUserRoleTitle] = useState<string | null>(null)
-    const [userProjectsId, setUserProjectsId] = useState<number | null>(null)
+    const [userProjectsId, setUserProjectsId] = useState<number[]>([])
     const [userTeamId, setUserTeamId] = useState<number | null>(null)
 
     const formRoleData = {
@@ -33,13 +33,17 @@ const UpdateUserModal: FC<IUpdateUserModalProps> = ({ onCancel, token, userId })
         userId: userIdNumber
     }
 
+    // useEffect(() => {
+    //     console.log(userTeamId)
+    // }, [])
+
     useEffect(() => {
         if (userId) {
             UserInfoAPI.fetchUserById(token, userId).then(res => {
                 if (res) {
                     setUserIdNumber(res.id)
                     setUserRoleTitle(res.role.title)
-                    setUserProjectsId(res.projects[0].id)
+                    setUserProjectsId(res.projects.map(project => project.id))
                     setUserTeamId(res.team.id)
                 }
             }).catch((e: Error) => openNotification(e.message, 'topRight'))
@@ -51,7 +55,7 @@ const UpdateUserModal: FC<IUpdateUserModalProps> = ({ onCancel, token, userId })
             UserInfoAPI
                 .editUserRole(token, formRoleData, userId)
                 .then(() => {
-                    openNotification('Данные сохранены!', 'topRight')
+                    openNotification('The user data is saved!', 'topRight')
                 })
                 .catch((e) => openNotification(e, 'topRight'))
         }
@@ -62,7 +66,7 @@ const UpdateUserModal: FC<IUpdateUserModalProps> = ({ onCancel, token, userId })
             UserInfoAPI
                 .editUserProject(token, formProjectsData)
                 .then(() => {
-                    openNotification('Данные сохранены!', 'topRight')
+                    openNotification('The user data is saved!', 'topRight')
                 })
                 .catch((e) => openNotification(e, 'topRight'))
         }
@@ -73,7 +77,7 @@ const UpdateUserModal: FC<IUpdateUserModalProps> = ({ onCancel, token, userId })
             UserInfoAPI
                 .deleteUserProject(token, formProjectsData)
                 .then(() => {
-                    openNotification('Данные сохранены!', 'topRight')
+                    openNotification('The user data is saved!', 'topRight')
                 })
                 .catch((e) => openNotification(e, 'topRight'))
         }
@@ -84,7 +88,7 @@ const UpdateUserModal: FC<IUpdateUserModalProps> = ({ onCancel, token, userId })
             UserInfoAPI
                 .editUserTeam(token, formTeamData)
                 .then(() => {
-                    openNotification('Данные сохранены!', 'topRight')
+                    openNotification('The user data is saved!', 'topRight')
                 })
                 .catch((e) => openNotification(e, 'topRight'))
         }
@@ -95,16 +99,24 @@ const UpdateUserModal: FC<IUpdateUserModalProps> = ({ onCancel, token, userId })
             UserInfoAPI
                 .deleteUserTeam(token, formTeamData)
                 .then(() => {
-                    openNotification('Данные сохранены!', 'topRight')
+                    openNotification('The user data is saved!', 'topRight')
                 })
                 .catch((e) => openNotification(e, 'topRight'))
         }
     }
 
-    const handleUserProjectsChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    const handleUserProjectsChange = (e: React.ChangeEvent<HTMLInputElement>, index: number): void => {
         const value = e.target.value
-        setUserProjectsId(value ? Number(value) : null)
+        setUserProjectsId(prevProjects => {
+            const newProjects = [...prevProjects]
+            newProjects[index] = value ? Number(value) : 0
+            return newProjects
+        })
     }
+
+    // const addProjectField = (): void => {
+    //     setUserProjectsId(prevProjects => [...prevProjects, 0])
+    // }
 
     const handleUserTeamChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
         const value = e.target.value
@@ -124,7 +136,15 @@ const UpdateUserModal: FC<IUpdateUserModalProps> = ({ onCancel, token, userId })
     </Form>
     <Form className='mb-8'>
         <Form.Item label={t('user-project-id')} rules={[{ required: false, message: t('enter-user-project-id') }]}>
-            <Input type="text" value={userProjectsId ?? ''} onChange={handleUserProjectsChange} />
+                {userProjectsId.map((id, index) => (
+                    <div key={id}>
+                        <Input
+                            type="text"
+                            value={id}
+                            onChange={(e) => handleUserProjectsChange(e, index)}
+                        />
+                    </div>
+                ))}
         </Form.Item>
         <div className='flex justify-center gap-12'>
             <Button className='flex justify-center items-center text-lg w-30 mt-5' type='primary' danger onClick={deleteUserProjects} >

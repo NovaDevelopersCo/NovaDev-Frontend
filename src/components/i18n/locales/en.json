@@ -48,6 +48,8 @@
   "changed-team": "Change command",
   "leave-project": "Leave from project",
   "changed-project": "Changed project",
+  "user-delete-title": "User deleting",
+  "confirm-user-delete": "Confirm user deleting",
   "something-went-wrong": "Something went wrong",
   "parent-category": "Parent category",
   "change-active": "Change active?",

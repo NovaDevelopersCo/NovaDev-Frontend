@@ -47,6 +47,8 @@
   "changed-team": "Команданы өзгерту",
   "leave-project": "Жобадан кету",
   "changed-project": "Жобаны өзгерту",
+  "user-delete-title": "Пайдаланушыны жою",
+  "confirm-user-delete": "Пайдаланушының жойылғанын растаңыз",
   "something-went-wrong": "Бірдеңе дұрыс болмады",
   "parent-category": "Ата-ана санаты",
   "change-active": "Әрекетті өзгерту керек пе?",

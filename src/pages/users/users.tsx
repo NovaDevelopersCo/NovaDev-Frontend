@@ -6,6 +6,7 @@ import { Link, NavLink } from 'react-router-dom'
 import { NotificationContext } from '../../components/notification-provider/notification-provider'
 import { TUser } from '../../utils/typesFromBackend'
 import UpdateUserModal from '../../components/update-user-modal/update-user-modal'
+import DeleteUserModal from '../../components/delete-user-modal/delete-user-modal'
 
 interface IUsers {
   token: string
@@ -16,8 +17,8 @@ interface IUsers {
 const AllUsers: FC<IUsers> = ({ token, pathRest, t }) => {
   const { openNotification } = useContext(NotificationContext)
   const [users, setUsers] = useState<TUser[]>([])
-  // const history = useHistory()
   const [updatingUserId, setUpdatingUserId] = useState<null | number>(null)
+  const [deletingUserId, setDeletingUserId] = useState<null | number>(null)
 
   useEffect(() => {
     UserInfoAPI
@@ -28,19 +29,12 @@ const AllUsers: FC<IUsers> = ({ token, pathRest, t }) => {
       .catch((e: Error) => openNotification(e.message, 'topRight'))
   }, [token, openNotification])
 
-  const handleDelete = (id: number): void => {
-    UserInfoAPI
-      .deleteUser(token, id)
-      .then(() =>
-        setUsers((prev: TUser[]) =>
-          prev.filter((user) => user.id !== id)
-        )
-      )
-      .catch((e: Error) => openNotification(e.message, 'topRight'))
-  }
-
   const handleCancel = (): void => {
     setUpdatingUserId(null)
+  }
+
+  const closeModalDelete = (): void => {
+    setDeletingUserId(null)
   }
 
   const columns: ColumnsType<TUser> = [
@@ -244,13 +238,13 @@ const AllUsers: FC<IUsers> = ({ token, pathRest, t }) => {
           <Button
             type='primary'
             onClick={() => {
-              console.log(user)
+              // console.log(user)
               setUpdatingUserId(user.id)
             }}
           >
             {t('update')}
           </Button>
-          <Button danger onClick={() => handleDelete(user.id)}>
+          <Button danger onClick={() => setDeletingUserId(user.id)}>
             {t('delete')}
           </Button>
         </div>
@@ -258,7 +252,8 @@ const AllUsers: FC<IUsers> = ({ token, pathRest, t }) => {
     }
   ]
 
-  console.log(users)
+  // console.log(users)
+  // console.log(users.map(user => ({ ...user, key: user.id })))
 
   return (
     <>
@@ -297,9 +292,10 @@ const AllUsers: FC<IUsers> = ({ token, pathRest, t }) => {
             {t('add')}
           </NavLink>
         </div>
-        <Table columns={columns} dataSource={users} />
+        <Table columns={columns} dataSource={users.map(user => ({ ...user, key: user.id }))} />
       </div>
       <UpdateUserModal token={token} userId={updatingUserId} onCancel={handleCancel}/>
+      <DeleteUserModal token={token} userId={deletingUserId} onCancel={closeModalDelete}/>
     </>
   )
 }
