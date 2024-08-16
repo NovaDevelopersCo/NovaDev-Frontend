@@ -3,7 +3,6 @@ import { FC, useContext, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import * as UserInfoAPI from '../../utils/api/user-info-api'
 import { NotificationContext } from '../notification-provider/notification-provider'
-// import { TUser } from '../../utils/typesFromBackend'
 
 interface IUpdateUserModalProps {
     onCancel: () => void
@@ -16,7 +15,8 @@ const UpdateUserModal: FC<IUpdateUserModalProps> = ({ onCancel, token, userId })
     const { openNotification } = useContext(NotificationContext)
     const [userIdNumber, setUserIdNumber] = useState<number | null>(null)
     const [userRoleTitle, setUserRoleTitle] = useState<string | null>(null)
-    const [userProjectsId, setUserProjectsId] = useState<number[]>([])
+    const [, setUserProjectsId] = useState<number[]>([])
+    const [userProjectsIdInput, setUserProjectsIdInput] = useState<number | null>(null)
     const [userTeamId, setUserTeamId] = useState<number | null>(null)
 
     const formRoleData = {
@@ -29,21 +29,20 @@ const UpdateUserModal: FC<IUpdateUserModalProps> = ({ onCancel, token, userId })
     }
 
     const formProjectsData = {
-        projectId: userProjectsId,
+        projectId: userProjectsIdInput,
         userId: userIdNumber
     }
-
-    // useEffect(() => {
-    //     console.log(userTeamId)
-    // }, [])
 
     useEffect(() => {
         if (userId) {
             UserInfoAPI.fetchUserById(token, userId).then(res => {
+                console.log(res)
                 if (res) {
                     setUserIdNumber(res.id)
                     setUserRoleTitle(res.role.title)
-                    setUserProjectsId(res.projects.map(project => project.id))
+                    const projectIds = res.projects.map(project => project.id)
+                    setUserProjectsId(projectIds)
+                    setUserProjectsIdInput(parseInt(projectIds.join(', ')))
                     setUserTeamId(res.team.id)
                 }
             }).catch((e: Error) => openNotification(e.message, 'topRight'))
@@ -105,18 +104,10 @@ const UpdateUserModal: FC<IUpdateUserModalProps> = ({ onCancel, token, userId })
         }
     }
 
-    const handleUserProjectsChange = (e: React.ChangeEvent<HTMLInputElement>, index: number): void => {
+    const handleUserProjectsChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
         const value = e.target.value
-        setUserProjectsId(prevProjects => {
-            const newProjects = [...prevProjects]
-            newProjects[index] = value ? Number(value) : 0
-            return newProjects
-        })
+        setUserProjectsIdInput(value ? Number(value) : null)
     }
-
-    // const addProjectField = (): void => {
-    //     setUserProjectsId(prevProjects => [...prevProjects, 0])
-    // }
 
     const handleUserTeamChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
         const value = e.target.value
@@ -136,15 +127,7 @@ const UpdateUserModal: FC<IUpdateUserModalProps> = ({ onCancel, token, userId })
     </Form>
     <Form className='mb-8'>
         <Form.Item label={t('user-project-id')} rules={[{ required: false, message: t('enter-user-project-id') }]}>
-                {userProjectsId.map((id, index) => (
-                    <div key={id}>
-                        <Input
-                            type="text"
-                            value={id}
-                            onChange={(e) => handleUserProjectsChange(e, index)}
-                        />
-                    </div>
-                ))}
+                <Input type='number' value={userProjectsIdInput ?? ''} onChange={handleUserProjectsChange} />
         </Form.Item>
         <div className='flex justify-center gap-12'>
             <Button className='flex justify-center items-center text-lg w-30 mt-5' type='primary' danger onClick={deleteUserProjects} >
@@ -157,7 +140,7 @@ const UpdateUserModal: FC<IUpdateUserModalProps> = ({ onCancel, token, userId })
     </Form>
     <Form>
         <Form.Item label={t('user-team-id')} rules={[{ required: false, message: t('enter-user-team-id') }]}>
-            <Input type="text" value={userTeamId ?? ''} onChange={handleUserTeamChange} />
+            <Input type="number" value={userTeamId ?? ''} onChange={handleUserTeamChange} />
         </Form.Item>
         <div className='flex justify-center gap-12'>
             <Button className='flex justify-center items-center text-lg w-30 mt-5' type='primary' danger onClick={deleteUserTeam} >
