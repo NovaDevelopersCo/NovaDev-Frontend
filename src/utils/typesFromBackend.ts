@@ -260,3 +260,15 @@ export interface TCustomer {
   email: string
   tg: string
 }
+export interface TAdvice {
+  id: string
+  title: string
+  content: string
+}
+export interface TProfileData {
+  picture: string
+  name: string
+  github: string
+  team: string
+  project: string
+}

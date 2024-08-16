@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/consistent-type-assertions */
 import React, { useState, useEffect, FC } from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-
 import { Layout } from 'antd'
 import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons'
 import fullscreenIcon from '../../assets/images/fullscreen.svg'
@@ -64,6 +63,17 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
         : language
     )
   }, [])
+
+  useEffect(() => {
+    if (dark) {
+      document.body.style.backgroundColor = '#0A0E14'
+      document.body.style.color = '#fff'
+    } else {
+      document.body.style.backgroundColor = '#fff'
+      document.body.style.color = '#0A0E14'
+    }
+  }, [dark])
+
   const [collapse, setCollapse] = useState(false)
   let flag = false
   if (typeof window !== 'undefined') {
@@ -99,7 +109,7 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
     window.innerWidth <= 760 ? setCollapse(true) : setCollapse(false)
   }, [])
 
-  function handleClickFullScreen(): void {
+  const handleClickFullScreen = (): void => {
     if (document.fullscreenElement != null) {
       void document.exitFullscreen()
     } else {
@@ -172,8 +182,6 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
             <Content
               style={{
                 ...style,
-                display: 'flex',
-                justifyContent: 'center',
                 padding: 24,
                 minHeight: 'calc(100vh - 114px)'
               }}
@@ -181,11 +189,11 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
               <Switch>
                 <Route path={`/:${pathRest}/autorization`}>
                   <Autorization
-                    dark={dark}
-                    style={style}
                     setIsLoggedIn={setIsLoggedIn}
                     t={t}
                     setToken={setToken}
+                    style={style}
+                    dark={dark}
                   />
                 </Route>
                 <ProtectedRoute
@@ -231,7 +239,13 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
                   isLoggedIn={isLoggedIn}
                   pathRest={pathRest}
                 >
-                  <Customers token={token} pathRest={pathRest} t={t} />
+                  <Customers
+                    token={token}
+                    pathRest={pathRest}
+                    t={t}
+                    dark={dark}
+                    style={style}
+                  />
                 </ProtectedRoute>
                 <ProtectedRoute
                   path={`/:${pathRest}/add/customers`}
