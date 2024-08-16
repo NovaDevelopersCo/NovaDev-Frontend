@@ -224,8 +224,9 @@ const AllUsers: FC<IUsers> = ({ token, pathRest, t }) => {
       },
       sorter: (a: TUser, b: TUser): number => {
         if (a.projects && b.projects) {
-            // @ts-expect-error projects is object
-            return a.projects.title.localeCompare(b.projects.title)
+          const aTitle = a.projects && a.projects.length > 0 ? a.projects[0].title : ''
+          const bTitle = b.projects && b.projects.length > 0 ? b.projects[0].title : ''
+          return aTitle.localeCompare(bTitle)
         }
         return 0
       }
@@ -238,7 +239,6 @@ const AllUsers: FC<IUsers> = ({ token, pathRest, t }) => {
           <Button
             type='primary'
             onClick={() => {
-              // console.log(user)
               setUpdatingUserId(user.id)
             }}
           >
@@ -251,9 +251,6 @@ const AllUsers: FC<IUsers> = ({ token, pathRest, t }) => {
       )
     }
   ]
-
-  // console.log(users)
-  // console.log(users.map(user => ({ ...user, key: user.id })))
 
   return (
     <>
