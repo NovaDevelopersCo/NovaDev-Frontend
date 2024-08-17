@@ -34,6 +34,16 @@ const UpdateUserModal: FC<IUpdateUserModalProps> = ({ onCancel, token, userId })
     }
 
     useEffect(() => {
+        return (
+            setUserIdNumber(null),
+            setUserRoleTitle(null),
+            setUserProjectsId([]),
+            setUserProjectsIdInput(null),
+            setUserTeamId(null)
+        )
+    }, [userId])
+
+    useEffect(() => {
         if (userId) {
             UserInfoAPI.fetchUserById(token, userId).then(res => {
                 console.log(res)
