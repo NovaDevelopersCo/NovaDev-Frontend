@@ -178,13 +178,7 @@ const AllUsers: FC<IUsers> = ({ token, pathRest, t }) => {
       key: 'image',
       render: (image: string, user: TUser): JSX.Element => {
         const userImage = user?.info?.image ?? 'No image found'
-        return <span>{userImage}</span>
-      },
-      sorter: (a: TUser, b: TUser): number => {
-        if (a.info && b.info) {
-            return a.info.image.localeCompare(b.info.image)
-        }
-        return 0
+        return <img alt='user image' src={userImage} />
       }
     },
     {
