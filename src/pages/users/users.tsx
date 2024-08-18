@@ -1,4 +1,4 @@
-import { Button, Table } from 'antd'
+import { Button, Table, Image } from 'antd'
 import { ColumnsType } from 'antd/es/table'
 import { FC, useContext, useEffect, useState } from 'react'
 import * as UserInfoAPI from '../../utils/api/user-info-api'
@@ -178,7 +178,7 @@ const AllUsers: FC<IUsers> = ({ token, pathRest, t }) => {
       key: 'image',
       render: (image: string, user: TUser): JSX.Element => {
         const userImage = user?.info?.image ?? 'No image found'
-        return <img alt='user image' src={userImage} />
+        return <Image alt='user image' src={userImage} />
       }
     },
     {
