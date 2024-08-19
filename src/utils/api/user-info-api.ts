@@ -14,6 +14,16 @@ export const getAllUsers = async (token: string) => {
     }).then(async (res) => await handleResponse(res))
 }
 
+export const addUser = async (token: string) => {
+    return await fetch(`${BASE_URL}/users/createUser`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`
+        }
+    }).then(async (res) => await handleResponse(res))
+}
+
 export const deleteUser = async (token: string, id: number) => {
     return await fetch(`${BASE_URL}/users/${id}`, {
       method: 'DELETE',

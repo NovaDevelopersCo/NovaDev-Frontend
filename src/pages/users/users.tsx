@@ -2,11 +2,12 @@ import { Button, Table, Image } from 'antd'
 import { ColumnsType } from 'antd/es/table'
 import { FC, useContext, useEffect, useState } from 'react'
 import * as UserInfoAPI from '../../utils/api/user-info-api'
-import { Link, NavLink } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { NotificationContext } from '../../components/notification-provider/notification-provider'
 import { TUser } from '../../utils/typesFromBackend'
 import UpdateUserModal from '../../components/update-user-modal/update-user-modal'
 import DeleteUserModal from '../../components/delete-user-modal/delete-user-modal'
+import AddUserModal from '../../components/create-user-modal/create-user-modal'
 
 interface IUsers {
   token: string
@@ -19,6 +20,7 @@ const AllUsers: FC<IUsers> = ({ token, pathRest, t }) => {
   const [users, setUsers] = useState<TUser[]>([])
   const [updatingUserId, setUpdatingUserId] = useState<null | number>(null)
   const [deletingUserId, setDeletingUserId] = useState<null | number>(null)
+  const [createUser, setCreateUser] = useState(false)
 
   useEffect(() => {
     UserInfoAPI
@@ -35,6 +37,10 @@ const AllUsers: FC<IUsers> = ({ token, pathRest, t }) => {
 
   const closeModalDelete = (): void => {
     setDeletingUserId(null)
+  }
+
+  const closeModalAdd = (): void => {
+    setCreateUser(false)
   }
 
   const columns: ColumnsType<TUser> = [
@@ -264,8 +270,10 @@ const AllUsers: FC<IUsers> = ({ token, pathRest, t }) => {
             </h2>
             <p style={{ marginBottom: '0' }}>{t('your-list-users')}</p>
           </div>
-          <NavLink
-            to={`/${pathRest}/add/user`}
+          <Button
+            onClick={() => {
+              setCreateUser(true)
+            }}
             style={{
               color: '#fff',
               backgroundColor: '#2bc155',
@@ -281,12 +289,13 @@ const AllUsers: FC<IUsers> = ({ token, pathRest, t }) => {
             }}
           >
             {t('add')}
-          </NavLink>
+          </Button>
         </div>
         <Table columns={columns} dataSource={users.map(user => ({ ...user, key: user.id }))} />
       </div>
       <UpdateUserModal token={token} userId={updatingUserId} onCancel={handleCancel}/>
       <DeleteUserModal token={token} userId={deletingUserId} onCancel={closeModalDelete}/>
+      <AddUserModal token={token} openUser={createUser} onCancel={closeModalAdd}/>
     </>
   )
 }

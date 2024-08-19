@@ -234,6 +234,8 @@
   "user-team-title": "Наименование команды:",
   "user-project-id": "Id проекта:",
   "user-project-title": "Наименование проекта",
+  "create-new-user-title": "Создание нового пользователя",
+  "create-new-user": "Создать пользователя",
   "send": "Отправить",
   "password": "Пароль",
   "login": "Логин",

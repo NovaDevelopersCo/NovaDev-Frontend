@@ -253,6 +253,8 @@
   "user-team-title": "Team Title:",
   "user-project-id": "Project Id:",
   "user-project-title": "Project Title:",
+  "create-new-user-title": "Create new user",
+  "create-new-user": "Create user",
   "send": "Send",
   "password": "Password",
   "login": "Login",
