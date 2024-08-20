@@ -4,7 +4,6 @@ import {
   ReadOutlined,
   LogoutOutlined,
   BarsOutlined,
-  VerticalAlignTopOutlined,
   UserOutlined,
   ContactsOutlined,
   TeamOutlined
@@ -31,19 +30,18 @@ const Sidebar: FC<ISidebar> = ({
   const handleCategoriesClick = (): void => {
     history.push(`/${pathRest}/categories`)
   }
-  const handleProfileClick = (): void => {
-    history.push(`/${pathRest}/profile`)
+  const handleCustomersClick = (): void => {
+    history.push(`/${pathRest}/customers`)
   }
-
+  const handleUsersClick = (): void => {
+    history.push(`/${pathRest}/users`)
+  }
   const handleInstructionClick = (): void => {
     history.push(`/${pathRest}/blog`)
   }
 
-  const handleRestClick = (): void => {
-    history.push(`/${pathRest}/dishes`)
-  }
-  const handleCustomersClick = (): void => {
-    history.push(`/${pathRest}/customers`)
+  const handleUserInfoClick = (): void => {
+    history.push(`/${pathRest}/user`)
   }
   const handleTeamsClick = (): void => {
     history.push(`/${pathRest}/teams`)
@@ -88,6 +86,10 @@ const Sidebar: FC<ISidebar> = ({
           <BarsOutlined />
           <span>{t('categories')}</span>
         </Menu.Item>
+        <Menu.Item key='8' onClick={handleUsersClick}>
+          <TeamOutlined />
+          <span>{t('users')}</span>
+        </Menu.Item>
         <Menu.Item key='3' onClick={handleInstructionClick}>
           <ReadOutlined />
           <span>{t('manual')}</span>
@@ -100,13 +102,9 @@ const Sidebar: FC<ISidebar> = ({
           <ContactsOutlined />
           <span>{t('customers')}</span>
         </Menu.Item>
-        <Menu.Item key='6' onClick={handleProfileClick}>
+        <Menu.Item key='5' onClick={handleUserInfoClick}>
           <UserOutlined />
-          <span>{t('profile')}</span>
-        </Menu.Item>
-        <Menu.Item key='7' onClick={handleRestClick}>
-          <VerticalAlignTopOutlined />
-          <span>{t('back-menu')}</span>
+          <span> {t('user-info')}</span>
         </Menu.Item>
       </Menu>
       <Button
