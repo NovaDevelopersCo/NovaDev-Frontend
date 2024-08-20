@@ -1,11 +1,13 @@
 import { Dispatch, FC, SetStateAction } from 'react'
 import { Menu, Button } from 'antd'
 import {
-  InfoCircleOutlined,
+  ReadOutlined,
   LogoutOutlined,
-  GroupOutlined,
+  BarsOutlined,
   VerticalAlignTopOutlined,
-  UserOutlined
+  UserOutlined,
+  ContactsOutlined,
+  TeamOutlined
 } from '@ant-design/icons'
 import { useHistory } from 'react-router'
 
@@ -42,6 +44,9 @@ const Sidebar: FC<ISidebar> = ({
   }
   const handleCustomersClick = (): void => {
     history.push(`/${pathRest}/customers`)
+  }
+  const handleTeamsClick = (): void => {
+    history.push(`/${pathRest}/teams`)
   }
 
   const handleLogout = (): void => {
@@ -80,23 +85,26 @@ const Sidebar: FC<ISidebar> = ({
         defaultSelectedKeys={['1']}
       >
         <Menu.Item key='2' onClick={handleCategoriesClick}>
-          <GroupOutlined />
+          <BarsOutlined />
           <span>{t('categories')}</span>
         </Menu.Item>
         <Menu.Item key='3' onClick={handleInstructionClick}>
-          <InfoCircleOutlined />
+          <ReadOutlined />
           <span>{t('manual')}</span>
         </Menu.Item>
-        <Menu.Item key='4' onClick={handleCustomersClick}>
-          <InfoCircleOutlined />
+        <Menu.Item key='4' onClick={handleTeamsClick}>
+          <TeamOutlined />
+          <span>{t('teams')}</span>
+        </Menu.Item>
+        <Menu.Item key='5' onClick={handleCustomersClick}>
+          <ContactsOutlined />
           <span>{t('customers')}</span>
         </Menu.Item>
-        <Menu.Item key='5' onClick={handleProfileClick}>
+        <Menu.Item key='6' onClick={handleProfileClick}>
           <UserOutlined />
           <span>{t('profile')}</span>
         </Menu.Item>
         <Menu.Item key='7' onClick={handleRestClick}>
-
           <VerticalAlignTopOutlined />
           <span>{t('back-menu')}</span>
         </Menu.Item>
