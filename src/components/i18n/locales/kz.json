@@ -3,6 +3,7 @@
   "dishes": "Тағамдар",
   "categories": "Санаттар",
   "customers": "Тұтынушылар",
+  "administrators": "Әкімшілер",
   "about-user-title": "Пайдаланушы туралы ақпарат",
   "base-info-title": "Негізгі ақпарат",
   "team-info-title": "Команда туралы ақпарат",
@@ -321,6 +322,10 @@
   "change-information-about-me": "Өзіңіз туралы ақпаратты өзгертіңіз",
   "your-list-customers": " Клиенттер тізімі",
   "teams": "Командалар",
-  "your-list-users": "Пайдаланушылар тізімі",
-  "tg": "Жеделхат"
+  "list-users": "Пайдаланушылар тізімі",
+  "tg": "Жеделхат",
+  "users": "Пайдаланушылар",
+  "actions": "Әрекеттер",
+  "name-of-post": "Пост атауы",
+  "date-of-post": "Жазба күні"
 }

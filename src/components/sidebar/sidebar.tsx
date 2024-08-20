@@ -6,7 +6,8 @@ import {
   BarsOutlined,
   UserOutlined,
   ContactsOutlined,
-  TeamOutlined
+  TeamOutlined,
+  ApartmentOutlined
 } from '@ant-design/icons'
 import { useHistory } from 'react-router'
 
@@ -86,23 +87,23 @@ const Sidebar: FC<ISidebar> = ({
           <BarsOutlined />
           <span>{t('categories')}</span>
         </Menu.Item>
-        <Menu.Item key='8' onClick={handleUsersClick}>
+        <Menu.Item key='3' onClick={handleUsersClick}>
           <TeamOutlined />
           <span>{t('users')}</span>
         </Menu.Item>
-        <Menu.Item key='3' onClick={handleInstructionClick}>
-          <ReadOutlined />
-          <span>{t('manual')}</span>
-        </Menu.Item>
         <Menu.Item key='4' onClick={handleTeamsClick}>
-          <TeamOutlined />
+          <ApartmentOutlined />
           <span>{t('teams')}</span>
         </Menu.Item>
         <Menu.Item key='5' onClick={handleCustomersClick}>
           <ContactsOutlined />
           <span>{t('customers')}</span>
         </Menu.Item>
-        <Menu.Item key='5' onClick={handleUserInfoClick}>
+        <Menu.Item key='6' onClick={handleInstructionClick}>
+          <ReadOutlined />
+          <span>{t('manual')}</span>
+        </Menu.Item>
+        <Menu.Item key='7' onClick={handleUserInfoClick}>
           <UserOutlined />
           <span> {t('user-info')}</span>
         </Menu.Item>

@@ -23,6 +23,8 @@ import Dark from '../dark/dark'
 import { Footer } from 'antd/es/layout/layout'
 import { useTelegram } from '../../services/hooks/use-telegram'
 import UserInfo from '../../pages/user-info/user-info'
+import AdvicesTips from '../../pages/advices-tips/advices-tips'
+import AddPost from '../../pages/add-post/add-post'
 
 const { Header, Sider, Content } = Layout
 
@@ -285,16 +287,41 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
                   />
                 </ProtectedRoute>
                 <ProtectedRoute
-                    path={`/:${pathRest}/user`}
-                    exact
-                    isLoggedIn={isLoggedIn}
-                    pathRest={pathRest}
+                  path={`/:${pathRest}/blog`}
+                  exact
+                  isLoggedIn={isLoggedIn}
+                  pathRest={pathRest}
                 >
-                  <UserInfo
+                  <AdvicesTips
                     token={token}
+                    pathRest={pathRest}
                     t={t}
-                    language={language}
+                    dark={dark}
+                    style={style}
                   />
+                </ProtectedRoute>
+
+                <ProtectedRoute
+                  path={`/:${pathRest}/add/advice`}
+                  exact
+                  isLoggedIn={isLoggedIn}
+                  pathRest={pathRest}
+                >
+                  <AddPost
+                    token={token}
+                    pathRest={pathRest}
+                    t={t}
+                    dark={dark}
+                    style={style}
+                  />
+                </ProtectedRoute>
+                <ProtectedRoute
+                  path={`/:${pathRest}/user`}
+                  exact
+                  isLoggedIn={isLoggedIn}
+                  pathRest={pathRest}
+                >
+                  <UserInfo token={token} t={t} language={language} />
                 </ProtectedRoute>
                 <Route path='*'>
                   <NotFound t={t} />

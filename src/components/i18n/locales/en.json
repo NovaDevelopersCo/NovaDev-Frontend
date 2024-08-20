@@ -3,7 +3,8 @@
   "dishes": "Dishes",
   "categories": "Categories",
   "customers": "Customers",
-  "users": "Пайдаланушылар",
+  "users": "Users",
+  "administrators": "administrators",
   "about-user-title": "Information about user",
   "base-info-title": "Base information",
   "team-info-title": "Team information",
@@ -320,6 +321,9 @@
   "team": "Team",
   "project": "Project",
   "change-information-about-me": "Change information about me",
-  "customers": "Customers",
-  "your-list-customers": " List of customers"
+  "your-list-customers": " List of customers",
+  "list-users": "List of users",
+  "action": "Actions",
+  "name-of-post": "Name of post",
+  "date-of-post": "Date of post"
 }
