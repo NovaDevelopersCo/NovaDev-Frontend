@@ -21,7 +21,8 @@ const AllUsers: FC<IUsers> = ({ token, pathRest, t }) => {
   const [deletingUserId, setDeletingUserId] = useState<null | number>(null)
 
   useEffect(() => {
-    UserInfoAPI.getAllUsers(token)
+    UserInfoAPI
+      .getAllUsers(token)
       .then((res: TUser[]) => {
         setUsers(res)
       })
@@ -44,7 +45,8 @@ const AllUsers: FC<IUsers> = ({ token, pathRest, t }) => {
       render: (id: number, user: TUser): JSX.Element => (
         <Link to={`/${pathRest}/user/${user.id}`}>{id}</Link>
       ),
-      sorter: (a: TUser, b: TUser): number => a.id - b.id
+      sorter: (a: TUser, b: TUser): number =>
+        a.id - b.id
     },
     {
       title: `${t('role-title')}`,
@@ -56,7 +58,7 @@ const AllUsers: FC<IUsers> = ({ token, pathRest, t }) => {
       },
       sorter: (a: TUser, b: TUser): number => {
         if (a.role && b.role) {
-          return a.role.title.localeCompare(b.role.title)
+            return a.role.title.localeCompare(b.role.title)
         }
         return 0
       }
@@ -67,13 +69,12 @@ const AllUsers: FC<IUsers> = ({ token, pathRest, t }) => {
       key: 'public_nickname',
       // eslint-disable-next-line @typescript-eslint/naming-convention
       render: (public_nickname: string, user: TUser): JSX.Element => {
-        const userPublicNickname =
-          user?.info?.public_nickname ?? 'No public_nickname found'
+        const userPublicNickname = user?.info?.public_nickname ?? 'No public_nickname found'
         return <span>{userPublicNickname}</span>
       },
       sorter: (a: TUser, b: TUser): number => {
         if (a.info && b.info) {
-          return a.info.public_nickname.localeCompare(b.info.public_nickname)
+            return a.info.public_nickname.localeCompare(b.info.public_nickname)
         }
         return 0
       }
@@ -89,7 +90,7 @@ const AllUsers: FC<IUsers> = ({ token, pathRest, t }) => {
       },
       sorter: (a: TUser, b: TUser): number => {
         if (a.info && b.info) {
-          return a.info.full_name.localeCompare(b.info.full_name)
+            return a.info.full_name.localeCompare(b.info.full_name)
         }
         return 0
       }
@@ -104,7 +105,7 @@ const AllUsers: FC<IUsers> = ({ token, pathRest, t }) => {
       },
       sorter: (a: TUser, b: TUser): number => {
         if (a.info && b.info) {
-          return a.info.email.localeCompare(b.info.email)
+            return a.info.email.localeCompare(b.info.email)
         }
         return 0
       }
@@ -119,8 +120,8 @@ const AllUsers: FC<IUsers> = ({ token, pathRest, t }) => {
       },
       sorter: (a: TUser, b: TUser): number => {
         if (a.info && b.info) {
-          // @ts-expect-error role is object
-          return a.info.phone.localeCompare(b.info.phone)
+            // @ts-expect-error role is object
+            return a.info.phone.localeCompare(b.info.phone)
         }
         return 0
       }
@@ -135,7 +136,7 @@ const AllUsers: FC<IUsers> = ({ token, pathRest, t }) => {
       },
       sorter: (a: TUser, b: TUser): number => {
         if (a.info && b.info) {
-          return a.info.github.localeCompare(b.info.github)
+            return a.info.github.localeCompare(b.info.github)
         }
         return 0
       }
@@ -146,13 +147,12 @@ const AllUsers: FC<IUsers> = ({ token, pathRest, t }) => {
       key: 'payment_info',
       // eslint-disable-next-line @typescript-eslint/naming-convention
       render: (payment_info: string, user: TUser): JSX.Element => {
-        const userPaymentInfo =
-          user?.info?.payment_info ?? 'No payment info found'
+        const userPaymentInfo = user?.info?.payment_info ?? 'No payment info found'
         return <span>{userPaymentInfo}</span>
       },
       sorter: (a: TUser, b: TUser): number => {
         if (a.info && b.info) {
-          return a.info.payment_info.localeCompare(b.info.payment_info)
+            return a.info.payment_info.localeCompare(b.info.payment_info)
         }
         return 0
       }
@@ -167,7 +167,7 @@ const AllUsers: FC<IUsers> = ({ token, pathRest, t }) => {
       },
       sorter: (a: TUser, b: TUser): number => {
         if (a.info && b.info) {
-          return a.info.tg.localeCompare(b.info.tg)
+            return a.info.tg.localeCompare(b.info.tg)
         }
         return 0
       }
@@ -182,7 +182,7 @@ const AllUsers: FC<IUsers> = ({ token, pathRest, t }) => {
       },
       sorter: (a: TUser, b: TUser): number => {
         if (a.info && b.info) {
-          return a.info.image.localeCompare(b.info.image)
+            return a.info.image.localeCompare(b.info.image)
         }
         return 0
       }
@@ -200,7 +200,7 @@ const AllUsers: FC<IUsers> = ({ token, pathRest, t }) => {
       },
       sorter: (a: TUser, b: TUser): number => {
         if (a.team && b.team) {
-          return a.team.title.localeCompare(b.team.title)
+            return a.team.title.localeCompare(b.team.title)
         }
         return 0
       }
@@ -224,10 +224,8 @@ const AllUsers: FC<IUsers> = ({ token, pathRest, t }) => {
       },
       sorter: (a: TUser, b: TUser): number => {
         if (a.projects && b.projects) {
-          const aTitle =
-            a.projects && a.projects.length > 0 ? a.projects[0].title : ''
-          const bTitle =
-            b.projects && b.projects.length > 0 ? b.projects[0].title : ''
+          const aTitle = a.projects && a.projects.length > 0 ? a.projects[0].title : ''
+          const bTitle = b.projects && b.projects.length > 0 ? b.projects[0].title : ''
           return aTitle.localeCompare(bTitle)
         }
         return 0
@@ -256,9 +254,7 @@ const AllUsers: FC<IUsers> = ({ token, pathRest, t }) => {
 
   return (
     <>
-      <div
-        style={{ display: 'flex', flexDirection: 'column', overflowY: 'auto' }}
-      >
+      <div style={{ display: 'flex', flexDirection: 'column', overflowY: 'auto' }}>
         <div
           style={{
             display: 'flex',
@@ -269,8 +265,10 @@ const AllUsers: FC<IUsers> = ({ token, pathRest, t }) => {
           }}
         >
           <div style={{ display: 'block', marginRight: 'auto' }}>
-            <h2 style={{ fontWeight: 600, marginBottom: '0' }}>{t('users')}</h2>
-            <p style={{ marginBottom: '0' }}>{t('list-users')}</p>
+            <h2 style={{ fontWeight: 600, marginBottom: '0' }}>
+              {t('users')}
+            </h2>
+            <p style={{ marginBottom: '0' }}>{t('your-list-users')}</p>
           </div>
           <NavLink
             to={`/${pathRest}/add/user`}
@@ -291,21 +289,10 @@ const AllUsers: FC<IUsers> = ({ token, pathRest, t }) => {
             {t('add')}
           </NavLink>
         </div>
-        <Table
-          columns={columns}
-          dataSource={users.map((user) => ({ ...user, key: user.id }))}
-        />
+        <Table columns={columns} dataSource={users.map(user => ({ ...user, key: user.id }))} />
       </div>
-      <UpdateUserModal
-        token={token}
-        userId={updatingUserId}
-        onCancel={handleCancel}
-      />
-      <DeleteUserModal
-        token={token}
-        userId={deletingUserId}
-        onCancel={closeModalDelete}
-      />
+      <UpdateUserModal token={token} userId={updatingUserId} onCancel={handleCancel}/>
+      <DeleteUserModal token={token} userId={deletingUserId} onCancel={closeModalDelete}/>
     </>
   )
 }

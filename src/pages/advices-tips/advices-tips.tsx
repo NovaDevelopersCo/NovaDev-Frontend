@@ -38,9 +38,9 @@ const AdvicesTips: FC<ICustomers> = ({ token, pathRest, t, dark, style }) => {
 
   const columns: ColumnsType<TAdvice> = [
     {
-      title: t('name-of-post'),
-      dataIndex: 'name-of-post',
-      key: 'name-of-post',
+      title: t('title'),
+      dataIndex: 'title',
+      key: 'title',
       render: (title: string, advice: TAdvice): JSX.Element => (
         <Link to={`/${pathRest}/advice/${advice.id}`}>{title}</Link>
       ),
@@ -52,82 +52,53 @@ const AdvicesTips: FC<ICustomers> = ({ token, pathRest, t, dark, style }) => {
       key: 'content',
       sorter: (a: TAdvice, b: TAdvice): number =>
         a.content.localeCompare(b.content)
-    },
-    {
-      title: t('category'),
-      dataIndex: 'category',
-      key: 'category',
-      sorter: (a: TAdvice, b: TAdvice): number =>
-        a.content.localeCompare(b.content)
-    },
-    {
-      title: t('image'),
-      dataIndex: 'image',
-      key: 'image',
-      sorter: (a: TAdvice, b: TAdvice): number =>
-        a.content.localeCompare(b.content)
-    },
-    {
-      title: t('date-of-post'),
-      dataIndex: 'date-of-post',
-      key: 'date-of-post',
-      sorter: (a: TAdvice, b: TAdvice): number =>
-        a.content.localeCompare(b.content)
     }
   ]
 
   return (
-    <>
-      <div style={{ display: 'flex', flexDirection: 'column' }}>
-        <div
+    <div style={{ display: 'flex', flexDirection: 'column' }}>
+      <div
+        style={{
+          display: 'flex',
+          marginBottom: '1rem',
+          alignItems: 'center',
+          outline: 'none',
+          padding: '0'
+        }}
+      >
+        <div style={{ display: 'block', marginRight: 'auto' }}>
+          <h2 style={{ fontWeight: 600, marginBottom: '0' }}>
+            {t('advices-tips')}
+          </h2>
+          <p style={{ marginBottom: '0' }}>{t('your-list-advices-and-tips')}</p>
+        </div>
+        <NavLink
+          to={`/${pathRest}/add/advice`}
           className={theme}
           style={{
+            color: '#fff',
+            backgroundColor: '#2bc155',
+            borderColor: '#2bc155',
+            width: '145px',
+            height: '61px',
+            borderRadius: '0.375rem',
+            fontWeight: '500',
+            fontSize: '1rem',
             display: 'flex',
-            marginBottom: '1rem',
             alignItems: 'center',
-            outline: 'none',
-            padding: '0'
+            justifyContent: 'center'
           }}
         >
-          <div
-            className={theme}
-            style={{ display: 'block', marginRight: 'auto' }}
-          >
-            <h2 style={{ fontWeight: 600, marginBottom: '0' }}>
-              {t('advices-tips')}
-            </h2>
-            <p style={{ marginBottom: '0' }}>
-              {t('your-list-advices-and-tips')}
-            </p>
-          </div>
-          <NavLink
-            to={`/${pathRest}/add/advice`}
-            className={theme}
-            style={{
-              color: '#fff',
-              backgroundColor: '#2bc155',
-              borderColor: '#2bc155',
-              width: '145px',
-              height: '61px',
-              borderRadius: '0.375rem',
-              fontWeight: '500',
-              fontSize: '1rem',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center'
-            }}
-          >
-            {t('add')}
-          </NavLink>
-        </div>
-        <Table
-          className={theme}
-          columns={columns}
-          dataSource={data}
-          rowKey='id'
-        />
+          {t('add')}
+        </NavLink>
       </div>
-    </>
+      <Table
+        className={theme}
+        columns={columns}
+        dataSource={data}
+        rowKey='id'
+      />
+    </div>
   )
 }
 
