@@ -4,23 +4,25 @@ import { FC, useContext, useEffect, useState } from 'react'
 import * as customerAPI from '../../utils/api/customers-api'
 import { Link, useHistory, NavLink } from 'react-router-dom'
 import { NotificationContext } from '../../components/notification-provider/notification-provider'
-import { TCustomer } from '../../utils/typesFromBackend'
+import { TTeams } from '../../utils/typesFromBackend'
 
-interface ICustomers {
+interface ITeams {
   token: string
   pathRest: string
   t: (arg0: string) => string
+  dark: boolean
+  style: object
 }
 
-const Customers: FC<ICustomers> = ({ token, pathRest, t }) => {
+const Teams: FC<ITeams> = ({ token, pathRest, t }) => {
   const { openNotification } = useContext(NotificationContext)
-  const [data, setData] = useState<TCustomer[]>([])
+  const [data, setData] = useState<TTeams[]>([])
   const history = useHistory()
 
   useEffect(() => {
     customerAPI
       .getAllCustomers(token)
-      .then((res: TCustomer[]) => setData(res))
+      .then((res: TTeams[]) => setData(res))
       .catch((e: Error) => openNotification(e.message, 'topRight'))
   }, [token, openNotification])
 
@@ -28,41 +30,46 @@ const Customers: FC<ICustomers> = ({ token, pathRest, t }) => {
     customerAPI
       .deleteCustomer(token, id)
       .then(() =>
-        setData((prev: TCustomer[]) =>
+        setData((prev: TTeams[]) =>
           prev.filter((customer) => customer.id !== id)
         )
       )
       .catch((e: Error) => openNotification(e.message, 'topRight'))
   }
 
-  const columns: ColumnsType<TCustomer> = [
+  const columns: ColumnsType<TTeams> = [
     {
       title: `${t('name')}`,
       dataIndex: 'name',
       key: 'name',
-      render: (name: string, customer: TCustomer): JSX.Element => (
+      render: (name: string, customer: TTeams): JSX.Element => (
         <Link to={`/${pathRest}/customer/${customer.id}`}>{name}</Link>
       ),
-      sorter: (a: TCustomer, b: TCustomer): number =>
-        a.name.localeCompare(b.name)
+      sorter: (a: TTeams, b: TTeams): number => a.name.localeCompare(b.name)
     },
     {
-      title: `${t('email')}`,
-      dataIndex: 'email',
-      key: 'email',
-      sorter: (a: TCustomer, b: TCustomer): number =>
-        a.email.localeCompare(b.email)
+      title: `${t('description')}`,
+      dataIndex: 'description',
+      key: 'description',
+      sorter: (a: TTeams, b: TTeams): number => a.text.localeCompare(b.text)
     },
     {
-      title: `${t('tg')}`,
-      dataIndex: 'tg',
-      key: 'tg',
-      sorter: (a: TCustomer, b: TCustomer): number => a.tg.localeCompare(b.tg)
+      title: `${t('number-user')}`,
+      dataIndex: 'number-user',
+      key: 'number-user',
+      sorter: (a: TTeams, b: TTeams): number => a.amount.localeCompare(b.amount)
+    },
+    {
+      title: t('category'),
+      dataIndex: 'category',
+      key: 'category',
+      sorter: (a: TTeams, b: TTeams): number =>
+        a.category.localeCompare(b.category)
     },
     {
       title: `${t('actions')}`,
       key: 'actions',
-      render: (_: any, customer: TCustomer): JSX.Element => (
+      render: (_: any, customer: TTeams): JSX.Element => (
         <>
           <Button
             type='primary'
@@ -92,13 +99,11 @@ const Customers: FC<ICustomers> = ({ token, pathRest, t }) => {
         }}
       >
         <div style={{ display: 'block', marginRight: 'auto' }}>
-          <h2 style={{ fontWeight: 600, marginBottom: '0' }}>
-            {t('customers')}
-          </h2>
-          <p style={{ marginBottom: '0' }}>{t('your-list-customers')}</p>
+          <h2 style={{ fontWeight: 600, marginBottom: '0' }}>{t('teams')}</h2>
+          <p style={{ marginBottom: '0' }}>{t('your-list-teams')}</p>
         </div>
         <NavLink
-          to={`/${pathRest}/add/category`}
+          to={`/${pathRest}/add/team`}
           style={{
             color: '#fff',
             backgroundColor: '#2bc155',
@@ -121,4 +126,4 @@ const Customers: FC<ICustomers> = ({ token, pathRest, t }) => {
   )
 }
 
-export default Customers
+export default Teams

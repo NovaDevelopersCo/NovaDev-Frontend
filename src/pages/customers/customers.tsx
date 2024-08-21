@@ -54,7 +54,7 @@ const Customers: FC<ICustomers> = ({ token, pathRest, t, dark, style }) => {
       dataIndex: 'phone',
       key: 'phone',
       sorter: (a: TCustomer, b: TCustomer): number =>
-        a.email.localeCompare(b.email)
+        a.phone.localeCompare(b.phone)
     },
     {
       title: `${t('email')}`,
@@ -67,14 +67,15 @@ const Customers: FC<ICustomers> = ({ token, pathRest, t, dark, style }) => {
       title: `${t('team')}`,
       dataIndex: 'team',
       key: 'team',
-      sorter: (a: TCustomer, b: TCustomer): number => a.tg.localeCompare(b.tg)
+      sorter: (a: TCustomer, b: TCustomer): number =>
+        a.team.localeCompare(b.team)
     },
     {
       title: `${t('status')}`,
       dataIndex: 'status',
       key: 'status',
       sorter: (a: TCustomer, b: TCustomer): number =>
-        a.email.localeCompare(b.email)
+        a.status.localeCompare(b.status)
     },
     {
       title: `${t('actions')}`,

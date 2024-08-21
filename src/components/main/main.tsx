@@ -26,6 +26,8 @@ import UserInfo from '../../pages/user-info/user-info'
 import AdvicesTips from '../../pages/advices-tips/advices-tips'
 import AddPost from '../../pages/add-post/add-post'
 import AddCustomer from '../../pages/add-customer/add-customer'
+import Teams from '../../pages/teams/teams'
+import AddTeam from '../../pages/add-team/add-team'
 
 const { Header, Sider, Content } = Layout
 
@@ -271,6 +273,34 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
                   pathRest={pathRest}
                 >
                   <AllUsers token={token} pathRest={pathRest} t={t} />
+                </ProtectedRoute>
+                <ProtectedRoute
+                  path={`/:${pathRest}/teams`}
+                  exact
+                  isLoggedIn={isLoggedIn}
+                  pathRest={pathRest}
+                >
+                  <Teams
+                    token={token}
+                    pathRest={pathRest}
+                    t={t}
+                    dark={dark}
+                    style={style}
+                  />
+                </ProtectedRoute>
+                <ProtectedRoute
+                  path={`/:${pathRest}/add/team`}
+                  exact
+                  isLoggedIn={isLoggedIn}
+                  pathRest={pathRest}
+                >
+                  <AddTeam
+                    token={token}
+                    pathRest={pathRest}
+                    t={t}
+                    dark={dark}
+                    style={style}
+                  />
                 </ProtectedRoute>
                 <ProtectedRoute
                   path={`/:${pathRest}/dishes`}

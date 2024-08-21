@@ -323,9 +323,15 @@
   "change-information-about-me": "Change information about me",
   "your-list-customers": " List of customers",
   "list-users": "List of users",
-  "action": "Actions",
+  "actions": "Actions",
   "name-of-post": "Name of post",
   "date-of-post": "Date of post",
   "name-client": "Client name",
-  "add-client": "Add client"
+  "add-client": "Add client",
+  "your-list-teams": "List of teams",
+  "number-user": "Number of users",
+  "teams": "Teams",
+  "tg": "Telegram",
+  "name-of-team": "Name of team",
+  "add-team": "Add team"
 }

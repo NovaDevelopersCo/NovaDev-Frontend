@@ -58,21 +58,19 @@ const AdvicesTips: FC<ICustomers> = ({ token, pathRest, t, dark, style }) => {
       dataIndex: 'category',
       key: 'category',
       sorter: (a: TAdvice, b: TAdvice): number =>
-        a.content.localeCompare(b.content)
+        a.category.localeCompare(b.category)
     },
     {
       title: t('image'),
       dataIndex: 'image',
       key: 'image',
-      sorter: (a: TAdvice, b: TAdvice): number =>
-        a.content.localeCompare(b.content)
+      sorter: (a: TAdvice, b: TAdvice): number => a.image.localeCompare(b.image)
     },
     {
       title: t('date-of-post'),
       dataIndex: 'date-of-post',
       key: 'date-of-post',
-      sorter: (a: TAdvice, b: TAdvice): number =>
-        a.content.localeCompare(b.content)
+      sorter: (a: TAdvice, b: TAdvice): number => a.date.localeCompare(b.date)
     }
   ]
 

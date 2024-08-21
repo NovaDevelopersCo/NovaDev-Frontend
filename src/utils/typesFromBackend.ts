@@ -257,13 +257,18 @@ export interface TAdmin {
 export interface TCustomer {
   id: string
   name: string
+  phone: string
   email: string
-  tg: string
+  team: string
+  status: string
 }
 export interface TAdvice {
   id: string
   title: string
   content: string
+  category: string
+  image: string
+  date: string
 }
 export interface TProfileData {
   picture: string
@@ -271,4 +276,11 @@ export interface TProfileData {
   github: string
   team: string
   project: string
+}
+export interface TTeams {
+  id: string
+  name: string
+  text: string
+  category: string
+  amount: string
 }
