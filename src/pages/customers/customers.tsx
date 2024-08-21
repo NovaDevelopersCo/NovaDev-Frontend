@@ -40,14 +40,21 @@ const Customers: FC<ICustomers> = ({ token, pathRest, t, dark, style }) => {
   const theme = clsx(dark ? 'black' : 'white')
   const columns: ColumnsType<TCustomer> = [
     {
-      title: `${t('name')}`,
-      dataIndex: 'name',
-      key: 'name',
+      title: `${t('name-client')}`,
+      dataIndex: 'name-client',
+      key: 'name-client',
       render: (name: string, customer: TCustomer): JSX.Element => (
         <Link to={`/${pathRest}/customer/${customer.id}`}>{name}</Link>
       ),
       sorter: (a: TCustomer, b: TCustomer): number =>
         a.name.localeCompare(b.name)
+    },
+    {
+      title: `${t('phone')}`,
+      dataIndex: 'phone',
+      key: 'phone',
+      sorter: (a: TCustomer, b: TCustomer): number =>
+        a.email.localeCompare(b.email)
     },
     {
       title: `${t('email')}`,
@@ -57,10 +64,17 @@ const Customers: FC<ICustomers> = ({ token, pathRest, t, dark, style }) => {
         a.email.localeCompare(b.email)
     },
     {
-      title: `${t('tg')}`,
-      dataIndex: 'tg',
-      key: 'tg',
+      title: `${t('team')}`,
+      dataIndex: 'team',
+      key: 'team',
       sorter: (a: TCustomer, b: TCustomer): number => a.tg.localeCompare(b.tg)
+    },
+    {
+      title: `${t('status')}`,
+      dataIndex: 'status',
+      key: 'status',
+      sorter: (a: TCustomer, b: TCustomer): number =>
+        a.email.localeCompare(b.email)
     },
     {
       title: `${t('actions')}`,
@@ -106,7 +120,7 @@ const Customers: FC<ICustomers> = ({ token, pathRest, t, dark, style }) => {
         </div>
         <NavLink
           className={theme}
-          to={`/${pathRest}/add/category`}
+          to={`/${pathRest}/add/customer`}
           style={{
             color: '#fff',
             backgroundColor: '#2bc155',

@@ -25,6 +25,7 @@ import { useTelegram } from '../../services/hooks/use-telegram'
 import UserInfo from '../../pages/user-info/user-info'
 import AdvicesTips from '../../pages/advices-tips/advices-tips'
 import AddPost from '../../pages/add-post/add-post'
+import AddCustomer from '../../pages/add-customer/add-customer'
 
 const { Header, Sider, Content } = Layout
 
@@ -250,12 +251,12 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
                   />
                 </ProtectedRoute>
                 <ProtectedRoute
-                  path={`/:${pathRest}/add/customers`}
+                  path={`/:${pathRest}/add/customer`}
                   exact
                   isLoggedIn={isLoggedIn}
                   pathRest={pathRest}
                 >
-                  <AddAdmin
+                  <AddCustomer
                     token={token}
                     pathRest={pathRest}
                     t={t}

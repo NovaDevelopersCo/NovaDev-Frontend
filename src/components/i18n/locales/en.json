@@ -325,5 +325,7 @@
   "list-users": "List of users",
   "action": "Actions",
   "name-of-post": "Name of post",
-  "date-of-post": "Date of post"
+  "date-of-post": "Date of post",
+  "name-client": "Client name",
+  "add-client": "Add client"
 }
