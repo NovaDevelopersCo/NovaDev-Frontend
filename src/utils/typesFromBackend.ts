@@ -36,7 +36,17 @@ export interface TUserTeam {
 export interface TUserProjects {
   id: number
   title: string
+  users: TUserProjectsUsers
 }
+
+export interface TUserProjectsUsers {
+  id: number
+}
+
+// export interface TUserProjects {
+//   id: number
+//   title: string
+// }
 
 export interface TTask {
   id: number
