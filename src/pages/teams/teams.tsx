@@ -5,17 +5,14 @@ import * as customerAPI from '../../utils/api/customers-api'
 import { Link, useHistory, NavLink } from 'react-router-dom'
 import { NotificationContext } from '../../components/notification-provider/notification-provider'
 import { TCustomer } from '../../utils/typesFromBackend'
-import clsx from 'clsx'
 
 interface ICustomers {
   token: string
   pathRest: string
   t: (arg0: string) => string
-  dark: boolean
-  style: object
 }
 
-const Customers: FC<ICustomers> = ({ token, pathRest, t, dark, style }) => {
+const Customers: FC<ICustomers> = ({ token, pathRest, t }) => {
   const { openNotification } = useContext(NotificationContext)
   const [data, setData] = useState<TCustomer[]>([])
   const history = useHistory()
@@ -37,24 +34,17 @@ const Customers: FC<ICustomers> = ({ token, pathRest, t, dark, style }) => {
       )
       .catch((e: Error) => openNotification(e.message, 'topRight'))
   }
-  const theme = clsx(dark ? 'black' : 'white')
+
   const columns: ColumnsType<TCustomer> = [
     {
-      title: `${t('name-client')}`,
-      dataIndex: 'name-client',
-      key: 'name-client',
+      title: `${t('name')}`,
+      dataIndex: 'name',
+      key: 'name',
       render: (name: string, customer: TCustomer): JSX.Element => (
         <Link to={`/${pathRest}/customer/${customer.id}`}>{name}</Link>
       ),
       sorter: (a: TCustomer, b: TCustomer): number =>
         a.name.localeCompare(b.name)
-    },
-    {
-      title: `${t('phone')}`,
-      dataIndex: 'phone',
-      key: 'phone',
-      sorter: (a: TCustomer, b: TCustomer): number =>
-        a.email.localeCompare(b.email)
     },
     {
       title: `${t('email')}`,
@@ -64,17 +54,10 @@ const Customers: FC<ICustomers> = ({ token, pathRest, t, dark, style }) => {
         a.email.localeCompare(b.email)
     },
     {
-      title: `${t('team')}`,
-      dataIndex: 'team',
-      key: 'team',
+      title: `${t('tg')}`,
+      dataIndex: 'tg',
+      key: 'tg',
       sorter: (a: TCustomer, b: TCustomer): number => a.tg.localeCompare(b.tg)
-    },
-    {
-      title: `${t('status')}`,
-      dataIndex: 'status',
-      key: 'status',
-      sorter: (a: TCustomer, b: TCustomer): number =>
-        a.email.localeCompare(b.email)
     },
     {
       title: `${t('actions')}`,
@@ -100,7 +83,6 @@ const Customers: FC<ICustomers> = ({ token, pathRest, t, dark, style }) => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
       <div
-        className={theme}
         style={{
           display: 'flex',
           marginBottom: '1rem',
@@ -109,18 +91,14 @@ const Customers: FC<ICustomers> = ({ token, pathRest, t, dark, style }) => {
           padding: '0'
         }}
       >
-        <div
-          className={theme}
-          style={{ display: 'block', marginRight: 'auto' }}
-        >
+        <div style={{ display: 'block', marginRight: 'auto' }}>
           <h2 style={{ fontWeight: 600, marginBottom: '0' }}>
             {t('customers')}
           </h2>
           <p style={{ marginBottom: '0' }}>{t('your-list-customers')}</p>
         </div>
         <NavLink
-          className={theme}
-          to={`/${pathRest}/add/customer`}
+          to={`/${pathRest}/add/category`}
           style={{
             color: '#fff',
             backgroundColor: '#2bc155',
@@ -138,7 +116,7 @@ const Customers: FC<ICustomers> = ({ token, pathRest, t, dark, style }) => {
           {t('add')}
         </NavLink>
       </div>
-      <Table columns={columns} dataSource={data} className={theme} />
+      <Table columns={columns} dataSource={data} />
     </div>
   )
 }

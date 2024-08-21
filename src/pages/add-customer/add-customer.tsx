@@ -1,14 +1,13 @@
 import React, { FC, useContext } from 'react'
 import { useHistory } from 'react-router-dom'
 import { TAdmin, TRest } from '../../utils/typesFromBackend'
-import { Form, Input, Button, Modal, Upload } from 'antd'
+import { Form, Input, Button, Modal } from 'antd'
 import { NotificationContext } from '../../components/notification-provider/notification-provider'
 import * as adminAPI from '../../utils/api/category-api'
 import * as userAPI from '../../utils/api/task-api'
 import clsx from 'clsx'
-import { UploadOutlined } from '@ant-design/icons'
 
-interface IAddPost {
+interface IAddCustomer {
   pathRest: string
   token: string
   t: (arg0: string) => string
@@ -16,7 +15,7 @@ interface IAddPost {
   style: object
 }
 
-const AddPost: FC<IAddPost> = ({ token, pathRest, t, dark, style }) => {
+const AddCustomer: FC<IAddCustomer> = ({ token, pathRest, t, dark, style }) => {
   const { openNotification } = useContext(NotificationContext)
   const [form] = Form.useForm()
   const history = useHistory()
@@ -27,27 +26,30 @@ const AddPost: FC<IAddPost> = ({ token, pathRest, t, dark, style }) => {
   const theme = clsx(dark ? 'black' : 'white')
   const [isModalVisible, setIsModalVisible] = React.useState(false)
   const [PathRest, setPathRest] = React.useState<{ [key: string]: string }>({})
-  const [, setCategory] = React.useState('')
-  const [, setTitle] = React.useState('')
-  const [, setContent] = React.useState('')
-  const [, setImage] = React.useState('')
+  const [, setName] = React.useState('')
+  const [, setPhone] = React.useState('')
+  const [, setEmail] = React.useState('')
+  const [, setTeam] = React.useState('')
+  const [, setStatus] = React.useState('')
 
-  function handleChangeContent(e: React.ChangeEvent<HTMLInputElement>): void {
-    setContent(e.target.value)
+  function handleChangeName(e: React.ChangeEvent<HTMLInputElement>): void {
+    setName(e.target.value)
   }
 
-  function handleChangeCategory(e: React.ChangeEvent<HTMLInputElement>): void {
-    setCategory(e.target.value)
+  function handleChangePhone(e: React.ChangeEvent<HTMLInputElement>): void {
+    setPhone(e.target.value)
   }
 
-  function handleChangeTitle(e: React.ChangeEvent<HTMLInputElement>): void {
-    setTitle(e.target.value)
+  function handleChangeEmail(e: React.ChangeEvent<HTMLInputElement>): void {
+    setEmail(e.target.value)
   }
 
-  function handleChangeImage(info: any): void {
-    if (info.file.status === 'done') {
-      setImage(info.file.originFileObj)
-    }
+  function handleChangeTeam(e: React.ChangeEvent<HTMLInputElement>): void {
+    setTeam(e.target.value)
+  }
+
+  function handleChangeStatus(e: React.ChangeEvent<HTMLInputElement>): void {
+    setStatus(e.target.value)
   }
 
   const validateMessages = {
@@ -115,7 +117,7 @@ const AddPost: FC<IAddPost> = ({ token, pathRest, t, dark, style }) => {
           padding: '15px'
         }}
       >
-        {t('add-post')}
+        {t('add-client')}
       </h4>
 
       <Form
@@ -128,35 +130,27 @@ const AddPost: FC<IAddPost> = ({ token, pathRest, t, dark, style }) => {
         style={{ paddingTop: '1.5rem' }}
       >
         <Form.Item
-          label={t('name-of-post')}
+          label={t('name-client')}
           rules={[{ required: true }]}
-          name='title'
+          name='name-client'
         >
-          <Input onChange={handleChangeTitle} />
+          <Input onChange={handleChangeName} />
+        </Form.Item>
+        <Form.Item label={t('phone')} rules={[{ required: true }]} name='phone'>
+          <Input onChange={handleChangePhone} />
+        </Form.Item>
+        <Form.Item label={t('email')} rules={[{ required: true }]} name='email'>
+          <Input onChange={handleChangeEmail} />
+        </Form.Item>
+        <Form.Item label={t('team')} rules={[{ required: true }]} name='team'>
+          <Input onChange={handleChangeTeam} />
         </Form.Item>
         <Form.Item
-          label={t('content')}
+          label={t('status')}
           rules={[{ required: true }]}
-          name='text'
+          name='status'
         >
-          <Input onChange={handleChangeContent} />
-        </Form.Item>
-        <Form.Item
-          label={t('category')}
-          rules={[{ required: true }]}
-          name='category'
-        >
-          <Input onChange={handleChangeCategory} />
-        </Form.Item>
-        <Form.Item label={t('image')} name='image'>
-          <Upload
-            name='image'
-            listType='picture'
-            beforeUpload={() => false}
-            onChange={handleChangeImage}
-          >
-            <Button icon={<UploadOutlined />}>{t('upload-photo')}</Button>
-          </Upload>
+          <Input onChange={handleChangeStatus} />
         </Form.Item>
         <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 4 }}>
           <Button type='primary' htmlType='submit'>
@@ -167,4 +161,4 @@ const AddPost: FC<IAddPost> = ({ token, pathRest, t, dark, style }) => {
     </>
   )
 }
-export default AddPost
+export default AddCustomer

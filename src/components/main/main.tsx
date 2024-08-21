@@ -5,8 +5,10 @@ import { Layout } from 'antd'
 import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons'
 import fullscreenIcon from '../../assets/images/fullscreen.svg'
 import Autorization from '../../pages/autorization/autorization'
-import { ECountry } from '../../utils/typesFromBackend'
 import NotFound from '../../pages/not-found/not-found'
+import Customers from '../../pages/customers/customers'
+import AllUsers from '../../pages/users/users'
+import { ECountry } from '../../utils/typesFromBackend'
 import { useTranslation } from 'react-i18next'
 import { NotificationProvider } from '../notification-provider/notification-provider'
 import i18n from '../i18n/i18n'
@@ -20,11 +22,10 @@ import Admin from '../../pages/category/category'
 import Dark from '../dark/dark'
 import { Footer } from 'antd/es/layout/layout'
 import { useTelegram } from '../../services/hooks/use-telegram'
-import Registration from '../../pages/registration/registration'
+import UserInfo from '../../pages/user-info/user-info'
 import AdvicesTips from '../../pages/advices-tips/advices-tips'
-import Profile from '../../pages/profile/profile'
 import AddPost from '../../pages/add-post/add-post'
-import Customers from '../../pages/customers/customers'
+import AddCustomer from '../../pages/add-customer/add-customer'
 
 const { Header, Sider, Content } = Layout
 
@@ -198,13 +199,6 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
                     dark={dark}
                   />
                 </Route>
-                <Route path={`/:${pathRest}/registration`}>
-                  <Registration
-                    setIsLoggedIn={setIsLoggedIn}
-                    t={t}
-                    setToken={setToken}
-                  />
-                </Route>
                 <ProtectedRoute
                   path={`/:${pathRest}/categories`}
                   exact
@@ -257,12 +251,12 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
                   />
                 </ProtectedRoute>
                 <ProtectedRoute
-                  path={`/:${pathRest}/add/customers`}
+                  path={`/:${pathRest}/add/customer`}
                   exact
                   isLoggedIn={isLoggedIn}
                   pathRest={pathRest}
                 >
-                  <AddAdmin
+                  <AddCustomer
                     token={token}
                     pathRest={pathRest}
                     t={t}
@@ -270,6 +264,20 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
                     style={style}
                   />
                 </ProtectedRoute>
+                <ProtectedRoute
+                  path={`/${pathRest}/users`}
+                  exact
+                  isLoggedIn={isLoggedIn}
+                  pathRest={pathRest}
+                >
+                  <AllUsers token={token} pathRest={pathRest} t={t} />
+                </ProtectedRoute>
+                <ProtectedRoute
+                  path={`/:${pathRest}/dishes`}
+                  exact
+                  isLoggedIn={isLoggedIn}
+                  pathRest={pathRest}
+                >
                   <Users
                     dark={dark}
                     style={style}
@@ -278,6 +286,7 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
                     t={t}
                     language={language}
                   />
+                </ProtectedRoute>
                 <ProtectedRoute
                   path={`/:${pathRest}/blog`}
                   exact
@@ -285,21 +294,14 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
                   pathRest={pathRest}
                 >
                   <AdvicesTips
-                    style={style}
-                    dark={dark}
                     token={token}
                     pathRest={pathRest}
                     t={t}
+                    dark={dark}
+                    style={style}
                   />
                 </ProtectedRoute>
-                <ProtectedRoute
-                  path={`/:${pathRest}/profile`}
-                  exact
-                  isLoggedIn={isLoggedIn}
-                  pathRest={pathRest}
-                >
-                  <Profile token={token} pathRest={pathRest} t={t} />
-                </ProtectedRoute>
+
                 <ProtectedRoute
                   path={`/:${pathRest}/add/advice`}
                   exact
@@ -310,9 +312,17 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
                     token={token}
                     pathRest={pathRest}
                     t={t}
-                    style={style}
                     dark={dark}
+                    style={style}
                   />
+                </ProtectedRoute>
+                <ProtectedRoute
+                  path={`/:${pathRest}/user`}
+                  exact
+                  isLoggedIn={isLoggedIn}
+                  pathRest={pathRest}
+                >
+                  <UserInfo token={token} t={t} language={language} />
                 </ProtectedRoute>
                 <Route path='*'>
                   <NotFound t={t} />

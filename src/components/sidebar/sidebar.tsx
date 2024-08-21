@@ -1,12 +1,13 @@
 import { Dispatch, FC, SetStateAction } from 'react'
 import { Menu, Button } from 'antd'
 import {
-  InfoCircleOutlined,
+  ReadOutlined,
   LogoutOutlined,
-  GroupOutlined,
-  VerticalAlignTopOutlined,
+  BarsOutlined,
   UserOutlined,
-  TeamOutlined
+  ContactsOutlined,
+  TeamOutlined,
+  ApartmentOutlined
 } from '@ant-design/icons'
 import { useHistory } from 'react-router'
 
@@ -30,19 +31,21 @@ const Sidebar: FC<ISidebar> = ({
   const handleCategoriesClick = (): void => {
     history.push(`/${pathRest}/categories`)
   }
-  const handleProfileClick = (): void => {
-    history.push(`/${pathRest}/profile`)
+  const handleCustomersClick = (): void => {
+    history.push(`/${pathRest}/customers`)
   }
-
+  const handleUsersClick = (): void => {
+    history.push(`/${pathRest}/users`)
+  }
   const handleInstructionClick = (): void => {
     history.push(`/${pathRest}/blog`)
   }
 
-  const handleRestClick = (): void => {
-    history.push(`/${pathRest}/dishes`)
+  const handleUserInfoClick = (): void => {
+    history.push(`/${pathRest}/user`)
   }
-  const handleCustomersClick = (): void => {
-    history.push(`/${pathRest}/customers`)
+  const handleTeamsClick = (): void => {
+    history.push(`/${pathRest}/teams`)
   }
 
   const handleLogout = (): void => {
@@ -81,25 +84,28 @@ const Sidebar: FC<ISidebar> = ({
         defaultSelectedKeys={['1']}
       >
         <Menu.Item key='2' onClick={handleCategoriesClick}>
-          <GroupOutlined />
+          <BarsOutlined />
           <span>{t('categories')}</span>
         </Menu.Item>
-        <Menu.Item key='3' onClick={handleInstructionClick}>
-          <InfoCircleOutlined />
-          <span>{t('manual')}</span>
+        <Menu.Item key='3' onClick={handleUsersClick}>
+          <TeamOutlined />
+          <span>{t('users')}</span>
         </Menu.Item>
-        <Menu.Item key='4' onClick={handleCustomersClick}>
-        <TeamOutlined />
+        <Menu.Item key='4' onClick={handleTeamsClick}>
+          <ApartmentOutlined />
+          <span>{t('teams')}</span>
+        </Menu.Item>
+        <Menu.Item key='5' onClick={handleCustomersClick}>
+          <ContactsOutlined />
           <span>{t('customers')}</span>
         </Menu.Item>
-        <Menu.Item key='5' onClick={handleProfileClick}>
-          <UserOutlined />
-          <span>{t('profile')}</span>
+        <Menu.Item key='6' onClick={handleInstructionClick}>
+          <ReadOutlined />
+          <span>{t('manual')}</span>
         </Menu.Item>
-        <Menu.Item key='7' onClick={handleRestClick}>
-
-          <VerticalAlignTopOutlined />
-          <span>{t('back-menu')}</span>
+        <Menu.Item key='7' onClick={handleUserInfoClick}>
+          <UserOutlined />
+          <span> {t('user-info')}</span>
         </Menu.Item>
       </Menu>
       <Button
