@@ -1,8 +1,9 @@
 
 import React, { FC, useState, useEffect, useContext } from 'react'
 import * as UserInfoAPI from '../../utils/api/user-info-api'
-import { Button, Form, Input } from 'antd'
-import { TUser, ECountry, TUserTeam } from '../../utils/typesFromBackend'
+import { Button, Form, Input, Image, Upload } from 'antd'
+import { UploadOutlined } from '@ant-design/icons'
+import { TUser, ECountry } from '../../utils/typesFromBackend'
 import { NotificationContext } from '../../components/notification-provider/notification-provider'
 
 interface IUserInfo {
@@ -26,35 +27,50 @@ const UserInfo: FC<IUserInfo> = ({ token, t }) => {
     const [user, setUser] = React.useState<TUser>({} as TUser)
     //
     useEffect(() => {
-        UserInfoAPI
-            .getUserData(token, user, setUser)
-            .then(() => {
-                console.log('Выполнено!')
-            })
-            .catch((e) => openNotification(e, 'topRight'))
-    }, [])
+        if (token) {
+            UserInfoAPI.getUserData(token).then(res => {
+                console.log(res)
+                if (res) {
+                    setUser(res)
+                }
+            }).catch((e) => openNotification(e, 'topRight'))
+        }
+    }, [token])
     //
     const onFinish = (e: React.FormEvent<HTMLFormElement>): void => {
-        e.preventDefault()
         UserInfoAPI
-            .editUserData(token, user)
-            .then(() => {
-                console.log('Done')
+            .editUserData(token, user).then(() => {
+                console.log(user)
+                openNotification('The user data is saved!', 'topLeft')
             })
             .catch((e) => openNotification(e, 'topRight'))
     }
     //
-    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-    const [userTeam, setUserTeam] = React.useState<TUserTeam>({} as TUserTeam)
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+        const { name, value } = e.target
+        // console.log(`Changing ${name} to ${value}`)
+        if (name in user.info) {
+          setUser((prevUser) => ({
+            ...prevUser,
+            info: {
+              ...prevUser.info,
+              [name]: value || ''
+            }
+          }))
+        }
+    }
     //
-    useEffect(() => {
-        UserInfoAPI
-            .getUserTeam(token, userTeam, setUserTeam)
-            .then(() => {
-                console.log('Выполнено!')
-            })
-            .catch((e) => openNotification(e, 'topRight'))
-    }, [])
+    const handleUploadChange = (info: any): void => {
+        if (info.file.status === 'done') {
+          setUser((prevUser) => ({
+            ...prevUser,
+            info: {
+              ...prevUser.info,
+              image: info.file.response.url
+            }
+          }))
+        }
+    }
     //
     return (
         <div>
@@ -72,74 +88,44 @@ const UserInfo: FC<IUserInfo> = ({ token, t }) => {
                         <h1 className='text-xl font-semibold mb-5'>{t('about-user-title')}</h1>
                     </div>
                     <Form className='flex flex-col gap-6' onFinish={onFinish} >
-                        <Form.Item label={t('user-id')} rules={[{ required: false, message: t('enter-your-id') }]}>
-                            <Input className='w-64' type="number" value={user.id} />
-                        </Form.Item>
-                        <Form.Item label={t('user-role-title')} rules={[{ required: false, message: t('enter-your-role-title') }]}>
-                            <Input className='w-64' type="text" value={user.role.title} />
-                        </Form.Item>
                         <div className='border-2 border-black rounded-md pl-2'>
-                            <div className='flex items-center justify-center mt-2'>
+                            <div className='flex items-center justify-center mt-2 mb-3'>
                                 <h4 className='text-lg font-semibold'>{t('base-info-title')}</h4>
                             </div>
-                            <Form.Item label={t('user-image-url')} rules={[{ required: false, message: t('enter-your-image-url') }]}>
-                                <Input className='w-64' type="text" value={user.info.image} />
-                            </Form.Item>
                             <Form.Item label={t('user-public-nickname')} rules={[{ required: false, message: t('enter-your-public-nickname') }]}>
-                                <Input className='w-64' type="text" value={user.info.public_nickname} />
+                                <Input className='w-64' type="text" value={user?.info?.public_nickname ?? ''} name='public_nickname' onChange={handleChange} />
                             </Form.Item>
                             <Form.Item label={t('user-full-name')} rules={[{ required: false, message: t('enter-your-full-name') }]}>
-                                <Input className='w-64' type="text" value={user.info.full_name} />
+                                <Input className='w-64' type="text" value={user?.info?.full_name ?? ''} name='full_name' onChange={handleChange} />
                             </Form.Item>
-                            <Form.Item label={t('user-email')} rules={[{ required: false, message: t('enter-your-email') }]}>
-                                <Input className='w-64' type="text" value={user.info.image} />
+                            <Form.Item label={t('user-image')} rules={[{ required: false, message: t('enter-your-image') }]}>
+                                <Upload onChange={handleUploadChange} >
+                                    <Button className='flex items-center'>
+                                        <UploadOutlined />
+                                        {t('upload-image')}
+                                    </Button>
+                                </Upload>
                             </Form.Item>
                             <Form.Item label={t('user-phone')} rules={[{ required: false, message: t('enter-your-phone') }]}>
-                                <Input className='w-64' type="number" value={user.info.email} />
+                                <Input className='w-64' type="number" value={user?.info?.phone ?? ''} name='phone' onChange={handleChange} />
+                            </Form.Item>
+                            <Form.Item label={t('user-email')} rules={[{ required: false, message: t('enter-your-email') }]}>
+                                <Input className='w-64' type="text" value={user?.info?.email ?? ''} name='email' onChange={handleChange} />
                             </Form.Item>
                             <Form.Item label={t('user-github')} rules={[{ required: false, message: t('enter-your-github') }]}>
-                                <Input className='w-64' type="text" value={user.info.github} />
+                                <Input className='w-64' type="text" value={user?.info?.github ?? ''} name='github' onChange={handleChange} />
                             </Form.Item>
                             <Form.Item label={t('user-payment-info')} rules={[{ required: false, message: t('enter-your-payment-info') }]}>
-                                <Input className='w-64' type="text" value={user.info.payment_info} />
+                                <Input className='w-64' type="text" value={user?.info?.payment_info ?? ''} name='payment_info' onChange={handleChange} />
                             </Form.Item>
                             <Form.Item label={t('user-tg')} rules={[{ required: false, message: t('enter-your-tg') }]}>
-                                <Input className='w-64' type="text" value={user.info.tg} />
-                            </Form.Item>
-                        </div>
-                        <div className='border-2 border-black rounded-md pl-2'>
-                            <div className='flex items-center justify-center mt-2'>
-                                <h4 className='text-lg font-semibold'>{t('projects-info-title')}</h4>
-                            </div>
-                            <Form.Item label={t('user-project-id')} rules={[{ required: false, message: t('enter-your-project-id') }]}>
-                                <Input className='w-64' type="number" value={user.projects && user.projects.length > 0 ? user.projects[0].id : ''} />
-                            </Form.Item>
-                            <Form.Item label={t('user-project-title')} rules={[{ required: false, message: t('enter-your-project-title') }]}>
-                                <Input className='w-64' type="text" value={user.projects && user.projects.length > 0 ? user.projects[0].title : ''} />
+                                <Input className='w-64' type="text" value={user?.info?.tg ?? ''} name='tg' onChange={handleChange} />
                             </Form.Item>
                         </div>
                         <div className='flex justify-center'>
                             <Button className='flex justify-center items-center text-lg w-28 mt-5' htmlType='submit'>
                                 <h4 className='p-2'>{t('changed-data')}</h4>
                             </Button>
-                        </div>
-                    </Form>
-                    <Form className='mt-8'>
-                        <div className='border-2 border-black rounded-md pl-2 pr-2'>
-                            <div className='flex items-center justify-center mt-2 mb-2'>
-                                <h4 className='text-lg font-semibold'>{t('team-info-title')}</h4>
-                            </div>
-                            <Form.Item label={t('user-team-id')} >
-                                <Input value={userTeam.id} disabled={true} />
-                            </Form.Item>
-                            <Form.Item label={t('user-team-title')} >
-                                <Input value={userTeam.title} />
-                            </Form.Item>
-                            <div className='flex justify-center mb-2'>
-                                <Button className='flex justify-center items-center text-lg w-28 mt-5' htmlType='submit'>
-                                    <h4 className='p-2'>{t('changed-data')}</h4>
-                                </Button>
-                            </div>
                         </div>
                     </Form>
                 </div>
@@ -150,46 +136,100 @@ const UserInfo: FC<IUserInfo> = ({ token, t }) => {
                     </div>
                     <Form className='flex flex-col gap-6'>
                         <Form.Item label={t('user-id')} >
-                            <p className='text-base'>{user.id}</p>
+                            {user?.id ? (
+                                <p className='text-base'>{user?.id ?? ''}</p>
+                            ) : (
+                                <p>Id not found</p>
+                            )
+                            }
                         </Form.Item>
                         <Form.Item label={t('user-role-title')} >
-                            <p className='text-base'>{user.role.title}</p>
+                            {user?.role?.title ? (
+                                <p className='text-base'>{user?.role?.title}</p>
+                            ) : (
+                                <p>Role title not found</p>
+                            )
+                            }
                         </Form.Item>
                         <div className='border-2 border-black rounded-md pl-2'>
                             <div className='flex items-center justify-center mt-2'>
                                 <h4 className='text-lg font-semibold'>{t('base-info-title')}</h4>
                             </div>
                             <Form.Item label={t('user-public-nickname')} >
-                                <p className='text-base'>{user.info.public_nickname}</p>
+                                {user?.info?.public_nickname ? (
+                                    <p className='text-base'>{user?.info?.public_nickname ?? ''}</p>
+                                ) : (
+                                    <p className='text-xs'>Public nickname not found</p>
+                                )
+                                }
                             </Form.Item>
                             <Form.Item label={t('user-full-name')} >
-                                <p className='text-base'>{user.info.full_name}</p>
+                                {user?.info?.full_name ? (
+                                    <p className='text-base'>{user?.info?.full_name ?? ''}</p>
+                                ) : (
+                                    <p>Full name not found</p>
+                                )
+                                }
                             </Form.Item>
                             <Form.Item label={t('user-email')} >
-                                <p className='text-base'>{user.info.email}</p>
+                                {user?.info?.email ? (
+                                    <p className='text-base'>{user?.info?.email ?? ''}</p>
+                                ) : (
+                                    <p>Email not found</p>
+                                )
+                                }
                             </Form.Item>
                             <Form.Item label={t('user-phone')} >
-                                <p className='text-base'>{user.info.phone}</p>
+                                {user?.info?.phone ? (
+                                    <p className='text-base'>{user?.info?.phone ?? null}</p>
+                                ) : (
+                                    <p>Phone not found</p>
+                                )
+                                }
                             </Form.Item>
                             <Form.Item label={t('user-github')} >
-                                <p className='text-base'>{user.info.github}</p>
+                                {user?.info?.github ? (
+                                    <p className='text-base'>{user?.info?.github ?? ''}</p>
+                                ) : (
+                                    <p>GitHub not found</p>
+                                )
+                                }
                             </Form.Item>
                             <Form.Item label={t('user-payment-info')} >
-                                <p className='text-base'>{user.info.payment_info}</p>
+                                {user?.info?.payment_info ? (
+                                    <p className='text-base'>{user?.info?.payment_info ?? ''}</p>
+                                ) : (
+                                    <p>Payment info not found</p>
+                                )
+                                }
                             </Form.Item>
                             <Form.Item label={t('user-tg')} >
-                                <p className='text-base'>{user.info.tg}</p>
+                                {user?.info?.tg ? (
+                                    <p className='text-base'>{user?.info?.tg ?? ''}</p>
+                                ) : (
+                                    <p>Telegram not found</p>
+                                )
+                                }
                             </Form.Item>
                         </div>
                         <div className='border-2 border-black rounded-md pl-2'>
                             <div className='flex items-center justify-center mt-2'>
                                 <h4 className='text-lg font-semibold'>{t('projects-info-title')}</h4>
                             </div>
-                            <Form.Item label={t('user-project-id')} >
-                                <p className='text-base'>{user.projects && user.projects.length > 0 ? user.projects[0].id : ''}</p>
+                            <Form.Item label={t('user-project-id')} className='flex items-center' >
+                                {user?.projects?.map(project => {
+                                    return (
+                                        <p key={project.id} className='text-base'>{project.id}</p>
+                                    )
+                                })
+                                }
                             </Form.Item>
                             <Form.Item label={t('user-project-title')} >
-                                <p className='text-base'>{user.projects && user.projects.length > 0 ? user.projects[0].title : ''}</p>
+                                {user?.projects?.map(project => {
+                                    return (
+                                        <p key={project.id} className='text-base'>{project.title}</p>
+                                    )
+                                })}
                             </Form.Item>
                         </div>
                         <div className='border-2 border-black rounded-md pl-2'>
@@ -197,7 +237,12 @@ const UserInfo: FC<IUserInfo> = ({ token, t }) => {
                                 <h4 className='text-lg font-semibold'>{t('user-profile-image')}</h4>
                             </div>
                             <Form.Item label={t('user-image-url')} rules={[{ required: false, message: t('enter-your-image-url') }]}>
-                                <img src={user.info.image} alt="Profile photo" />
+                                {user?.info?.image ? (
+                                    <Image src={user?.info?.image ?? 'No image found'} alt="Profile photo" />
+                                ) : (
+                                    <p>Image not found</p>
+                                )
+                                }
                             </Form.Item>
                         </div>
                     </Form>
@@ -207,10 +252,20 @@ const UserInfo: FC<IUserInfo> = ({ token, t }) => {
                                 <h4 className='text-lg font-semibold'>{t('team-info-title')}</h4>
                             </div>
                             <Form.Item label={t('user-team-id')} >
-                                <p className='text-base'>{userTeam.id}</p>
+                                {user?.team?.id ? (
+                                    <p className='text-base'>{user?.team?.id ?? ''}</p>
+                                ) : (
+                                    <p>Team Id not found</p>
+                                )
+                                }
                             </Form.Item>
                             <Form.Item label={t('user-team-title')} >
-                                <p className='text-base'>{userTeam.title}</p>
+                                {user?.team?.title ? (
+                                    <p className='text-base'>{user?.team?.title ?? ''}</p>
+                                ) : (
+                                    <p>Team title not found</p>
+                                )
+                                }
                             </Form.Item>
                         </div>
                     </Form>
