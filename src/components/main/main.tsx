@@ -1,13 +1,14 @@
 /* eslint-disable @typescript-eslint/consistent-type-assertions */
 import React, { useState, useEffect, FC } from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-
 import { Layout } from 'antd'
 import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons'
 import fullscreenIcon from '../../assets/images/fullscreen.svg'
 import Autorization from '../../pages/autorization/autorization'
-import { ECountry } from '../../utils/typesFromBackend'
 import NotFound from '../../pages/not-found/not-found'
+import Customers from '../../pages/customers/customers'
+import AllUsers from '../../pages/users/users'
+import { ECountry } from '../../utils/typesFromBackend'
 import { useTranslation } from 'react-i18next'
 import { NotificationProvider } from '../notification-provider/notification-provider'
 import i18n from '../i18n/i18n'
@@ -22,6 +23,9 @@ import Dark from '../dark/dark'
 import { Footer } from 'antd/es/layout/layout'
 import { useTelegram } from '../../services/hooks/use-telegram'
 import UserInfo from '../../pages/user-info/user-info'
+import AdvicesTips from '../../pages/advices-tips/advices-tips'
+import AddPost from '../../pages/add-post/add-post'
+import AddCustomer from '../../pages/add-customer/add-customer'
 
 const { Header, Sider, Content } = Layout
 
@@ -62,6 +66,17 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
         : language
     )
   }, [])
+
+  useEffect(() => {
+    if (dark) {
+      document.body.style.backgroundColor = '#0A0E14'
+      document.body.style.color = '#fff'
+    } else {
+      document.body.style.backgroundColor = '#fff'
+      document.body.style.color = '#0A0E14'
+    }
+  }, [dark])
+
   const [collapse, setCollapse] = useState(false)
   let flag = false
   if (typeof window !== 'undefined') {
@@ -97,7 +112,7 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
     window.innerWidth <= 760 ? setCollapse(true) : setCollapse(false)
   }, [])
 
-  function handleClickFullScreen(): void {
+  const handleClickFullScreen = (): void => {
     if (document.fullscreenElement != null) {
       void document.exitFullscreen()
     } else {
@@ -170,8 +185,6 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
             <Content
               style={{
                 ...style,
-                display: 'flex',
-                justifyContent: 'center',
                 padding: 24,
                 minHeight: 'calc(100vh - 114px)'
               }}
@@ -179,11 +192,11 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
               <Switch>
                 <Route path={`/:${pathRest}/autorization`}>
                   <Autorization
-                    dark={dark}
-                    style={style}
                     setIsLoggedIn={setIsLoggedIn}
                     t={t}
                     setToken={setToken}
+                    style={style}
+                    dark={dark}
                   />
                 </Route>
                 <ProtectedRoute
@@ -224,6 +237,20 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
                   />
                 </ProtectedRoute>
                 <ProtectedRoute
+                  path={`/${pathRest}/customers`}
+                  exact
+                  isLoggedIn={isLoggedIn}
+                  pathRest={pathRest}
+                >
+                  <Customers
+                    token={token}
+                    pathRest={pathRest}
+                    t={t}
+                    dark={dark}
+                    style={style}
+                  />
+                </ProtectedRoute>
+                <ProtectedRoute
                   path={`/:${pathRest}/dishes`}
                   exact
                   isLoggedIn={isLoggedIn}
@@ -239,16 +266,78 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
                   />
                 </ProtectedRoute>
                 <ProtectedRoute
-                    path={`/:${pathRest}/user`}
-                    exact
-                    isLoggedIn={isLoggedIn}
-                    pathRest={pathRest}
+                  path={`/:${pathRest}/add/customer`}
+                  exact
+                  isLoggedIn={isLoggedIn}
+                  pathRest={pathRest}
                 >
-                  <UserInfo
+                  <AddCustomer
                     token={token}
+                    pathRest={pathRest}
+                    t={t}
+                    dark={dark}
+                    style={style}
+                  />
+                </ProtectedRoute>
+                <ProtectedRoute
+                  path={`/${pathRest}/users`}
+                  exact
+                  isLoggedIn={isLoggedIn}
+                  pathRest={pathRest}
+                >
+                  <AllUsers token={token} pathRest={pathRest} t={t} />
+                </ProtectedRoute>
+                <ProtectedRoute
+                  path={`/:${pathRest}/dishes`}
+                  exact
+                  isLoggedIn={isLoggedIn}
+                  pathRest={pathRest}
+                >
+                  <Users
+                    dark={dark}
+                    style={style}
+                    token={token}
+                    pathRest={pathRest}
                     t={t}
                     language={language}
                   />
+                </ProtectedRoute>
+                <ProtectedRoute
+                  path={`/:${pathRest}/blog`}
+                  exact
+                  isLoggedIn={isLoggedIn}
+                  pathRest={pathRest}
+                >
+                  <AdvicesTips
+                    token={token}
+                    pathRest={pathRest}
+                    t={t}
+                    dark={dark}
+                    style={style}
+                  />
+                </ProtectedRoute>
+
+                <ProtectedRoute
+                  path={`/:${pathRest}/add/advice`}
+                  exact
+                  isLoggedIn={isLoggedIn}
+                  pathRest={pathRest}
+                >
+                  <AddPost
+                    token={token}
+                    pathRest={pathRest}
+                    t={t}
+                    dark={dark}
+                    style={style}
+                  />
+                </ProtectedRoute>
+                <ProtectedRoute
+                  path={`/:${pathRest}/user`}
+                  exact
+                  isLoggedIn={isLoggedIn}
+                  pathRest={pathRest}
+                >
+                  <UserInfo token={token} t={t} language={language} />
                 </ProtectedRoute>
                 <Route path='*'>
                   <NotFound t={t} />

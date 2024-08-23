@@ -29,7 +29,6 @@ const UserInfo: FC<IUserInfo> = ({ token, t }) => {
     useEffect(() => {
         if (token) {
             UserInfoAPI.getUserData(token).then(res => {
-                console.log(res)
                 if (res) {
                     setUser(res)
                 }
