@@ -49,8 +49,6 @@ const UpdateUserModal: FC<IUpdateUserModalProps> = ({ onCancel, token, userId })
     useEffect(() => {
         if (userId) {
             UserInfoAPI.fetchUserById(token, userId).then(res => {
-                console.log(res)
-                console.log('UserById info:', typeof (res))
                 if (res) {
                     setUserIdNumber(res.id)
                     setUserRoleTitle(res.role.title)
@@ -65,12 +63,8 @@ const UpdateUserModal: FC<IUpdateUserModalProps> = ({ onCancel, token, userId })
     useEffect(() => {
         if (token) {
             ProjectsInfoAPI.getAllProjects(token).then(res => {
-                console.log(res)
-                console.log('AllProjects info:', typeof (res))
                 if (res) {
                     setAllProjects(res)
-                    console.log(allProjects)
-                    console.log('Array 1:', typeof (allProjects))
                 }
             }).catch((e: Error) => openNotification(e.message, 'topRight'))
         }
