@@ -17,11 +17,10 @@ const UpdateUserModal: FC<IUpdateUserModalProps> = ({ onCancel, token, userId })
     const { openNotification } = useContext(NotificationContext)
     const [userIdNumber, setUserIdNumber] = useState<number | null>(null)
     const [userRoleTitle, setUserRoleTitle] = useState<string | null>(null)
-    const [allProjects, setAllProjects] = useState<TUserProjects[] | []>([])
+    // const [allProjects, setAllProjects] = useState<TUserProjects[] | []>([])
+    const [allProjects, setAllProjects] = useState<TUserProjects[]>([])
     const [, setProjects] = useState<TUserProjects[]>([])
     const [selectedProject, setSelectedProject] = useState<string[]>([])
-    // const [selectedProjectId, setSelectedProjectId] = useState<number | null>(null)
-    // const [selectedProjectId, setSelectedProjectId] = useState<number[]>([])
     const [userTeamId, setUserTeamId] = useState<number | null>(null)
 
     const formRoleData = {
@@ -51,11 +50,11 @@ const UpdateUserModal: FC<IUpdateUserModalProps> = ({ onCancel, token, userId })
         if (userId) {
             UserInfoAPI.fetchUserById(token, userId).then(res => {
                 console.log(res)
+                console.log('UserById info:', typeof (res))
                 if (res) {
                     setUserIdNumber(res.id)
                     setUserRoleTitle(res.role.title)
                     setProjects(res.projects)
-                    // setSelectedProjectIds(res.projects.map(project => project.title))
                     setSelectedProject(res.projects.map(project => project.title))
                     setUserTeamId(res.team.id)
                 }
@@ -67,22 +66,15 @@ const UpdateUserModal: FC<IUpdateUserModalProps> = ({ onCancel, token, userId })
         if (token) {
             ProjectsInfoAPI.getAllProjects(token).then(res => {
                 console.log(res)
-                console.log(typeof (res))
+                console.log('AllProjects info:', typeof (res))
                 if (res) {
                     setAllProjects(res)
                     console.log(allProjects)
+                    console.log('Array 1:', typeof (allProjects))
                 }
             }).catch((e: Error) => openNotification(e.message, 'topRight'))
         }
     }, [token])
-
-    // useEffect(() => {
-    //     ProjectsInfoAPI.getAllProjects(token).then(res => {
-    //         if (res) {
-    //             allProjects.filter(project => project)
-    //         }
-    //     }).catch((e: Error) => openNotification(e.message, 'topRight'))
-    // }, [token])
 
     const onChangeUserRole = (e: React.FormEvent<HTMLFormElement>): void => {
         if (userId !== null) {
@@ -105,17 +97,6 @@ const UpdateUserModal: FC<IUpdateUserModalProps> = ({ onCancel, token, userId })
                 .catch((e) => openNotification(e, 'topRight'))
         }
     }
-
-    // const deleteUserProjects = (): void => {
-    //     if (userId !== null) {
-    //         UserInfoAPI
-    //             .deleteUserProject(token, formProjectsData)
-    //             .then(() => {
-    //                 openNotification('The user data is saved!', 'topRight')
-    //             })
-    //             .catch((e) => openNotification(e, 'topRight'))
-    //     }
-    // }
 
     const changeUserTeam = (): void => {
         if (userId !== null) {
@@ -141,9 +122,6 @@ const UpdateUserModal: FC<IUpdateUserModalProps> = ({ onCancel, token, userId })
 
     const handleUserProjectsChange = (value: string[]): void => {
         setSelectedProject(value)
-        // const projectIds = id.map(Number)
-        // setSelectedProjectId(projectIds)
-        // console.log('Change state:', selectedProjectId)
         console.log('Change state:', selectedProject)
     }
 
@@ -181,9 +159,6 @@ const UpdateUserModal: FC<IUpdateUserModalProps> = ({ onCancel, token, userId })
             </Select>
         </Form.Item>
         <div className='flex justify-center gap-12'>
-            {/* <Button className='flex justify-center items-center text-lg w-30 mt-5' type='primary' danger onClick={deleteUserProjects} >
-                <h4 className='p-1'>{t('leave-project')}</h4>
-            </Button> */}
             <Button className='flex justify-center items-center text-lg w-30 mt-5' onClick={changeUserProjects} >
                 <h4 className='p-1'>{t('changed-project')}</h4>
             </Button>
