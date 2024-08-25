@@ -33,7 +33,6 @@ const UpdateUserModal: FC<IUpdateUserModalProps> = ({ onCancel, token, userId })
     }
 
     const formProjectsData = {
-        // projectId: selectedProjectId,
         projectId: selectedProject,
         userId: userIdNumber
     }
