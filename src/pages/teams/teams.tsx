@@ -1,7 +1,7 @@
 import { Button, Table } from 'antd'
 import { ColumnsType } from 'antd/es/table'
 import { FC, useContext, useEffect, useState } from 'react'
-import * as customerAPI from '../../utils/api/customers-api'
+import * as teamAPI from '../../utils/api/team-api'
 import { Link, useHistory, NavLink } from 'react-router-dom'
 import { NotificationContext } from '../../components/notification-provider/notification-provider'
 import { TTeams } from '../../utils/typesFromBackend'
@@ -20,19 +20,17 @@ const Teams: FC<ITeams> = ({ token, pathRest, t }) => {
   const history = useHistory()
 
   useEffect(() => {
-    customerAPI
-      .getAllCustomers(token)
+    teamAPI
+      .getAllTeams(token)
       .then((res: TTeams[]) => setData(res))
       .catch((e: Error) => openNotification(e.message, 'topRight'))
   }, [token, openNotification])
 
   const handleDelete = (id: string): void => {
-    customerAPI
-      .deleteCustomer(token, id)
+    teamAPI
+      .deleteTeam(token, id)
       .then(() =>
-        setData((prev: TTeams[]) =>
-          prev.filter((customer) => customer.id !== id)
-        )
+        setData((prev: TTeams[]) => prev.filter((team) => team.id !== id))
       )
       .catch((e: Error) => openNotification(e.message, 'topRight'))
   }
@@ -42,8 +40,8 @@ const Teams: FC<ITeams> = ({ token, pathRest, t }) => {
       title: `${t('name')}`,
       dataIndex: 'name',
       key: 'name',
-      render: (name: string, customer: TTeams): JSX.Element => (
-        <Link to={`/${pathRest}/customer/${customer.id}`}>{name}</Link>
+      render: (name: string, team: TTeams): JSX.Element => (
+        <Link to={`/${pathRest}/team/${team.id}`}>{name}</Link>
       ),
       sorter: (a: TTeams, b: TTeams): number => a.name.localeCompare(b.name)
     },

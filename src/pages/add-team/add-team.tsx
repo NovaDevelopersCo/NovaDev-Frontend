@@ -1,10 +1,8 @@
-import React, { FC, useContext } from 'react'
+import { FC, useContext, useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import { TAdmin, TRest } from '../../utils/typesFromBackend'
 import { Form, Input, Button, Modal } from 'antd'
 import { NotificationContext } from '../../components/notification-provider/notification-provider'
-import * as adminAPI from '../../utils/api/category-api'
-import * as userAPI from '../../utils/api/task-api'
+import * as teamAPI from '../../utils/api/team-api'
 import clsx from 'clsx'
 
 interface IAddTeam {
@@ -15,7 +13,7 @@ interface IAddTeam {
   style: object
 }
 
-const AddTeam: FC<IAddTeam> = ({ token, pathRest, t, dark, style }) => {
+const AddTeam: FC<IAddTeam> = ({ token, pathRest, t, dark }) => {
   const { openNotification } = useContext(NotificationContext)
   const [form] = Form.useForm()
   const history = useHistory()
@@ -24,62 +22,27 @@ const AddTeam: FC<IAddTeam> = ({ token, pathRest, t, dark, style }) => {
     wrapperCol: { span: 14 }
   }
   const theme = clsx(dark ? 'black' : 'white')
-  const [isModalVisible, setIsModalVisible] = React.useState(false)
-  const [PathRest, setPathRest] = React.useState<{ [key: string]: string }>({})
-  const [, setCategory] = React.useState('')
-  const [, setTitle] = React.useState('')
-  const [, setContent] = React.useState('')
-  const [, setNumber] = React.useState('')
-
-  function handleChangeContent(e: React.ChangeEvent<HTMLInputElement>): void {
-    setContent(e.target.value)
-  }
-
-  function handleChangeCategory(e: React.ChangeEvent<HTMLInputElement>): void {
-    setCategory(e.target.value)
-  }
-
-  function handleChangeNumber(e: React.ChangeEvent<HTMLInputElement>): void {
-    setNumber(e.target.value)
-  }
-
-  function handleChangeTitle(e: React.ChangeEvent<HTMLInputElement>): void {
-    setTitle(e.target.value)
-  }
+  const [isModalVisible, setIsModalVisible] = useState(false)
 
   const validateMessages = {
     // eslint-disable-next-line no-template-curly-in-string
     required: '${label} ' + `${t('it-is-necessary-to-fill-in')}!`
   }
-  React.useEffect(() => {
-    userAPI
-      .getTasks(token, 1)
-      .then((res) => {
-        const nameRests: { [key: string]: string } = {}
-        res.rests.forEach((rest: TRest) => {
-          if (!nameRests[rest.titleRest] && rest.titleRest) {
-            nameRests[rest.titleRest] = rest._id
-          }
-        })
-        setPathRest(nameRests)
-      })
-      .catch((e) => openNotification(e, 'topRight'))
-  }, [])
 
   const onFinish = (values: any): void => {
-    const newLanguageRest: any = {
-      nickname: values.nickname,
-      password: values.password,
-      level_access: Number(values.level_access),
-      rest_id: PathRest[values.restaurant],
-      image: values.image
+    const newTeam = {
+      name: values.name,
+      description: values.description,
+      numberUsers: values.numberUsers,
+      category: values.category
     }
-    adminAPI
-      .createAdmin(token, newLanguageRest)
-      .then((res: TAdmin) => {
-        history.push(`/${pathRest}/admins`)
+
+    teamAPI
+      .createTeam(token, newTeam)
+      .then(() => {
+        history.push(`/${pathRest}/teams`)
       })
-      .catch((e) => openNotification(e, 'topRight'))
+      .catch((e) => openNotification(e.message, 'topRight'))
   }
 
   const handleModalClose = (): void => {
@@ -120,37 +83,37 @@ const AddTeam: FC<IAddTeam> = ({ token, pathRest, t, dark, style }) => {
         {...layout}
         onFinish={onFinish}
         validateMessages={validateMessages}
-        name='dish'
+        name='team'
         form={form}
         style={{ paddingTop: '1.5rem' }}
       >
         <Form.Item
           label={t('name-of-team')}
           rules={[{ required: true }]}
-          name='title'
+          name='name'
         >
-          <Input onChange={handleChangeTitle} />
+          <Input />
         </Form.Item>
         <Form.Item
           label={t('description')}
           rules={[{ required: true }]}
           name='description'
         >
-          <Input onChange={handleChangeContent} />
+          <Input />
         </Form.Item>
         <Form.Item
           label={t('number-user')}
           rules={[{ required: true }]}
           name='number-users'
         >
-          <Input onChange={handleChangeNumber} />
+          <Input />
         </Form.Item>
         <Form.Item
           label={t('category')}
           rules={[{ required: true }]}
           name='category'
         >
-          <Input onChange={handleChangeCategory} />
+          <Input />
         </Form.Item>
         <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 4 }}>
           <Button type='primary' htmlType='submit'>
@@ -161,4 +124,5 @@ const AddTeam: FC<IAddTeam> = ({ token, pathRest, t, dark, style }) => {
     </>
   )
 }
+
 export default AddTeam
