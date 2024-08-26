@@ -31,10 +31,19 @@ const RoleUser: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
   React.useEffect(() => {
     userAPI
       .getUsers(token)
-      .then((res) => {
+      .then((res: TUser[]) => {
         setUsers(res)
-        setData(res)
-        console.log(res)
+        const array: TUser[] = []
+        res.forEach((user: TUser) => {
+          if (
+            typeof user.role.id === 'number' &&
+            typeof roleId === 'number' &&
+            user.roleId === roleId
+          ) {
+            array.push(user)
+          }
+        })
+        setData(array)
       })
       .catch((e) => openNotification(e, 'topRight'))
     const currentPath = location.pathname
@@ -68,7 +77,7 @@ const RoleUser: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
       // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
       render: (nickname, role) => (
         // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-        <Link to={`/${pathRest}/role/:${role.id}`}>{nickname}</Link>
+        <Link to={`/${pathRest}/role/:${role.id}`}>{role.info.full_name}</Link>
       )
     },
     {
