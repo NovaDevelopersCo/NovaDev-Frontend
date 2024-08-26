@@ -44,7 +44,9 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
   const [language, setLanguage] = useState<ECountry>(
     (localStorage.getItem('language') as ECountry) ?? ECountry.RU
   )
-  const [dark, setDark] = useState<boolean>(localStorage.getItem('dark') === 'true')
+  const [dark, setDark] = useState<boolean>(
+    localStorage.getItem('dark') === 'true'
+  )
   const [width, setWidth] = useState<boolean>(false)
   const { t } = useTranslation()
 
@@ -257,7 +259,7 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
                   isLoggedIn={isLoggedIn}
                   pathRest={pathRest}
                 >
-                  <Role token={token} pathRest={pathRest} t={t} />
+                  <Role token={token} pathRest={pathRest} t={t} style={style} />
                 </ProtectedRoute>
                 <ProtectedRoute
                   path={`/:${pathRest}/add/role`}
@@ -369,8 +371,8 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
         </Layout>
         <Footer style={style}>
           <div className='border-t flex justify-center text-center'>
-            Copyright &copy; {new Date().getFullYear()} Nova Developers. All rights
-            reserved.
+            Copyright &copy; {new Date().getFullYear()} Nova Developers. All
+            rights reserved.
           </div>
         </Footer>
       </Router>

@@ -9,9 +9,15 @@ interface IGroupModifiersForDish {
   pathRest: string
   token: string
   t: (arg0: string) => string
+  style: object
 }
 
-const RoleUpdate: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
+const RoleUpdate: FC<IGroupModifiersForDish> = ({
+  token,
+  pathRest,
+  t,
+  style
+}) => {
   const { openNotification } = useContext(NotificationContext)
   const [form] = Form.useForm()
   const history = useHistory()
@@ -115,7 +121,7 @@ const RoleUpdate: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
       validateMessages={validateMessages}
       name='role'
       form={form}
-      style={{ paddingTop: '1.5rem' }}
+      style={{ paddingTop: '1.5rem', ...style }}
       onValuesChange={handleFormChange}
     >
       <Form.Item label={t('title')} name='title'>

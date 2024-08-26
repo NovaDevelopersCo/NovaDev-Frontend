@@ -10,6 +10,7 @@ interface IGroupModifiersForDish {
   pathRest: string
   token: string
   t: (arg0: string) => string
+  style: object
 }
 
 interface ILevelsAccess {
@@ -17,7 +18,12 @@ interface ILevelsAccess {
   value: string
 }
 
-const RoleUser: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
+const RoleUser: FC<IGroupModifiersForDish> = ({
+  token,
+  pathRest,
+  t,
+  style
+}) => {
   const { openNotification } = useContext(NotificationContext)
   const pathname = useLocation().pathname
   const match = useRouteMatch(pathname)
@@ -103,7 +109,7 @@ const RoleUser: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
         name='role'
         form={form}
         validateMessages={validateMessages}
-        style={{ paddingTop: '1.5rem' }}
+        style={{ paddingTop: '1.5rem', ...style }}
       >
         <Form.Item label={t('add-user')} name='id' rules={[{ required: true }]}>
           <Select>

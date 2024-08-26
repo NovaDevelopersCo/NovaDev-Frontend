@@ -12,9 +12,10 @@ interface IEditorRole {
   token: string
   t: (arg0: string) => string
   pathRest: string
+  style: object
 }
 
-const Role: FC<IEditorRole> = ({ token, pathRest, t }) => {
+const Role: FC<IEditorRole> = ({ token, pathRest, t, style }) => {
   const { openNotification } = useContext(NotificationContext)
   const pathname = useLocation().pathname
   const match = useRouteMatch(pathname)
@@ -59,7 +60,7 @@ const Role: FC<IEditorRole> = ({ token, pathRest, t }) => {
       />{' '}
       {isRole ? (
         value === t('role') ? (
-          <RoleUpdate token={token} pathRest={pathRest} t={t} />
+          <RoleUpdate token={token} pathRest={pathRest} t={t} style={style} />
         ) : (
           ''
         )
@@ -68,7 +69,12 @@ const Role: FC<IEditorRole> = ({ token, pathRest, t }) => {
       )}
       {isRole ? (
         value === t('users') ? (
-          <RoleUser token={token} pathRest={pathRest} t={t}></RoleUser>
+          <RoleUser
+            token={token}
+            pathRest={pathRest}
+            t={t}
+            style={style}
+          ></RoleUser>
         ) : (
           ''
         )

@@ -5,8 +5,6 @@ import { useLocation, useRouteMatch } from 'react-router-dom'
 import { TAdmin } from '../../utils/typesFromBackend'
 import { Button, Modal, Segmented } from 'antd'
 import { NotificationContext } from '../../components/notification-provider/notification-provider'
-import AdminPassword from '../../components/FRole/role-user/role-user'
-import AdminUpdate from '../../components/FRole/role-update/role-update'
 
 interface IEditorRest {
   token: string
@@ -20,7 +18,7 @@ const Admin: FC<IEditorRest> = ({ token, pathRest, t }) => {
   const match = useRouteMatch(pathname)
   const restId = Object.keys(match?.params as string)[0]
   const [admin, setAdmin] = React.useState<TAdmin>({} as TAdmin)
-  const [isRest, setIsRest] = React.useState(false)
+  const [, setIsRest] = React.useState(false)
   const [value, setValue] = React.useState<string | number>(t('admin'))
   const [isModalVisible, setIsModalVisible] = React.useState(false)
   React.useEffect(() => {
@@ -57,28 +55,6 @@ const Admin: FC<IEditorRest> = ({ token, pathRest, t }) => {
         value={value}
         onChange={setValue}
       />{' '}
-      {isRest ? (
-        value === t('admin') ? (
-          <AdminUpdate token={token} pathRest={pathRest} t={t} />
-        ) : (
-          ''
-        )
-      ) : (
-        ''
-      )}
-      {isRest ? (
-        value === t('password') ? (
-          <AdminPassword
-            token={token}
-            pathRest={pathRest}
-            t={t}
-          ></AdminPassword>
-        ) : (
-          ''
-        )
-      ) : (
-        ''
-      )}
       {
         <Modal
           title={t('alert')}
