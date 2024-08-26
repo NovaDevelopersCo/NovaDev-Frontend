@@ -88,12 +88,13 @@ const RoleUpdate: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
   }
   const onFinish = (values: any): void => {
     const newLanguageRest: any = {
-      id: role.id,
       title: values.title,
+      description: values.description,
       level_access: Number(values.level_access)
     }
+    console.log(newLanguageRest)
     roleAPI
-      .updateRole(token, newLanguageRest)
+      .updateRole(token, newLanguageRest, role.id.toString())
       .then((res: TRole) => {
         localStorage.removeItem('formDataAdmin')
         history.push(`/${pathRest}/roles`)

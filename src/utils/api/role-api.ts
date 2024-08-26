@@ -46,8 +46,8 @@ export const deleteRole = async (token: string, id: string) => {
   }).then(async (res) => await handleResponse(res))
 }
 
-export const updateRole = async (token: string, data: any) => {
-  return await fetch(`${BASE_URL}/roles`, {
+export const updateRole = async (token: string, data: object, id: string) => {
+  return await fetch(`${BASE_URL}/roles/${id}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
