@@ -369,7 +369,7 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
         </Layout>
         <Footer style={style}>
           <div className='border-t flex justify-center text-center'>
-            Copyright &copy; {new Date().getFullYear()} Zoomish. All rights
+            Copyright &copy; {new Date().getFullYear()} Nova Developers. All rights
             reserved.
           </div>
         </Footer>
