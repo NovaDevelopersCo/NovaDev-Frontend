@@ -26,6 +26,9 @@ export interface TUserInfo {
 export interface TRole {
   id: number
   title: string
+  description: string
+  level_access: number
+  users: TUser[]
 }
 
 export interface TUserTeam {
