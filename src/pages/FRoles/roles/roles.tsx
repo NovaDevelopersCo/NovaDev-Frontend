@@ -1,71 +1,59 @@
 import { Table } from 'antd'
 import { ColumnsType } from 'antd/es/table'
 import React, { FC, useContext } from 'react'
-import { ECountry, TCategory } from '../../utils/typesFromBackend'
-import * as adminAPI from '../../utils/api/category-api'
+import { ECountry, TRole } from '../../../utils/typesFromBackend'
+import * as roleAPI from '../../../utils/api/role-api'
 import { Link, NavLink, useLocation } from 'react-router-dom'
-import { NotificationContext } from '../../components/notification-provider/notification-provider'
-import imageNoPhoto from '../../assets/images/no_photo.png'
-import { BASE_URL } from '../../utils/const'
+import { NotificationContext } from '../../../components/notification-provider/notification-provider'
 import clsx from 'clsx'
 
-interface ILevelsAccess {
+interface ILevelAccess {
   text: string
   value: string
 }
 
-interface IAdmins {
+interface IRoles {
   token: string
   pathRest: string
   t: (arg0: string) => string
   language: ECountry
   dark: boolean
-  style: object
 }
 
-const Categories: FC<IAdmins> = ({ token, pathRest, t, dark, style }) => {
+const Roles: FC<IRoles> = ({ token, pathRest, t, dark }) => {
   const { openNotification } = useContext(NotificationContext)
 
-  const [data, setData] = React.useState<TCategory[]>([])
-  const [, setLevelsAccess] = React.useState<ILevelsAccess[]>([])
+  const [data, setData] = React.useState<TRole[]>([])
+  const [levelAccess, setLevelAccess] = React.useState<ILevelAccess[]>([])
   const location = useLocation()
   React.useEffect(() => {
-    adminAPI
-      .getAllCategories()
+    roleAPI
+      .getRoles(token)
       .then((res) => {
         setData(res)
         const levelsAccessNames: { [key: string]: boolean } = {}
-        const resultArrayLevels: ILevelsAccess[] = []
+        const resultArrayLevels: ILevelAccess[] = []
+        res.forEach((role: TRole) => {
+          if (!levelsAccessNames[role.level_access]) {
+            levelsAccessNames[role.level_access] = true
+          }
+        })
         for (const key of Object.keys(levelsAccessNames)) {
           resultArrayLevels.push({ text: key, value: key })
         }
-        setLevelsAccess(resultArrayLevels)
+        setLevelAccess(resultArrayLevels)
       })
       .catch((e) => openNotification(e, 'topRight'))
     const currentPath = location.pathname
     window.localStorage.setItem('initialRoute', currentPath)
   }, [])
-  const columns: ColumnsType<TCategory> = [
-    {
-      title: `${t('logo')}`,
-      dataIndex: 'image',
-      key: 'image',
-      render: (image, admin) => (
-        <img
-          style={{ width: '100px', height: '100px', objectFit: 'contain' }}
-          src={admin.image ? `${BASE_URL}/${admin.image}` : `${imageNoPhoto}`}
-          onError={(e) => {
-            e.currentTarget.src = imageNoPhoto
-          }}
-        />
-      )
-    },
+  const columns: ColumnsType<TRole> = [
     {
       title: `${t('name')}`,
       dataIndex: 'title',
       key: 'title',
-      render: (title, restId) => (
-        <Link to={`/${pathRest}/category/:${restId.id}`}>{title}</Link>
+      render: (title, role) => (
+        <Link to={`/${pathRest}/role/:${role.id}`}>{title}</Link>
       ),
       sorter: (a, b) => {
         if (a.title !== undefined && b.title !== undefined) {
@@ -77,6 +65,27 @@ const Categories: FC<IAdmins> = ({ token, pathRest, t, dark, style }) => {
         }
         return 0
       }
+    },
+    {
+      title: `${t('description')}`,
+      dataIndex: 'description',
+      key: 'description',
+      render: (title, role) => (
+        <Link to={`/${pathRest}/role/:${role.id}`}>{title}</Link>
+      )
+    },
+    {
+      title: `${t('level_access')}`,
+      dataIndex: 'level_access',
+      key: 'level_access',
+      render: (title, role) => (
+        <Link to={`/${pathRest}/role/:${role.id}`}>{title}</Link>
+      ),
+      sorter: (a, b) => a.level_access - b.level_access,
+      filters: [...levelAccess],
+      onFilter: (value: string | number | boolean, record) =>
+        // eslint-disable-next-line eqeqeq
+        record.level_access == value
     }
   ]
   const theme = clsx(dark ? 'black' : 'white')
@@ -93,12 +102,12 @@ const Categories: FC<IAdmins> = ({ token, pathRest, t, dark, style }) => {
       >
         <div style={{ display: 'block', marginRight: 'auto' }}>
           <h2 style={{ fontWeight: 600, marginBottom: '0' }}>
-            {t('categories')}
+            {t('roles')}
           </h2>
-          <p style={{ marginBottom: '0' }}>{t('your-list-categories')}</p>
+          <p style={{ marginBottom: '0' }}>{t('your-list-roles')}</p>
         </div>
         <NavLink
-          to={`/${pathRest}/add/category`}
+          to={`/${pathRest}/add/role`}
           style={{
             color: '#fff',
             backgroundColor: '#2bc155',
@@ -116,13 +125,8 @@ const Categories: FC<IAdmins> = ({ token, pathRest, t, dark, style }) => {
           {t('add')}
         </NavLink>
       </div>
-      <Table
-        columns={columns}
-        dataSource={data}
-        style={style}
-        className={theme}
-      />
+      <Table columns={columns} dataSource={data} className={theme} />
     </div>
   )
 }
-export default Categories
+export default Roles

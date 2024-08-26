@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { Button, Form, Input } from 'antd'
 import { Dispatch, FC, SetStateAction, useContext, useEffect } from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import * as autorizationApi from '../../utils/api/autorization-api'
 import { NotificationContext } from '../../components/notification-provider/notification-provider'
 import * as validateTokenApi from '../../utils/api/validate-token-api'
@@ -29,9 +29,9 @@ const Autorization: FC<IAutorization> = ({
   const { openNotification } = useContext(NotificationContext)
   const history = useHistory()
   const { tg } = useTelegram()
+
   useEffect(() => {
     const tokenDetailsString = localStorage.getItem('token')
-    // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
     if (tokenDetailsString) {
       validateTokenApi
         .validateToken(tokenDetailsString)
@@ -40,13 +40,13 @@ const Autorization: FC<IAutorization> = ({
             setIsLoggedIn(true)
             if (storedInitialRoute) {
               if (storedInitialRoute === '/') {
-                history.push('dishes')
+                history.push('roles')
               } else {
                 history.push(storedInitialRoute)
                 localStorage.removeItem('initialRoute')
               }
             } else {
-              history.push('dishes')
+              history.push('roles')
             }
           } else {
             setIsLoggedIn(true)
@@ -54,7 +54,7 @@ const Autorization: FC<IAutorization> = ({
               history.push(storedInitialRoute)
               localStorage.removeItem('initialRoute')
             } else {
-              history.push('dishes')
+              history.push('roles')
             }
           }
         })
@@ -63,6 +63,7 @@ const Autorization: FC<IAutorization> = ({
         })
     }
   }, [])
+
   const onFinish = (values: any) => {
     autorizationApi
       .autorization(values)
@@ -77,7 +78,7 @@ const Autorization: FC<IAutorization> = ({
           history.push(storedInitialRoute)
           localStorage.removeItem('initialRoute')
         } else {
-          history.push('dishes')
+          history.push('roles')
         }
       })
       .catch((e) => openNotification(e, 'topRight'))
@@ -88,21 +89,25 @@ const Autorization: FC<IAutorization> = ({
   }
 
   const layout = {
-    labelCol: { span: 4 },
-    wrapperCol: { span: 14 }
+    labelCol: { span: 6 },
+    wrapperCol: { span: 18 }
   }
 
+  const tailLayout = {
+    wrapperCol: { span: 24 },
+    style: { display: 'flex', justifyContent: 'center' }
+  }
   const theme = clsx(dark ? 'black' : 'white')
 
   return (
     <Form
       {...layout}
-      style={style}
       name='basic'
       className={clsx(theme, 'max-w-[600px] flex justify-center flex-col')}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
       autoComplete='off'
+      style={{ maxWidth: '550px', margin: ' 0 auto' }}
     >
       <Form.Item
         label={t('email')}
@@ -119,13 +124,8 @@ const Autorization: FC<IAutorization> = ({
       >
         <Input.Password />
       </Form.Item>
-      <Form.Item wrapperCol={{ offset: 4, span: 16 }}>
-        {t('dont-have-an-account')}?{' '}
-        <Link to={'registration'} className='text-blue-500'>
-          {t('sign-up')}
-        </Link>
-      </Form.Item>
-      <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+
+      <Form.Item {...tailLayout}>
         <Button type='primary' htmlType='submit'>
           {t('send')}
         </Button>
@@ -133,4 +133,5 @@ const Autorization: FC<IAutorization> = ({
     </Form>
   )
 }
+
 export default Autorization

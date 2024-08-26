@@ -6,10 +6,42 @@ export interface TButton {
 
 export interface TUser {
   id: number
-  nickname?: string
-  tg_id?: number
-  tasks?: TTask[]
+  roleId: number
+  role: TRole
+  info: TUserInfo
+  team: TUserTeam
+  projects: TUserProjects[]
 }
+
+export interface TUserInfo {
+  public_nickname: string
+  full_name: string
+  email: string
+  github: string
+  payment_info: string
+  tg: string
+  phone: number
+  image: string
+}
+
+export interface TRole {
+  id: number
+  title: string
+  description: string
+  level_access: number
+  users: TUser[]
+}
+
+export interface TUserTeam {
+  id: number
+  title: string
+}
+
+export interface TUserProjects {
+  id: number
+  title: string
+}
+
 export interface TTask {
   id: number
   title: string
@@ -24,14 +56,6 @@ export interface TTask {
 export interface TCustomInputsOrder {
   name: string
   value: string
-}
-export interface TCartInitialState {
-  dishes: TDishInCart[]
-}
-export interface TDishInCart {
-  dish: TDish
-  quantity: number
-  id: string
 }
 export interface TOrderType {
   _id: string
@@ -119,7 +143,6 @@ export interface TRest {
   countTable: number
   currentCurrency: string
   titleTable: string
-  enableDishesQr: boolean
   tariff: ETariff
   adminCode: string
   waiterCode: string
@@ -165,9 +188,12 @@ export enum ECountry {
 }
 
 export enum ELevelAccess {
-  Сustomer = '1',
-  Admin = '2',
-  Super_Admin = '3'
+  LOW = '1',
+  Mead = '2',
+  TOP = '3',
+  ANGEL = '4',
+  DEMIGOD = '5',
+  GOD = '6'
 }
 
 export interface IMultiLang {
@@ -214,20 +240,11 @@ export interface TCategory {
   id: string
   image: string
   title: string
-  items: TDish[]
 }
-export interface TDish {
-  id: string
-  email: string
-  description: string
-  roles: string[]
-  banned: boolean
-  image: any
-}
+
 export interface TSubCategories {
   subcategories: TSubCategories[] | []
   category: TCategory
-  dishes: TDish[] | []
 }
 export interface TCustomInput {
   _id: string
@@ -248,4 +265,16 @@ export interface TCustomer {
   name: string
   email: string
   tg: string
+}
+export interface TAdvice {
+  id: string
+  title: string
+  content: string
+}
+export interface TProfileData {
+  picture: string
+  name: string
+  github: string
+  team: string
+  project: string
 }

@@ -12,7 +12,7 @@ interface IGroupModifiersForDish {
   t: (arg0: string) => string
 }
 
-const AdminPassword: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
+const UserUpdate: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
   const { openNotification } = useContext(NotificationContext)
   const [form] = Form.useForm()
   const history = useHistory()
@@ -179,4 +179,4 @@ const AdminPassword: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
     </Form>
   )
 }
-export default AdminPassword
+export default UserUpdate
