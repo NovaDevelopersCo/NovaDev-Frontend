@@ -22,3 +22,16 @@ export const getUser = async (token: string, id: number) => {
     }
   }).then(async (res) => await handleResponse(res))
 }
+
+export const updateUser = async (token: string, id: number, data: object) => {
+  return await fetch(`${BASE_URL}/users/${id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify({
+      ...data
+    })
+  }).then(async (res) => await handleResponse(res))
+}

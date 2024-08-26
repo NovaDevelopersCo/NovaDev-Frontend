@@ -22,7 +22,7 @@ const RoleUser: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
   const { openNotification } = useContext(NotificationContext)
   const pathname = useLocation().pathname
   const match = useRouteMatch(pathname)
-  const restId = Object.keys(match?.params as number)[0]
+  const roleId = Object.keys(match?.params as number)[0]
   const [data, setData] = React.useState<TRole[]>([])
   const [users, setUsers] = React.useState<TUser[]>([])
   const [levelsAccess, setLevelsAccess] = React.useState<ILevelsAccess[]>([])
@@ -39,7 +39,7 @@ const RoleUser: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
       .catch((e) => openNotification(e, 'topRight'))
     const currentPath = location.pathname
     window.localStorage.setItem('initialRoute', currentPath)
-  }, [restId, update])
+  }, [roleId, update])
 
   React.useEffect(() => {
     const levelsAccessNames: { [key: string]: boolean } = {}
@@ -56,13 +56,10 @@ const RoleUser: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
   }, [data])
   function handleDeleteModifierFromDish(values: any): void {
     const newLanguageRest: any = {
-      _id: values._id,
-      nickname: values.nickname,
-      password: values.password,
-      level_access: Number(values.level_access)
+      roleId: 1
     }
     userAPI
-      .updateAdmin(token, newLanguageRest)
+      .updateUser(token, values.id, newLanguageRest)
       .then((res: any) => {
         setUpdate(!update)
       })
@@ -116,13 +113,10 @@ const RoleUser: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
       .getUser(token, values.id)
       .then((res: TRole) => {
         const newLanguageRest: any = {
-          id: res.id,
-          nickname: res.title,
-          password: res.description,
-          level_access: Number(res.level_access)
+          roleId: roleId
         }
         userAPI
-          .updateAdmin(token, newLanguageRest)
+          .updateUser(token, values.id, newLanguageRest)
           .then((res: any) => {
             setUpdate(!update)
           })
