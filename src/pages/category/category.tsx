@@ -5,8 +5,8 @@ import { useLocation, useRouteMatch } from 'react-router-dom'
 import { TAdmin } from '../../utils/typesFromBackend'
 import { Button, Modal, Segmented } from 'antd'
 import { NotificationContext } from '../../components/notification-provider/notification-provider'
-import AdminPassword from '../../components/admin-password/admin-password'
-import AdminUpdate from '../../components/admin-update/admins-update'
+import AdminPassword from '../../components/FRole/role-user/role-user'
+import AdminUpdate from '../../components/FRole/role-update/role-update'
 
 interface IEditorRest {
   token: string

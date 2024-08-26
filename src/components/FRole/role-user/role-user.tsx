@@ -1,9 +1,9 @@
 import { Form, Button, Input } from 'antd'
 import React, { FC, useContext } from 'react'
 import { useHistory, useLocation, useRouteMatch } from 'react-router-dom'
-import { TAdmin } from '../../utils/typesFromBackend'
-import * as adminAPI from '../../utils/api/category-api'
-import { NotificationContext } from '../notification-provider/notification-provider'
+import { TAdmin } from '../../../utils/typesFromBackend'
+import * as adminAPI from '../../../utils/api/category-api'
+import { NotificationContext } from '../../notification-provider/notification-provider'
 
 interface IGroupModifiersForDish {
   pathRest: string
@@ -11,7 +11,7 @@ interface IGroupModifiersForDish {
   t: (arg0: string) => string
 }
 
-const AdminPassword: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
+const RoleUser: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
   const { openNotification } = useContext(NotificationContext)
   const [form] = Form.useForm()
   const history = useHistory()
@@ -129,4 +129,4 @@ const AdminPassword: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
     </Form>
   )
 }
-export default AdminPassword
+export default RoleUser

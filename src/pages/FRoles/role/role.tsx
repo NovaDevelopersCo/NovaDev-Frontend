@@ -5,8 +5,8 @@ import { useLocation, useRouteMatch } from 'react-router-dom'
 import { TAdmin } from '../../../utils/typesFromBackend'
 import { Button, Modal, Segmented } from 'antd'
 import { NotificationContext } from '../../../components/notification-provider/notification-provider'
-import AdminPassword from '../../../components/admin-password/admin-password'
-import AdminUpdate from '../../../components/admin-update/admins-update'
+import RoleUpdate from '../../../components/FRole/role-update/role-update'
+import RoleUser from '../../../components/FRole/role-user/role-user'
 
 interface IEditorRole {
   token: string
@@ -62,7 +62,7 @@ const Role: FC<IEditorRole> = ({ token, pathRest, t }) => {
       />{' '}
       {isRest ? (
         value === t('role') ? (
-          <AdminUpdate token={token} pathRest={pathRest} t={t} />
+          <RoleUpdate token={token} pathRest={pathRest} t={t} />
         ) : (
           ''
         )
@@ -71,11 +71,11 @@ const Role: FC<IEditorRole> = ({ token, pathRest, t }) => {
       )}
       {isRest ? (
         value === t('users') ? (
-          <AdminPassword
+          <RoleUser
             token={token}
             pathRest={pathRest}
             t={t}
-          ></AdminPassword>
+          ></RoleUser>
         ) : (
           ''
         )

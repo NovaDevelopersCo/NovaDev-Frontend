@@ -1,10 +1,10 @@
 import { Popconfirm, Select, Form, Button, Input } from 'antd'
 import React, { FC, useContext } from 'react'
 import { useHistory, useLocation, useRouteMatch } from 'react-router-dom'
-import { ELevelAccess, TAdmin, TRest } from '../../utils/typesFromBackend'
-import * as adminAPI from '../../utils/api/category-api'
-import { NotificationContext } from '../notification-provider/notification-provider'
-import * as userAPI from '../../utils/api/task-api'
+import { ELevelAccess, TAdmin, TRest } from '../../../utils/typesFromBackend'
+import * as adminAPI from '../../../utils/api/category-api'
+import { NotificationContext } from '../../notification-provider/notification-provider'
+import * as userAPI from '../../../utils/api/task-api'
 
 interface IGroupModifiersForDish {
   pathRest: string
@@ -12,7 +12,7 @@ interface IGroupModifiersForDish {
   t: (arg0: string) => string
 }
 
-const AdminPassword: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
+const RoleUpdate: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
   const { openNotification } = useContext(NotificationContext)
   const [form] = Form.useForm()
   const history = useHistory()
@@ -179,4 +179,4 @@ const AdminPassword: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
     </Form>
   )
 }
-export default AdminPassword
+export default RoleUpdate
