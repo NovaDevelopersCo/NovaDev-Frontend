@@ -60,19 +60,22 @@ const RoleUpdate: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
     const parsedFormData = storedFormDataString
       ? JSON.parse(storedFormDataString)
       : null
-    if (parsedFormData && parsedFormData._id === role.id) {
+    if (parsedFormData && parsedFormData.id === role.id) {
       form.setFieldsValue({
         title: parsedFormData.title
       })
       form.setFieldsValue({
-        level_access: parsedFormData.level_access
+        description: parsedFormData.description
       })
       form.setFieldsValue({
-        rest_id: parsedFormData.rest_id
+        level_access: parsedFormData.level_access
       })
     } else {
       form.setFieldsValue({
         title: role.title
+      })
+      form.setFieldsValue({
+        description: role.description
       })
       form.setFieldsValue({
         level_access: role.level_access
@@ -85,7 +88,7 @@ const RoleUpdate: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
   }
   const onFinish = (values: any): void => {
     const newLanguageRest: any = {
-      _id: role.id,
+      id: role.id,
       title: values.title,
       level_access: Number(values.level_access)
     }
