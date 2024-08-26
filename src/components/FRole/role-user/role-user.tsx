@@ -22,7 +22,7 @@ const RoleUser: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
   const { openNotification } = useContext(NotificationContext)
   const pathname = useLocation().pathname
   const match = useRouteMatch(pathname)
-  const roleId = Object.keys(match?.params as number)[0]
+  const roleId = Number(Object.keys(match?.params as number)[0])
   const [data, setData] = React.useState<TUser[]>([])
   const [users, setUsers] = React.useState<TUser[]>([])
   const [update, setUpdate] = React.useState<boolean>(true)
@@ -36,7 +36,7 @@ const RoleUser: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
         const array: TUser[] = []
         res.forEach((user: TUser) => {
           if (
-            typeof user.role.id === 'number' &&
+            typeof user.roleId === 'number' &&
             typeof roleId === 'number' &&
             user.roleId === roleId
           ) {
