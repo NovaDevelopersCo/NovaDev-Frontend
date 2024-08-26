@@ -32,18 +32,21 @@ const RoleUser: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
     userAPI
       .getUsers(token)
       .then((res: TUser[]) => {
-        setUsers(res)
-        const array: TUser[] = []
+        const users: TUser[] = []
+        const Data: TUser[] = []
         res.forEach((user: TUser) => {
           if (
             typeof user.roleId === 'number' &&
             typeof roleId === 'number' &&
             user.roleId === roleId
           ) {
-            array.push(user)
+            Data.push(user)
+          } else {
+            users.push(user)
           }
         })
-        setData(array)
+        setUsers(users)
+        setData(Data)
       })
       .catch((e) => openNotification(e, 'topRight'))
     const currentPath = location.pathname
