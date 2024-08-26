@@ -1,10 +1,9 @@
-import { Form, Button, Select, Table, Popconfirm } from 'antd'
+import { Form, Button, Select, Table } from 'antd'
 import React, { FC, useContext } from 'react'
 import { Link, useLocation, useRouteMatch } from 'react-router-dom'
 import { TRole, TUser } from '../../../utils/typesFromBackend'
 import * as userAPI from '../../../utils/api/user-api'
 import { NotificationContext } from '../../notification-provider/notification-provider'
-import { DeleteTwoTone } from '@ant-design/icons'
 import { ColumnsType } from 'antd/es/table'
 
 interface IGroupModifiersForDish {
@@ -56,18 +55,6 @@ const RoleUser: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
       resultArrayLevels.push({ text: key, value: key })
     }
   }, [data])
-  function handleDeleteModifierFromDish(values: any): void {
-    const newLanguageRest: any = {
-      roleId: 1
-    }
-    userAPI
-      .updateUser(token, values.id, newLanguageRest)
-      .then((res: any) => {
-        setUpdate(!update)
-      })
-      .catch((e: any) => openNotification(e, 'topRight'))
-  }
-
   const columns: ColumnsType<TUser> = [
     {
       title: `${t('name')}`,
@@ -78,19 +65,6 @@ const RoleUser: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
         // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
         <Link to={`/${pathRest}/role/:${role.id}`}>{role.info.full_name}</Link>
       )
-    },
-    {
-      title: '',
-      dataIndex: 'operation',
-      render: (_, record: { id: React.Key }) =>
-        data.length >= 1 ? (
-          <Popconfirm
-            title={t('delete-role-from-restaurant')}
-            onConfirm={() => handleDeleteModifierFromDish(record)}
-          >
-            <DeleteTwoTone />
-          </Popconfirm>
-        ) : null
     }
   ]
   const layout = {
@@ -100,15 +74,11 @@ const RoleUser: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
   const [form] = Form.useForm()
 
   const onFinish = (values: any): void => {
-    console.log(values)
-
     userAPI
       .getUser(token, values.id)
       .then((res: TRole) => {
-        console.log(res)
-
         const newLanguageRest: any = {
-          roleId: roleId
+          roleId
         }
         userAPI
           .updateUser(token, values.id, newLanguageRest)
