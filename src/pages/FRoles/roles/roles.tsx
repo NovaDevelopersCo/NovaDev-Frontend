@@ -13,10 +13,9 @@ interface IRoles {
   t: (arg0: string) => string
   language: ECountry
   dark: boolean
-  style: object
 }
 
-const Roles: FC<IRoles> = ({ token, pathRest, t, dark, style }) => {
+const Roles: FC<IRoles> = ({ token, pathRest, t, dark }) => {
   const { openNotification } = useContext(NotificationContext)
 
   const [data, setData] = React.useState<TRole[]>([])
@@ -109,7 +108,6 @@ const Roles: FC<IRoles> = ({ token, pathRest, t, dark, style }) => {
       <Table
         columns={columns}
         dataSource={data}
-        style={style}
         className={theme}
       />
     </div>

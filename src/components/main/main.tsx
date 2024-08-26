@@ -245,7 +245,6 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
                 >
                   <Roles
                     dark={dark}
-                    style={style}
                     token={token}
                     pathRest={pathRest}
                     t={t}
