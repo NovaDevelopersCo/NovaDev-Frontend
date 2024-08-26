@@ -25,7 +25,7 @@ const RoleUpdate: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
   const match = useRouteMatch(pathname)
   const roleId = Object.keys(match?.params as string)[0]
   // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-  const [admin, setAdmin] = React.useState<TAdmin>({} as TAdmin)
+  const [role, setAdmin] = React.useState<TAdmin>({} as TAdmin)
   const [formData, setFormData] = React.useState(() => {
     const storedFormDataString = localStorage.getItem('formDataAdmin')
     return storedFormDataString ? JSON.parse(storedFormDataString) : null
@@ -33,13 +33,13 @@ const RoleUpdate: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
 
   const handleFormChange = (): void => {
     const allValues = form.getFieldsValue()
-    const updateallValues = { ...allValues, _id: admin._id }
+    const updateallValues = { ...allValues, _id: role.id }
     setFormData(updateallValues)
   }
 
   React.useEffect(() => {
-    if (Object.keys(admin).length > 0 && formData) {
-      if (admin._id !== formData._id) {
+    if (Object.keys(role).length > 0 && formData) {
+      if (role.id !== formData._id) {
         localStorage.removeItem('formDataAdmin')
       }
     }
@@ -60,7 +60,7 @@ const RoleUpdate: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
     const parsedFormData = storedFormDataString
       ? JSON.parse(storedFormDataString)
       : null
-    if (parsedFormData && parsedFormData._id === admin._id) {
+    if (parsedFormData && parsedFormData._id === role.id) {
       form.setFieldsValue({
         nickname: parsedFormData.nickname
       })
@@ -72,20 +72,20 @@ const RoleUpdate: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
       })
     } else {
       form.setFieldsValue({
-        nickname: admin.nickname
+        nickname: role.nickname
       })
       form.setFieldsValue({
-        level_access: admin.level_access
+        level_access: role.level_access
       })
     }
-  }, [admin])
+  }, [role])
   const validateMessages = {
     // eslint-disable-next-line no-template-curly-in-string
     required: '${label} ' + `${t('it-is-necessary-to-fill-in')}!`
   }
   const onFinish = (values: any): void => {
     const newLanguageRest: any = {
-      _id: admin._id,
+      _id: role.id,
       nickname: values.nickname,
       level_access: Number(values.level_access)
     }
@@ -100,7 +100,7 @@ const RoleUpdate: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
 
   function confirm(): void {
     roleAPI
-      .deleteRole(token, admin._id)
+      .deleteRole(token, role.id)
       .then(() => history.push(`/${pathRest}/roles`))
       .catch((e) => openNotification(e, 'topRight'))
   }
