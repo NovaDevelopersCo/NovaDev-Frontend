@@ -62,7 +62,6 @@ const AddRole: FC<IAddRole> = ({ token, pathRest, t, dark }) => {
         style={{
           marginBottom: '15px',
           marginTop: '0',
-          color: '#000',
           fontSize: '1.75rem',
           fontWeight: '600',
           padding: '15px'
