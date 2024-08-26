@@ -7,6 +7,11 @@ import { Link, NavLink, useLocation } from 'react-router-dom'
 import { NotificationContext } from '../../../components/notification-provider/notification-provider'
 import clsx from 'clsx'
 
+interface ILevelAccess {
+  text: string
+  value: string
+}
+
 interface IRoles {
   token: string
   pathRest: string
@@ -19,13 +24,24 @@ const Roles: FC<IRoles> = ({ token, pathRest, t, dark }) => {
   const { openNotification } = useContext(NotificationContext)
 
   const [data, setData] = React.useState<TRole[]>([])
+  const [levelAccess, setLevelAccess] = React.useState<ILevelAccess[]>([])
   const location = useLocation()
   React.useEffect(() => {
     roleAPI
       .getRoles(token)
       .then((res) => {
         setData(res)
-        console.log(res)
+        const levelsAccessNames: { [key: string]: boolean } = {}
+        const resultArrayLevels: ILevelAccess[] = []
+        res.forEach((role: TRole) => {
+          if (!levelsAccessNames[role.level_access]) {
+            levelsAccessNames[role.level_access] = true
+          }
+        })
+        for (const key of Object.keys(levelsAccessNames)) {
+          resultArrayLevels.push({ text: key, value: key })
+        }
+        setLevelAccess(resultArrayLevels)
       })
       .catch((e) => openNotification(e, 'topRight'))
     const currentPath = location.pathname
@@ -65,7 +81,11 @@ const Roles: FC<IRoles> = ({ token, pathRest, t, dark }) => {
       render: (title, role) => (
         <Link to={`/${pathRest}/role/:${role.id}`}>{title}</Link>
       ),
-      sorter: (a, b) => a.level_access - b.level_access
+      sorter: (a, b) => a.level_access - b.level_access,
+      filters: [...levelAccess],
+      onFilter: (value: string | number | boolean, record) =>
+        // eslint-disable-next-line eqeqeq
+        record.level_access == value
     }
   ]
   const theme = clsx(dark ? 'black' : 'white')
@@ -105,11 +125,7 @@ const Roles: FC<IRoles> = ({ token, pathRest, t, dark }) => {
           {t('add')}
         </NavLink>
       </div>
-      <Table
-        columns={columns}
-        dataSource={data}
-        className={theme}
-      />
+      <Table columns={columns} dataSource={data} className={theme} />
     </div>
   )
 }
