@@ -21,7 +21,7 @@ const Role: FC<IEditorRole> = ({ token, pathRest, t }) => {
   const restId = Object.keys(match?.params as string)[0]
   const [admin, setAdmin] = React.useState<TAdmin>({} as TAdmin)
   const [isRest, setIsRest] = React.useState(false)
-  const [value, setValue] = React.useState<string | number>(t('admin'))
+  const [value, setValue] = React.useState<string | number>(t('role'))
   const [isModalVisible, setIsModalVisible] = React.useState(false)
   console.log(restId)
 
@@ -46,7 +46,6 @@ const Role: FC<IEditorRole> = ({ token, pathRest, t }) => {
         style={{
           marginBottom: '15px',
           marginTop: '0',
-          color: '#000',
           fontSize: '1.75rem',
           fontWeight: '600',
           padding: '15px'
@@ -71,11 +70,7 @@ const Role: FC<IEditorRole> = ({ token, pathRest, t }) => {
       )}
       {isRest ? (
         value === t('users') ? (
-          <RoleUser
-            token={token}
-            pathRest={pathRest}
-            t={t}
-          ></RoleUser>
+          <RoleUser token={token} pathRest={pathRest} t={t}></RoleUser>
         ) : (
           ''
         )

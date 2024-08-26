@@ -116,7 +116,7 @@ const RoleUpdate: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
       .updateAdmin(token, newLanguageRest)
       .then((res: TAdmin) => {
         localStorage.removeItem('formDataAdmin')
-        history.push(`/${pathRest}/admins`)
+        history.push(`/${pathRest}/roles`)
       })
       .catch((e) => openNotification(e, 'topRight'))
   }
@@ -124,7 +124,7 @@ const RoleUpdate: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
   function confirm(): void {
     adminAPI
       .deleteAdmin(token, admin._id)
-      .then(() => history.push(`/${pathRest}/admins`))
+      .then(() => history.push(`/${pathRest}/roles`))
       .catch((e) => openNotification(e, 'topRight'))
   }
   return (
@@ -132,7 +132,7 @@ const RoleUpdate: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
       {...layout}
       onFinish={onFinish}
       validateMessages={validateMessages}
-      name='admin'
+      name='role'
       form={form}
       style={{ paddingTop: '1.5rem' }}
       onValuesChange={handleFormChange}
