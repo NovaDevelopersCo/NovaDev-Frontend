@@ -1,8 +1,8 @@
 import { Form, Button, Select, Table, Popconfirm } from 'antd'
 import React, { FC, useContext } from 'react'
 import { Link, useLocation, useRouteMatch } from 'react-router-dom'
-import { TAdmin } from '../../../utils/typesFromBackend'
-import * as adminAPI from '../../../utils/api/category-api'
+import { TRole } from '../../../utils/typesFromBackend'
+import * as roleAPI from '../../../utils/api/category-api'
 import { NotificationContext } from '../../notification-provider/notification-provider'
 import { DeleteTwoTone } from '@ant-design/icons'
 import { ColumnsType } from 'antd/es/table'
@@ -22,23 +22,21 @@ const RoleUser: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
   const { openNotification } = useContext(NotificationContext)
   const pathname = useLocation().pathname
   const match = useRouteMatch(pathname)
-  const restId = Object.keys(match?.params as string)[0]
-  const [data, setData] = React.useState<TAdmin[]>([])
-  const [unUsedAdmins, setUnUsedAdmins] = React.useState<TAdmin[]>([])
+  const restId = Object.keys(match?.params as number)[0]
+  const [data, setData] = React.useState<TRole[]>([])
+  const [unUsedAdmins, setUnUsedAdmins] = React.useState<TRole[]>([])
   const [levelsAccess, setLevelsAccess] = React.useState<ILevelsAccess[]>([])
   const [update, setUpdate] = React.useState<boolean>(true)
   const location = useLocation()
 
   React.useEffect(() => {
-    adminAPI
+    roleAPI
       .getAllCategories()
       .then((res) => {
-        const nameRests: TAdmin[] = []
-        const unUsedAdmied: TAdmin[] = []
-        res.admins.forEach((admin: TAdmin) => {
-          if (admin.rest_id === restId) {
-            nameRests.push(admin)
-          } else if (!admin.rest_id) unUsedAdmied.push(admin)
+        const nameRests: TRole[] = []
+        const unUsedAdmied: TRole[] = []
+        res.roles.forEach((role: TRole) => {
+          if (!role.id) unUsedAdmied.push(role)
         })
         setUnUsedAdmins(unUsedAdmied)
         setData(nameRests)
@@ -51,9 +49,9 @@ const RoleUser: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
   React.useEffect(() => {
     const levelsAccessNames: { [key: string]: boolean } = {}
     const resultArrayLevels: ILevelsAccess[] = []
-    data.forEach((admin: TAdmin) => {
-      if (!levelsAccessNames[admin.level_access]) {
-        levelsAccessNames[admin.level_access] = true
+    data.forEach((role: TRole) => {
+      if (!levelsAccessNames[role.level_access]) {
+        levelsAccessNames[role.level_access] = true
       }
     })
     for (const key of Object.keys(levelsAccessNames)) {
@@ -69,7 +67,7 @@ const RoleUser: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
       level_access: Number(values.level_access),
       rest_id: ''
     }
-    adminAPI
+    roleAPI
       .updateAdmin(token, newLanguageRest)
       .then((res: any) => {
         setUpdate(!update)
@@ -77,15 +75,15 @@ const RoleUser: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
       .catch((e) => openNotification(e, 'topRight'))
   }
 
-  const columns: ColumnsType<TAdmin> = [
+  const columns: ColumnsType<TRole> = [
     {
       title: `${t('login')}`,
       dataIndex: 'nickname',
       key: 'nickname',
       // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
-      render: (nickname, admin) => (
+      render: (nickname, role) => (
         // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-        <Link to={`/${pathRest}/admin/:${admin._id}`}>{nickname}</Link>
+        <Link to={`/${pathRest}/role/:${role.id}`}>{nickname}</Link>
       )
     },
     {
@@ -102,10 +100,10 @@ const RoleUser: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
     {
       title: '',
       dataIndex: 'operation',
-      render: (_, record: { _id: React.Key }) =>
+      render: (_, record: { id: React.Key }) =>
         data.length >= 1 ? (
           <Popconfirm
-            title={t('delete-admin-from-restaurant')}
+            title={t('delete-role-from-restaurant')}
             onConfirm={() => handleDeleteModifierFromDish(record)}
           >
             <DeleteTwoTone />
@@ -120,17 +118,16 @@ const RoleUser: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
   const [form] = Form.useForm()
 
   const onFinish = (values: any): void => {
-    adminAPI
+    roleAPI
       .getAdmin(token, values._id)
-      .then((res: TAdmin) => {
+      .then((res: TRole) => {
         const newLanguageRest: any = {
-          _id: res._id,
-          nickname: res.nickname,
-          password: res.password,
-          level_access: Number(res.level_access),
-          rest_id: restId
+          id: res.id,
+          nickname: res.title,
+          password: res.description,
+          level_access: Number(res.level_access)
         }
-        adminAPI
+        roleAPI
           .updateAdmin(token, newLanguageRest)
           .then((res: any) => {
             setUpdate(!update)
@@ -155,22 +152,18 @@ const RoleUser: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
         validateMessages={validateMessages}
         style={{ paddingTop: '1.5rem' }}
       >
-        <Form.Item
-          label={t('add-user')}
-          name='id'
-          rules={[{ required: true }]}
-        >
+        <Form.Item label={t('add-user')} name='id' rules={[{ required: true }]}>
           <Select>
-            {unUsedAdmins.map((admin, index) => (
-              <Select.Option value={admin._id} key={index}>
-                {admin.nickname}
+            {unUsedAdmins.map((role, index) => (
+              <Select.Option value={role.id} key={index}>
+                {role.title}
               </Select.Option>
             ))}
           </Select>
         </Form.Item>
         <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
           <Button type='primary' htmlType='submit'>
-            {t('add-admin-to-rest')}
+            {t('add-role-to-rest')}
           </Button>
         </Form.Item>
       </Form>
