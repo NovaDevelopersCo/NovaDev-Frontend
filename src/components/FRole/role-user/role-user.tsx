@@ -61,9 +61,9 @@ const RoleUser: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
       dataIndex: 'info.full_name',
       key: 'info.full_name',
       // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
-      render: (nickname, role) => (
+      render: (nickname, user) => (
         // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-        <Link to={`/${pathRest}/role/:${role.id}`}>{role.info.full_name}</Link>
+        <Link to={`/${pathRest}/user/:${user.id}`}>{user.info.full_name}</Link>
       )
     }
   ]
