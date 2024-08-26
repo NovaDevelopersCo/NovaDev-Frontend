@@ -1,8 +1,8 @@
 import { Form, Button, Select, Table, Popconfirm } from 'antd'
 import React, { FC, useContext } from 'react'
 import { Link, useLocation, useRouteMatch } from 'react-router-dom'
-import { TRole } from '../../../utils/typesFromBackend'
-import * as roleAPI from '../../../utils/api/category-api'
+import { TRole, TUser } from '../../../utils/typesFromBackend'
+import * as userAPI from '../../../utils/api/user-api'
 import { NotificationContext } from '../../notification-provider/notification-provider'
 import { DeleteTwoTone } from '@ant-design/icons'
 import { ColumnsType } from 'antd/es/table'
@@ -24,22 +24,17 @@ const RoleUser: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
   const match = useRouteMatch(pathname)
   const restId = Object.keys(match?.params as number)[0]
   const [data, setData] = React.useState<TRole[]>([])
-  const [unUsedAdmins, setUnUsedAdmins] = React.useState<TRole[]>([])
+  const [users, setUsers] = React.useState<TUser[]>([])
   const [levelsAccess, setLevelsAccess] = React.useState<ILevelsAccess[]>([])
   const [update, setUpdate] = React.useState<boolean>(true)
   const location = useLocation()
 
   React.useEffect(() => {
-    roleAPI
-      .getAllCategories()
+    userAPI
+      .getUsers(token)
       .then((res) => {
-        const nameRests: TRole[] = []
-        const unUsedAdmied: TRole[] = []
-        res.roles.forEach((role: TRole) => {
-          if (!role.id) unUsedAdmied.push(role)
-        })
-        setUnUsedAdmins(unUsedAdmied)
-        setData(nameRests)
+        setUsers(res)
+        setData(res)
       })
       .catch((e) => openNotification(e, 'topRight'))
     const currentPath = location.pathname
@@ -66,17 +61,17 @@ const RoleUser: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
       password: values.password,
       level_access: Number(values.level_access)
     }
-    roleAPI
+    userAPI
       .updateAdmin(token, newLanguageRest)
       .then((res: any) => {
         setUpdate(!update)
       })
-      .catch((e) => openNotification(e, 'topRight'))
+      .catch((e: any) => openNotification(e, 'topRight'))
   }
 
   const columns: ColumnsType<TRole> = [
     {
-      title: `${t('login')}`,
+      title: `${t('title')}`,
       dataIndex: 'title',
       key: 'title',
       // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
@@ -117,8 +112,8 @@ const RoleUser: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
   const [form] = Form.useForm()
 
   const onFinish = (values: any): void => {
-    roleAPI
-      .getAdmin(token, values._id)
+    userAPI
+      .getUser(token, values.id)
       .then((res: TRole) => {
         const newLanguageRest: any = {
           id: res.id,
@@ -126,12 +121,12 @@ const RoleUser: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
           password: res.description,
           level_access: Number(res.level_access)
         }
-        roleAPI
+        userAPI
           .updateAdmin(token, newLanguageRest)
           .then((res: any) => {
             setUpdate(!update)
           })
-          .catch((e) => openNotification(e, 'topRight'))
+          .catch((e: any) => openNotification(e, 'topRight'))
       })
       .catch((e) => openNotification(e, 'topRight'))
   }
@@ -153,9 +148,9 @@ const RoleUser: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
       >
         <Form.Item label={t('add-user')} name='id' rules={[{ required: true }]}>
           <Select>
-            {unUsedAdmins.map((role, index) => (
-              <Select.Option value={role.id} key={index}>
-                {role.title}
+            {users.map((user, index) => (
+              <Select.Option value={user.id} key={index}>
+                {user.info.full_name}
               </Select.Option>
             ))}
           </Select>
