@@ -64,8 +64,7 @@ const RoleUser: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
       _id: values._id,
       nickname: values.nickname,
       password: values.password,
-      level_access: Number(values.level_access),
-      rest_id: ''
+      level_access: Number(values.level_access)
     }
     roleAPI
       .updateAdmin(token, newLanguageRest)
@@ -78,8 +77,8 @@ const RoleUser: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
   const columns: ColumnsType<TRole> = [
     {
       title: `${t('login')}`,
-      dataIndex: 'nickname',
-      key: 'nickname',
+      dataIndex: 'title',
+      key: 'title',
       // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
       render: (nickname, role) => (
         // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
