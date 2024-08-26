@@ -310,5 +310,6 @@
   "add-client": "Добавить клиента",
   "roles": "Роли",
   "role": "Роль",
-  "your-list-roles": "Список ролей"
+  "your-list-roles": "Список ролей",
+  "add-role": "Добавить роль"
 }

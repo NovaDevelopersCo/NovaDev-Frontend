@@ -1,7 +1,7 @@
 import React, { FC, useContext } from 'react'
 import { useHistory } from 'react-router-dom'
 import { TRole } from '../../../utils/typesFromBackend'
-import { Form, Input, Button, Modal } from 'antd'
+import { Form, Input, Button, Modal, Select } from 'antd'
 import { NotificationContext } from '../../../components/notification-provider/notification-provider'
 import * as roleAPI from '../../../utils/api/role-api'
 import clsx from 'clsx'
@@ -68,7 +68,7 @@ const AddRole: FC<IAddRole> = ({ token, pathRest, t, dark }) => {
           padding: '15px'
         }}
       >
-        {t('add-post')}
+        {t('add-role')}
       </h4>
 
       <Form
@@ -91,11 +91,17 @@ const AddRole: FC<IAddRole> = ({ token, pathRest, t, dark }) => {
           <Input />
         </Form.Item>
         <Form.Item
-          label={t('category')}
+          label={t('level_access')}
           rules={[{ required: true }]}
-          name='category'
+          name='level_access'
         >
-          <Input />
+          <Select>
+            <Select.Option value='1'>1</Select.Option>
+            <Select.Option value='2'>2</Select.Option>
+            <Select.Option value='3'>3</Select.Option>
+            <Select.Option value='4'>4</Select.Option>
+            <Select.Option value='5'>5</Select.Option>
+          </Select>
         </Form.Item>
         <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 4 }}>
           <Button type='primary' htmlType='submit'>
