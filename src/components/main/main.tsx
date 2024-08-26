@@ -41,9 +41,7 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
   const [language, setLanguage] = useState<ECountry>(
     (localStorage.getItem('language') as ECountry) ?? ECountry.RU
   )
-  const [dark, setDark] = useState<boolean>(
-    localStorage.getItem('dark') === 'true' ?? false
-  )
+  const [dark, setDark] = useState<boolean>(localStorage.getItem('dark') === 'true')
   const [width, setWidth] = useState<boolean>(false)
   const { t } = useTranslation()
 
@@ -224,6 +222,43 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
                 </ProtectedRoute>
                 <ProtectedRoute
                   path={`/:${pathRest}/add/category`}
+                  exact
+                  isLoggedIn={isLoggedIn}
+                  pathRest={pathRest}
+                >
+                  <AddAdmin
+                    token={token}
+                    pathRest={pathRest}
+                    t={t}
+                    dark={dark}
+                    style={style}
+                  />
+                </ProtectedRoute>
+                <ProtectedRoute
+                  path={`/:${pathRest}/roles`}
+                  exact
+                  isLoggedIn={isLoggedIn}
+                  pathRest={pathRest}
+                >
+                  <Admins
+                    dark={dark}
+                    style={style}
+                    token={token}
+                    pathRest={pathRest}
+                    t={t}
+                    language={language}
+                  />
+                </ProtectedRoute>
+                <ProtectedRoute
+                  path={`/:${pathRest}/role/:roleId`}
+                  exact
+                  isLoggedIn={isLoggedIn}
+                  pathRest={pathRest}
+                >
+                  <Admin token={token} pathRest={pathRest} t={t} />
+                </ProtectedRoute>
+                <ProtectedRoute
+                  path={`/:${pathRest}/add/role`}
                   exact
                   isLoggedIn={isLoggedIn}
                   pathRest={pathRest}
