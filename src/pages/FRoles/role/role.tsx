@@ -20,18 +20,16 @@ const Role: FC<IEditorRole> = ({ token, pathRest, t }) => {
   const match = useRouteMatch(pathname)
   const restId = Object.keys(match?.params as string)[0]
   const [admin, setAdmin] = React.useState<TAdmin>({} as TAdmin)
-  const [isRest, setIsRest] = React.useState(false)
+  const [isRole, setIsRole] = React.useState(false)
   const [value, setValue] = React.useState<string | number>(t('role'))
   const [isModalVisible, setIsModalVisible] = React.useState(false)
-  console.log(restId)
 
   React.useEffect(() => {
     roleAPI
       .getRole(token, restId)
       .then((res: TAdmin) => {
-        setIsRest(true)
+        setIsRole(true)
         setAdmin(res)
-        console.log(res)
       })
       .catch((e) => openNotification(e, 'topRight'))
   }, [])
@@ -59,7 +57,7 @@ const Role: FC<IEditorRole> = ({ token, pathRest, t }) => {
         value={value}
         onChange={setValue}
       />{' '}
-      {isRest ? (
+      {isRole ? (
         value === t('role') ? (
           <RoleUpdate token={token} pathRest={pathRest} t={t} />
         ) : (
@@ -68,7 +66,7 @@ const Role: FC<IEditorRole> = ({ token, pathRest, t }) => {
       ) : (
         ''
       )}
-      {isRest ? (
+      {isRole ? (
         value === t('users') ? (
           <RoleUser token={token} pathRest={pathRest} t={t}></RoleUser>
         ) : (
