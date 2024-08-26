@@ -3,7 +3,7 @@ import { Menu, Button } from 'antd'
 import {
   ReadOutlined,
   LogoutOutlined,
-  BarsOutlined,
+  SolutionOutlined,
   UserOutlined,
   ContactsOutlined,
   TeamOutlined,
@@ -28,8 +28,8 @@ const Sidebar: FC<ISidebar> = ({
 }) => {
   const history = useHistory()
 
-  const handleCategoriesClick = (): void => {
-    history.push(`/${pathRest}/categories`)
+  const handleRolesClick = (): void => {
+    history.push(`/${pathRest}/roles`)
   }
   const handleCustomersClick = (): void => {
     history.push(`/${pathRest}/customers`)
@@ -83,9 +83,9 @@ const Sidebar: FC<ISidebar> = ({
         }}
         defaultSelectedKeys={['1']}
       >
-        <Menu.Item key='2' onClick={handleCategoriesClick}>
-          <BarsOutlined />
-          <span>{t('categories')}</span>
+        <Menu.Item key='2' onClick={handleRolesClick}>
+          <SolutionOutlined />
+          <span>{t('roles')}</span>
         </Menu.Item>
         <Menu.Item key='3' onClick={handleUsersClick}>
           <TeamOutlined />
