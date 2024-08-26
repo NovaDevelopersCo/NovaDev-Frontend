@@ -35,6 +35,7 @@ const RoleUser: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
       .then((res) => {
         setUsers(res)
         setData(res)
+        console.log(res)
       })
       .catch((e) => openNotification(e, 'topRight'))
     const currentPath = location.pathname
@@ -44,11 +45,6 @@ const RoleUser: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
   React.useEffect(() => {
     const levelsAccessNames: { [key: string]: boolean } = {}
     const resultArrayLevels: ILevelsAccess[] = []
-    data.forEach((role: TRole) => {
-      if (!levelsAccessNames[role.level_access]) {
-        levelsAccessNames[role.level_access] = true
-      }
-    })
     for (const key of Object.keys(levelsAccessNames)) {
       resultArrayLevels.push({ text: key, value: key })
     }
@@ -68,7 +64,7 @@ const RoleUser: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
 
   const columns: ColumnsType<TRole> = [
     {
-      title: `${t('title')}`,
+      title: `${t('name')}`,
       dataIndex: 'title',
       key: 'title',
       // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
@@ -109,6 +105,8 @@ const RoleUser: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
   const [form] = Form.useForm()
 
   const onFinish = (values: any): void => {
+    console.log(values)
+
     userAPI
       .getUser(token, values.id)
       .then((res: TRole) => {
@@ -151,7 +149,7 @@ const RoleUser: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
         </Form.Item>
         <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
           <Button type='primary' htmlType='submit'>
-            {t('add-role-to-rest')}
+            {t('add-role-to-user')}
           </Button>
         </Form.Item>
       </Form>
