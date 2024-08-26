@@ -1,12 +1,10 @@
 import { Table } from 'antd'
 import { ColumnsType } from 'antd/es/table'
 import React, { FC, useContext } from 'react'
-import { ECountry, TCategory } from '../../utils/typesFromBackend'
+import { ECountry, TRole } from '../../utils/typesFromBackend'
 import * as roleAPI from '../../utils/api/role-api'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { NotificationContext } from '../../components/notification-provider/notification-provider'
-import imageNoPhoto from '../../assets/images/no_photo.png'
-import { BASE_URL } from '../../utils/const'
 import clsx from 'clsx'
 
 interface ILevelsAccess {
@@ -26,7 +24,7 @@ interface IRoles {
 const Categories: FC<IRoles> = ({ token, pathRest, t, dark, style }) => {
   const { openNotification } = useContext(NotificationContext)
 
-  const [data, setData] = React.useState<TCategory[]>([])
+  const [data, setData] = React.useState<TRole[]>([])
   const [, setLevelsAccess] = React.useState<ILevelsAccess[]>([])
   const location = useLocation()
   React.useEffect(() => {
@@ -45,21 +43,7 @@ const Categories: FC<IRoles> = ({ token, pathRest, t, dark, style }) => {
     const currentPath = location.pathname
     window.localStorage.setItem('initialRoute', currentPath)
   }, [])
-  const columns: ColumnsType<TCategory> = [
-    {
-      title: `${t('logo')}`,
-      dataIndex: 'image',
-      key: 'image',
-      render: (image, admin) => (
-        <img
-          style={{ width: '100px', height: '100px', objectFit: 'contain' }}
-          src={admin.image ? `${BASE_URL}/${admin.image}` : `${imageNoPhoto}`}
-          onError={(e) => {
-            e.currentTarget.src = imageNoPhoto
-          }}
-        />
-      )
-    },
+  const columns: ColumnsType<TRole> = [
     {
       title: `${t('name')}`,
       dataIndex: 'title',
