@@ -175,26 +175,6 @@ const UserInfo: FC<IUserInfo> = ({ token, t }) => {
                                 </div>
                             </div>
                         </div>
-                        {/* <div className='border-2 border-black rounded-md pl-2'>
-                            <div className='flex items-center justify-center mt-2'>
-                                <h4 className='text-lg font-semibold'>{t('projects-info-title')}</h4>
-                            </div>
-                            <Form.Item label={t('user-project-id')} className='flex items-center' >
-                                {user?.projects?.map(project => {
-                                    return (
-                                        <p key={project.id} className='text-base'>{project.id}</p>
-                                    )
-                                })
-                                }
-                            </Form.Item>
-                            <Form.Item label={t('user-project-title')} >
-                                {user?.projects?.map(project => {
-                                    return (
-                                        <p key={project.id} className='text-base'>{project.title}</p>
-                                    )
-                                })}
-                            </Form.Item>
-                        </div> */}
                         <div className='border-2 border-black rounded-md pl-2'>
                             <div className='flex items-center justify-center mt-2'>
                                 <h4 className='text-lg font-semibold'>{t('user-profile-image')}</h4>
