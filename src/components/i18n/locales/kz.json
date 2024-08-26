@@ -329,5 +329,11 @@
   "name-of-post": "Пост атауы",
   "date-of-post": "Жазба күні",
   "name-client": "Клиент аты",
-  "add-client": "Тұтынушы қосу"
+  "add-client": "Тұтынушы қосу",
+  "roles": "Рөлдер",
+  "role": "Рөл",
+  "your-list-roles": "Рөлдер тізімі",
+  "add-role": "Рөл қосыңыз",
+  "add-user": "Пайдаланушы қосу",
+  "add-role-to-user": "Пайдаланушыға рөл қосыңыз"
 }

@@ -40,13 +40,13 @@ const Autorization: FC<IAutorization> = ({
             setIsLoggedIn(true)
             if (storedInitialRoute) {
               if (storedInitialRoute === '/') {
-                history.push('dishes')
+                history.push('roles')
               } else {
                 history.push(storedInitialRoute)
                 localStorage.removeItem('initialRoute')
               }
             } else {
-              history.push('dishes')
+              history.push('roles')
             }
           } else {
             setIsLoggedIn(true)
@@ -54,7 +54,7 @@ const Autorization: FC<IAutorization> = ({
               history.push(storedInitialRoute)
               localStorage.removeItem('initialRoute')
             } else {
-              history.push('dishes')
+              history.push('roles')
             }
           }
         })
@@ -78,7 +78,7 @@ const Autorization: FC<IAutorization> = ({
           history.push(storedInitialRoute)
           localStorage.removeItem('initialRoute')
         } else {
-          history.push('dishes')
+          history.push('roles')
         }
       })
       .catch((e) => openNotification(e, 'topRight'))

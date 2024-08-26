@@ -1,18 +1,23 @@
 import { Popconfirm, Select, Form, Button, Input } from 'antd'
 import React, { FC, useContext } from 'react'
 import { useHistory, useLocation, useRouteMatch } from 'react-router-dom'
-import { ELevelAccess, TAdmin, TRest } from '../../utils/typesFromBackend'
-import * as adminAPI from '../../utils/api/category-api'
-import { NotificationContext } from '../notification-provider/notification-provider'
-import * as userAPI from '../../utils/api/task-api'
+import { ELevelAccess, TRole } from '../../../utils/typesFromBackend'
+import * as roleAPI from '../../../utils/api/role-api'
+import { NotificationContext } from '../../notification-provider/notification-provider'
 
 interface IGroupModifiersForDish {
   pathRest: string
   token: string
   t: (arg0: string) => string
+  style: object
 }
 
-const AdminPassword: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
+const RoleUpdate: FC<IGroupModifiersForDish> = ({
+  token,
+  pathRest,
+  t,
+  style
+}) => {
   const { openNotification } = useContext(NotificationContext)
   const [form] = Form.useForm()
   const history = useHistory()
@@ -21,13 +26,12 @@ const AdminPassword: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
     wrapperCol: { span: 14 }
   }
   // eslint-disable-next-line prefer-regex-literals
-  // const { restId } = useParams<{ restId: string }>()
+  // const { roleId } = useParams<{ roleId: string }>()
   const pathname = useLocation().pathname
   const match = useRouteMatch(pathname)
-  const restId = Object.keys(match?.params as string)[0]
+  const roleId = Object.keys(match?.params as string)[0]
   // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-  const [admin, setAdmin] = React.useState<TAdmin>({} as TAdmin)
-  const [PathRest, setPathRest] = React.useState<{ [key: string]: string }>({})
+  const [role, setAdmin] = React.useState<TRole>({} as TRole)
   const [formData, setFormData] = React.useState(() => {
     const storedFormDataString = localStorage.getItem('formDataAdmin')
     return storedFormDataString ? JSON.parse(storedFormDataString) : null
@@ -35,28 +39,13 @@ const AdminPassword: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
 
   const handleFormChange = (): void => {
     const allValues = form.getFieldsValue()
-    const updateallValues = { ...allValues, _id: admin._id }
+    const updateallValues = { ...allValues, _id: role.id }
     setFormData(updateallValues)
   }
 
   React.useEffect(() => {
-    userAPI
-      .getTasks(token, 1)
-      .then((res) => {
-        const nameRests: { [key: string]: string } = {}
-        res.rests.forEach((rest: TRest) => {
-          if (!nameRests[rest.titleRest] && rest.titleRest) {
-            nameRests[rest.titleRest] = rest._id
-          }
-        })
-        setPathRest(nameRests)
-      })
-      .catch((e) => openNotification(e, 'topRight'))
-  }, [])
-
-  React.useEffect(() => {
-    if (Object.keys(admin).length > 0 && formData) {
-      if (admin._id !== formData._id) {
+    if (Object.keys(role).length > 0 && formData) {
+      if (role.id !== formData._id) {
         localStorage.removeItem('formDataAdmin')
       }
     }
@@ -64,9 +53,9 @@ const AdminPassword: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
   }, [formData])
 
   React.useEffect(() => {
-    adminAPI
-      .getAdmin(token, restId)
-      .then((res: TAdmin) => {
+    roleAPI
+      .getRole(token, roleId)
+      .then((res: TRole) => {
         setAdmin(res)
       })
       .catch((e) => openNotification(e, 'topRight'))
@@ -77,54 +66,52 @@ const AdminPassword: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
     const parsedFormData = storedFormDataString
       ? JSON.parse(storedFormDataString)
       : null
-    if (parsedFormData && parsedFormData._id === admin._id) {
+    if (parsedFormData && parsedFormData.id === role.id) {
       form.setFieldsValue({
-        nickname: parsedFormData.nickname
+        title: parsedFormData.title
+      })
+      form.setFieldsValue({
+        description: parsedFormData.description
       })
       form.setFieldsValue({
         level_access: parsedFormData.level_access
       })
-      form.setFieldsValue({
-        rest_id: parsedFormData.rest_id
-      })
     } else {
       form.setFieldsValue({
-        nickname: admin.nickname
+        title: role.title
       })
       form.setFieldsValue({
-        level_access: admin.level_access
+        description: role.description
       })
       form.setFieldsValue({
-        rest_id: admin.rest_id
-          ? Object.keys(PathRest).find((k) => PathRest[k] === admin.rest_id)
-          : ''
+        level_access: role.level_access
       })
     }
-  }, [admin])
+  }, [role])
   const validateMessages = {
     // eslint-disable-next-line no-template-curly-in-string
     required: '${label} ' + `${t('it-is-necessary-to-fill-in')}!`
   }
   const onFinish = (values: any): void => {
     const newLanguageRest: any = {
-      _id: admin._id,
-      nickname: values.nickname,
-      level_access: Number(values.level_access),
-      rest_id: values.rest_id ? PathRest[values.rest_id] : ''
+      title: values.title,
+      description: values.description,
+      level_access: Number(values.level_access)
     }
-    adminAPI
-      .updateAdmin(token, newLanguageRest)
-      .then((res: TAdmin) => {
+    console.log(newLanguageRest)
+    roleAPI
+      .updateRole(token, newLanguageRest, role.id.toString())
+      .then((res: TRole) => {
         localStorage.removeItem('formDataAdmin')
-        history.push(`/${pathRest}/admins`)
+        history.push(`/${pathRest}/roles`)
       })
       .catch((e) => openNotification(e, 'topRight'))
   }
 
   function confirm(): void {
-    adminAPI
-      .deleteAdmin(token, admin._id)
-      .then(() => history.push(`/${pathRest}/admins`))
+    roleAPI
+      .deleteRole(token, role.id.toString())
+      .then(() => history.push(`/${pathRest}/roles`))
       .catch((e) => openNotification(e, 'topRight'))
   }
   return (
@@ -132,25 +119,16 @@ const AdminPassword: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
       {...layout}
       onFinish={onFinish}
       validateMessages={validateMessages}
-      name='admin'
+      name='role'
       form={form}
-      style={{ paddingTop: '1.5rem' }}
+      style={{ paddingTop: '1.5rem', ...style }}
       onValuesChange={handleFormChange}
     >
-      <Form.Item label={t('login')} name='nickname'>
+      <Form.Item label={t('title')} name='title'>
         <Input />
       </Form.Item>
-      <Form.Item label={t('restaurant')} name='rest_id'>
-        <Select>
-          <Select.Option value={''} key={'no-rest'}>
-            {t('no-restaurant')}
-          </Select.Option>
-          {Object.keys(PathRest).map((levelAccess: any, index: number) => (
-            <Select.Option value={levelAccess} key={index}>
-              {levelAccess}
-            </Select.Option>
-          ))}
-        </Select>
+      <Form.Item label={t('description')} name='description'>
+        <Input />
       </Form.Item>
       <Form.Item label={t('level_access')} name='level_access'>
         <Select>
@@ -179,4 +157,4 @@ const AdminPassword: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
     </Form>
   )
 }
-export default AdminPassword
+export default RoleUpdate
