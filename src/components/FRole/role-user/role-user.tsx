@@ -35,11 +35,7 @@ const RoleUser: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
         const users: TUser[] = []
         const Data: TUser[] = []
         res.forEach((user: TUser) => {
-          if (
-            typeof user.roleId === 'number' &&
-            typeof roleId === 'number' &&
-            user.roleId === roleId
-          ) {
+          if (user.roleId === roleId) {
             Data.push(user)
           } else {
             users.push(user)
