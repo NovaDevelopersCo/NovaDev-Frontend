@@ -8,15 +8,14 @@ import * as userAPI from '../../../utils/api/task-api'
 import clsx from 'clsx'
 import { UploadOutlined } from '@ant-design/icons'
 
-interface IAddPost {
+interface IAddRole {
   pathRest: string
   token: string
   t: (arg0: string) => string
   dark: boolean
-  style: object
 }
 
-const AddRole: FC<IAddPost> = ({ token, pathRest, t, dark, style }) => {
+const AddRole: FC<IAddRole> = ({ token, pathRest, t, dark }) => {
   const { openNotification } = useContext(NotificationContext)
   const [form] = Form.useForm()
   const history = useHistory()

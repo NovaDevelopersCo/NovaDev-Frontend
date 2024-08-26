@@ -270,7 +270,6 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
                     pathRest={pathRest}
                     t={t}
                     dark={dark}
-                    style={style}
                   />
                 </ProtectedRoute>
                 <ProtectedRoute
