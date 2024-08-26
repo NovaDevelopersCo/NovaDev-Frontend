@@ -156,8 +156,8 @@ const RoleUser: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
         style={{ paddingTop: '1.5rem' }}
       >
         <Form.Item
-          label={t('add-admin')}
-          name='_id'
+          label={t('add-user')}
+          name='id'
           rules={[{ required: true }]}
         >
           <Select>
