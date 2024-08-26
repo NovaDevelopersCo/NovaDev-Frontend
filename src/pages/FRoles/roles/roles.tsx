@@ -37,8 +37,8 @@ const Roles: FC<IRoles> = ({ token, pathRest, t, dark, style }) => {
       title: `${t('name')}`,
       dataIndex: 'title',
       key: 'title',
-      render: (title, restId) => (
-        <Link to={`/${pathRest}/role/:${restId.id}`}>{title}</Link>
+      render: (title, role) => (
+        <Link to={`/${pathRest}/role/:${role.id}`}>{title}</Link>
       ),
       sorter: (a, b) => {
         if (a.title !== undefined && b.title !== undefined) {
@@ -55,16 +55,16 @@ const Roles: FC<IRoles> = ({ token, pathRest, t, dark, style }) => {
       title: `${t('description')}`,
       dataIndex: 'description',
       key: 'description',
-      render: (title, restId) => (
-        <Link to={`/${pathRest}/role/:${restId.id}`}>{title}</Link>
+      render: (title, role) => (
+        <Link to={`/${pathRest}/role/:${role.id}`}>{title}</Link>
       )
     },
     {
       title: `${t('level_access')}`,
       dataIndex: 'level_access',
       key: 'level_access',
-      render: (title, restId) => (
-        <Link to={`/${pathRest}/role/:${restId.id}`}>{title}</Link>
+      render: (title, role) => (
+        <Link to={`/${pathRest}/role/:${role.id}`}>{title}</Link>
       ),
       sorter: (a, b) => a.level_access - b.level_access
     }
