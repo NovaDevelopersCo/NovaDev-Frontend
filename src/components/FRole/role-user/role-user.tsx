@@ -105,6 +105,8 @@ const RoleUser: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
     userAPI
       .getUser(token, values.id)
       .then((res: TRole) => {
+        console.log(res)
+
         const newLanguageRest: any = {
           roleId: roleId
         }
