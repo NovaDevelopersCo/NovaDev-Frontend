@@ -27,33 +27,29 @@ const UserInfo: FC<IUserInfo> = ({ token, t }) => {
     const [user, setUser] = React.useState<TUser>({} as TUser)
     //
     useEffect(() => {
-        if (token) {
             UserInfoAPI.getUserData(token).then(res => {
                 if (res) {
                     setUser(res)
                 }
             }).catch((e) => openNotification(e, 'topRight'))
-        }
     }, [token])
     //
     const onFinish = (e: React.FormEvent<HTMLFormElement>): void => {
         UserInfoAPI
             .editUserData(token, user).then(() => {
-                console.log(user)
-                openNotification('The user data is saved!', 'topLeft')
+                openNotification('The user data is saved!', 'topRight')
             })
             .catch((e) => openNotification(e, 'topRight'))
     }
     //
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
         const { name, value } = e.target
-        // console.log(`Changing ${name} to ${value}`)
         if (name in user.info) {
           setUser((prevUser) => ({
             ...prevUser,
             info: {
               ...prevUser.info,
-              [name]: value || ''
+              [name]: value
             }
           }))
         }
@@ -129,89 +125,57 @@ const UserInfo: FC<IUserInfo> = ({ token, t }) => {
                     </Form>
                 </div>
             ) : (
-                <div className='flex flex-col mt-4'>
+                 <div className='flex flex-col mt-4'>
                     <div className='flex items-center justify-center'>
                         <h1 className='text-xl font-semibold mb-5'>{t('about-user-title')}</h1>
                     </div>
-                    <Form className='flex flex-col gap-6'>
-                        <Form.Item label={t('user-id')} >
-                            {user?.id ? (
+                    <div className='flex flex-col gap-6'>
+                        <div className='border-2 border-black rounded-md p-4'>
+                            <div className='flex gap-2'>
+                                <h2>{t('user-id')}</h2>
                                 <p className='text-base'>{user?.id ?? ''}</p>
-                            ) : (
-                                <p>Id not found</p>
-                            )
-                            }
-                        </Form.Item>
-                        <Form.Item label={t('user-role-title')} >
-                            {user?.role?.title ? (
+                            </div>
+                            <div className='flex gap-2'>
+                                <h2>{t('user-role-title')}</h2>
                                 <p className='text-base'>{user?.role?.title}</p>
-                            ) : (
-                                <p>Role title not found</p>
-                            )
-                            }
-                        </Form.Item>
+                            </div>
+                        </div>
                         <div className='border-2 border-black rounded-md pl-2'>
                             <div className='flex items-center justify-center mt-2'>
                                 <h4 className='text-lg font-semibold'>{t('base-info-title')}</h4>
                             </div>
-                            <Form.Item label={t('user-public-nickname')} >
-                                {user?.info?.public_nickname ? (
+                            <div className='flex flex-col gap-3 mb-2'>
+                                <div className='flex gap-2'>
+                                    <h2>{t('user-public-nickname')}</h2>
                                     <p className='text-base'>{user?.info?.public_nickname ?? ''}</p>
-                                ) : (
-                                    <p className='text-xs'>Public nickname not found</p>
-                                )
-                                }
-                            </Form.Item>
-                            <Form.Item label={t('user-full-name')} >
-                                {user?.info?.full_name ? (
+                                </div>
+                                <div className='flex gap-2'>
+                                    <h2>{t('user-full-name')}</h2>
                                     <p className='text-base'>{user?.info?.full_name ?? ''}</p>
-                                ) : (
-                                    <p>Full name not found</p>
-                                )
-                                }
-                            </Form.Item>
-                            <Form.Item label={t('user-email')} >
-                                {user?.info?.email ? (
+                                </div>
+                                <div className='flex gap-2'>
+                                    <h2>{t('user-email')}</h2>
                                     <p className='text-base'>{user?.info?.email ?? ''}</p>
-                                ) : (
-                                    <p>Email not found</p>
-                                )
-                                }
-                            </Form.Item>
-                            <Form.Item label={t('user-phone')} >
-                                {user?.info?.phone ? (
+                                </div>
+                                <div className='flex gap-2'>
+                                    <h2>{t('user-phone')}</h2>
                                     <p className='text-base'>{user?.info?.phone ?? null}</p>
-                                ) : (
-                                    <p>Phone not found</p>
-                                )
-                                }
-                            </Form.Item>
-                            <Form.Item label={t('user-github')} >
-                                {user?.info?.github ? (
+                                </div>
+                                <div className='flex gap-2'>
+                                    <h2>{t('user-github')}</h2>
                                     <p className='text-base'>{user?.info?.github ?? ''}</p>
-                                ) : (
-                                    <p>GitHub not found</p>
-                                )
-                                }
-                            </Form.Item>
-                            <Form.Item label={t('user-payment-info')} >
-                                {user?.info?.payment_info ? (
+                                </div>
+                                <div className='flex gap-2'>
+                                    <h2>{t('user-payment-info')}</h2>
                                     <p className='text-base'>{user?.info?.payment_info ?? ''}</p>
-                                ) : (
-                                    <p>Payment info not found</p>
-                                )
-                                }
-                            </Form.Item>
-                            <Form.Item label={t('user-tg')} >
-                                {user?.info?.tg ? (
+                                </div>
+                                <div className='flex gap-2'>
+                                    <h2>{t('user-tg')}</h2>
                                     <p className='text-base'>{user?.info?.tg ?? ''}</p>
-                                ) : (
-                                    <p>Telegram not found</p>
-                                )
-                                }
-                            </Form.Item>
+                                </div>
+                            </div>
                         </div>
-                        <div className='border-2 border-black rounded-md pl-2'>
+                        {/* <div className='border-2 border-black rounded-md pl-2'>
                             <div className='flex items-center justify-center mt-2'>
                                 <h4 className='text-lg font-semibold'>{t('projects-info-title')}</h4>
                             </div>
@@ -230,44 +194,28 @@ const UserInfo: FC<IUserInfo> = ({ token, t }) => {
                                     )
                                 })}
                             </Form.Item>
-                        </div>
+                        </div> */}
                         <div className='border-2 border-black rounded-md pl-2'>
                             <div className='flex items-center justify-center mt-2'>
                                 <h4 className='text-lg font-semibold'>{t('user-profile-image')}</h4>
                             </div>
-                            <Form.Item label={t('user-image-url')} rules={[{ required: false, message: t('enter-your-image-url') }]}>
-                                {user?.info?.image ? (
-                                    <Image src={user?.info?.image ?? 'No image found'} alt="Profile photo" />
-                                ) : (
-                                    <p>Image not found</p>
-                                )
-                                }
-                            </Form.Item>
+                            <div className='flex gap-2 mb-2'>
+                                <h2>{t('user-image-url')}</h2>
+                                <Image src={user?.info?.image ?? 'No image found'} alt="Profile photo" />
+                            </div>
                         </div>
-                    </Form>
-                    <Form className='mt-8'>
+                    </div>
+                    <div className='mt-8'>
                         <div className='border-2 border-black rounded-md pl-2'>
                             <div className='flex items-center justify-center mt-2'>
                                 <h4 className='text-lg font-semibold'>{t('team-info-title')}</h4>
                             </div>
-                            <Form.Item label={t('user-team-id')} >
-                                {user?.team?.id ? (
-                                    <p className='text-base'>{user?.team?.id ?? ''}</p>
-                                ) : (
-                                    <p>Team Id not found</p>
-                                )
-                                }
-                            </Form.Item>
-                            <Form.Item label={t('user-team-title')} >
-                                {user?.team?.title ? (
-                                    <p className='text-base'>{user?.team?.title ?? ''}</p>
-                                ) : (
-                                    <p>Team title not found</p>
-                                )
-                                }
-                            </Form.Item>
+                            <div className='flex gap-2 mb-2'>
+                                <h2>{t('user-team-title')}</h2>
+                                <p className='text-base'>{user?.team?.title ?? ''}</p>
+                            </div>
                         </div>
-                    </Form>
+                    </div>
                 </div>
             )
         }
