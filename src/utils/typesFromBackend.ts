@@ -6,7 +6,7 @@ export interface TButton {
 
 export interface TUser {
   id: number
-  role: TUserRole
+  role: TRole
   info: TUserInfo
   team: TUserTeam
   projects: TUserProjects[]
@@ -23,7 +23,7 @@ export interface TUserInfo {
   image: string
 }
 
-export interface TUserRole {
+export interface TRole {
   id: number
   title: string
 }
