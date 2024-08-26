@@ -14,7 +14,7 @@ interface IEditorRest {
   pathRest: string
 }
 
-const Admin: FC<IEditorRest> = ({ token, pathRest, t }) => {
+const Role: FC<IEditorRest> = ({ token, pathRest, t }) => {
   const { openNotification } = useContext(NotificationContext)
   const pathname = useLocation().pathname
   const match = useRouteMatch(pathname)
@@ -96,4 +96,4 @@ const Admin: FC<IEditorRest> = ({ token, pathRest, t }) => {
     </>
   )
 }
-export default Admin
+export default Role

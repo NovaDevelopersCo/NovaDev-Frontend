@@ -16,7 +16,7 @@ interface IAddPost {
   style: object
 }
 
-const AddPost: FC<IAddPost> = ({ token, pathRest, t, dark, style }) => {
+const AddRole: FC<IAddPost> = ({ token, pathRest, t, dark, style }) => {
   const { openNotification } = useContext(NotificationContext)
   const [form] = Form.useForm()
   const history = useHistory()
@@ -167,4 +167,4 @@ const AddPost: FC<IAddPost> = ({ token, pathRest, t, dark, style }) => {
     </>
   )
 }
-export default AddPost
+export default AddRole

@@ -26,6 +26,9 @@ import UserInfo from '../../pages/user-info/user-info'
 import AdvicesTips from '../../pages/advices-tips/advices-tips'
 import AddPost from '../../pages/add-post/add-post'
 import AddCustomer from '../../pages/add-customer/add-customer'
+import Roles from '../../pages/FRoles/roles/roles'
+import Role from '../../pages/FRoles/role/role'
+import AddRole from '../../pages/FRoles/add-role/add-role'
 
 const { Header, Sider, Content } = Layout
 
@@ -240,7 +243,7 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
                   isLoggedIn={isLoggedIn}
                   pathRest={pathRest}
                 >
-                  <Admins
+                  <Roles
                     dark={dark}
                     style={style}
                     token={token}
@@ -255,7 +258,7 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
                   isLoggedIn={isLoggedIn}
                   pathRest={pathRest}
                 >
-                  <Admin token={token} pathRest={pathRest} t={t} />
+                  <Role token={token} pathRest={pathRest} t={t} />
                 </ProtectedRoute>
                 <ProtectedRoute
                   path={`/:${pathRest}/add/role`}
@@ -263,7 +266,7 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
                   isLoggedIn={isLoggedIn}
                   pathRest={pathRest}
                 >
-                  <AddAdmin
+                  <AddRole
                     token={token}
                     pathRest={pathRest}
                     t={t}

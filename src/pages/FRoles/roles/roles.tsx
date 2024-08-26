@@ -16,7 +16,7 @@ interface IRoles {
   style: object
 }
 
-const Categories: FC<IRoles> = ({ token, pathRest, t, dark, style }) => {
+const Roles: FC<IRoles> = ({ token, pathRest, t, dark, style }) => {
   const { openNotification } = useContext(NotificationContext)
 
   const [data, setData] = React.useState<TRole[]>([])
@@ -98,4 +98,4 @@ const Categories: FC<IRoles> = ({ token, pathRest, t, dark, style }) => {
     </div>
   )
 }
-export default Categories
+export default Roles
