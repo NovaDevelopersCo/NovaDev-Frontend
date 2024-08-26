@@ -14,7 +14,7 @@ interface ILevelsAccess {
   value: string
 }
 
-interface IAdmins {
+interface IRoles {
   token: string
   pathRest: string
   t: (arg0: string) => string
@@ -23,7 +23,7 @@ interface IAdmins {
   style: object
 }
 
-const Categories: FC<IAdmins> = ({ token, pathRest, t, dark, style }) => {
+const Categories: FC<IRoles> = ({ token, pathRest, t, dark, style }) => {
   const { openNotification } = useContext(NotificationContext)
 
   const [data, setData] = React.useState<TCategory[]>([])
