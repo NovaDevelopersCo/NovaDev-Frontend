@@ -1,10 +1,9 @@
 import { Popconfirm, Select, Form, Button, Input } from 'antd'
 import React, { FC, useContext } from 'react'
 import { useHistory, useLocation, useRouteMatch } from 'react-router-dom'
-import { ELevelAccess, TAdmin, TRest } from '../../../utils/typesFromBackend'
-import * as adminAPI from '../../../utils/api/category-api'
+import { ELevelAccess, TAdmin } from '../../../utils/typesFromBackend'
+import * as roleAPI from '../../../utils/api/role-api'
 import { NotificationContext } from '../../notification-provider/notification-provider'
-import * as userAPI from '../../../utils/api/task-api'
 
 interface IGroupModifiersForDish {
   pathRest: string
@@ -21,13 +20,12 @@ const RoleUpdate: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
     wrapperCol: { span: 14 }
   }
   // eslint-disable-next-line prefer-regex-literals
-  // const { restId } = useParams<{ restId: string }>()
+  // const { roleId } = useParams<{ roleId: string }>()
   const pathname = useLocation().pathname
   const match = useRouteMatch(pathname)
-  const restId = Object.keys(match?.params as string)[0]
+  const roleId = Object.keys(match?.params as string)[0]
   // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
   const [admin, setAdmin] = React.useState<TAdmin>({} as TAdmin)
-  const [PathRest, setPathRest] = React.useState<{ [key: string]: string }>({})
   const [formData, setFormData] = React.useState(() => {
     const storedFormDataString = localStorage.getItem('formDataAdmin')
     return storedFormDataString ? JSON.parse(storedFormDataString) : null
@@ -40,21 +38,6 @@ const RoleUpdate: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
   }
 
   React.useEffect(() => {
-    userAPI
-      .getTasks(token, 1)
-      .then((res) => {
-        const nameRests: { [key: string]: string } = {}
-        res.rests.forEach((rest: TRest) => {
-          if (!nameRests[rest.titleRest] && rest.titleRest) {
-            nameRests[rest.titleRest] = rest._id
-          }
-        })
-        setPathRest(nameRests)
-      })
-      .catch((e) => openNotification(e, 'topRight'))
-  }, [])
-
-  React.useEffect(() => {
     if (Object.keys(admin).length > 0 && formData) {
       if (admin._id !== formData._id) {
         localStorage.removeItem('formDataAdmin')
@@ -64,8 +47,8 @@ const RoleUpdate: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
   }, [formData])
 
   React.useEffect(() => {
-    adminAPI
-      .getAdmin(token, restId)
+    roleAPI
+      .getRole(token, roleId)
       .then((res: TAdmin) => {
         setAdmin(res)
       })
@@ -94,11 +77,6 @@ const RoleUpdate: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
       form.setFieldsValue({
         level_access: admin.level_access
       })
-      form.setFieldsValue({
-        rest_id: admin.rest_id
-          ? Object.keys(PathRest).find((k) => PathRest[k] === admin.rest_id)
-          : ''
-      })
     }
   }, [admin])
   const validateMessages = {
@@ -109,11 +87,10 @@ const RoleUpdate: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
     const newLanguageRest: any = {
       _id: admin._id,
       nickname: values.nickname,
-      level_access: Number(values.level_access),
-      rest_id: values.rest_id ? PathRest[values.rest_id] : ''
+      level_access: Number(values.level_access)
     }
-    adminAPI
-      .updateAdmin(token, newLanguageRest)
+    roleAPI
+      .updateRole(token, newLanguageRest)
       .then((res: TAdmin) => {
         localStorage.removeItem('formDataAdmin')
         history.push(`/${pathRest}/roles`)
@@ -122,8 +99,8 @@ const RoleUpdate: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
   }
 
   function confirm(): void {
-    adminAPI
-      .deleteAdmin(token, admin._id)
+    roleAPI
+      .deleteRole(token, admin._id)
       .then(() => history.push(`/${pathRest}/roles`))
       .catch((e) => openNotification(e, 'topRight'))
   }
@@ -137,20 +114,11 @@ const RoleUpdate: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
       style={{ paddingTop: '1.5rem' }}
       onValuesChange={handleFormChange}
     >
-      <Form.Item label={t('login')} name='nickname'>
+      <Form.Item label={t('title')} name='title'>
         <Input />
       </Form.Item>
-      <Form.Item label={t('restaurant')} name='rest_id'>
-        <Select>
-          <Select.Option value={''} key={'no-rest'}>
-            {t('no-restaurant')}
-          </Select.Option>
-          {Object.keys(PathRest).map((levelAccess: any, index: number) => (
-            <Select.Option value={levelAccess} key={index}>
-              {levelAccess}
-            </Select.Option>
-          ))}
-        </Select>
+      <Form.Item label={t('description')} name='description'>
+        <Input />
       </Form.Item>
       <Form.Item label={t('level_access')} name='level_access'>
         <Select>
