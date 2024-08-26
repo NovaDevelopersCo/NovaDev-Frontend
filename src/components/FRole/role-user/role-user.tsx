@@ -23,9 +23,8 @@ const RoleUser: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
   const pathname = useLocation().pathname
   const match = useRouteMatch(pathname)
   const roleId = Object.keys(match?.params as number)[0]
-  const [data, setData] = React.useState<TRole[]>([])
+  const [data, setData] = React.useState<TUser[]>([])
   const [users, setUsers] = React.useState<TUser[]>([])
-  const [levelsAccess, setLevelsAccess] = React.useState<ILevelsAccess[]>([])
   const [update, setUpdate] = React.useState<boolean>(true)
   const location = useLocation()
 
@@ -48,7 +47,6 @@ const RoleUser: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
     for (const key of Object.keys(levelsAccessNames)) {
       resultArrayLevels.push({ text: key, value: key })
     }
-    setLevelsAccess(resultArrayLevels)
   }, [data])
   function handleDeleteModifierFromDish(values: any): void {
     const newLanguageRest: any = {
@@ -62,27 +60,16 @@ const RoleUser: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
       .catch((e: any) => openNotification(e, 'topRight'))
   }
 
-  const columns: ColumnsType<TRole> = [
+  const columns: ColumnsType<TUser> = [
     {
       title: `${t('name')}`,
-      dataIndex: 'title',
-      key: 'title',
+      dataIndex: 'info.full_name',
+      key: 'info.full_name',
       // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
       render: (nickname, role) => (
         // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
         <Link to={`/${pathRest}/role/:${role.id}`}>{nickname}</Link>
       )
-    },
-    {
-      title: `${t('level_access')}`,
-      dataIndex: 'level_access',
-      key: 'level_access',
-      render: (levelAccess) => <p>{levelAccess}</p>,
-      sorter: (a, b) => a.level_access - b.level_access,
-      filters: [...levelsAccess],
-      onFilter: (value: string | number | boolean, record) =>
-        // eslint-disable-next-line eqeqeq
-        record.level_access == value
     },
     {
       title: '',
