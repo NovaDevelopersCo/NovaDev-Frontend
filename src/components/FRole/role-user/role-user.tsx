@@ -100,7 +100,7 @@ const RoleUser: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
       <Form
         {...layout}
         onFinish={onFinish}
-        name='dish'
+        name='role'
         form={form}
         validateMessages={validateMessages}
         style={{ paddingTop: '1.5rem' }}
