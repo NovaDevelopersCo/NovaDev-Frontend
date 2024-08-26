@@ -78,7 +78,7 @@ const AddPost: FC<IAddPost> = ({ token, pathRest, t, dark, style }) => {
       image: values.image
     }
     roleAPI
-      .createAdmin(token, newLanguageRest)
+      .createRole(token, newLanguageRest)
       .then((res: TAdmin) => {
         history.push(`/${pathRest}/admins`)
       })

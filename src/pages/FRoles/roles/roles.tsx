@@ -7,11 +7,6 @@ import { Link, NavLink, useLocation } from 'react-router-dom'
 import { NotificationContext } from '../../../components/notification-provider/notification-provider'
 import clsx from 'clsx'
 
-interface ILevelsAccess {
-  text: string
-  value: string
-}
-
 interface IRoles {
   token: string
   pathRest: string
@@ -25,19 +20,13 @@ const Categories: FC<IRoles> = ({ token, pathRest, t, dark, style }) => {
   const { openNotification } = useContext(NotificationContext)
 
   const [data, setData] = React.useState<TRole[]>([])
-  const [, setLevelsAccess] = React.useState<ILevelsAccess[]>([])
   const location = useLocation()
   React.useEffect(() => {
     roleAPI
-      .getAllCategories()
+      .getRoles()
       .then((res) => {
         setData(res)
-        const levelsAccessNames: { [key: string]: boolean } = {}
-        const resultArrayLevels: ILevelsAccess[] = []
-        for (const key of Object.keys(levelsAccessNames)) {
-          resultArrayLevels.push({ text: key, value: key })
-        }
-        setLevelsAccess(resultArrayLevels)
+        console.log(res)
       })
       .catch((e) => openNotification(e, 'topRight'))
     const currentPath = location.pathname

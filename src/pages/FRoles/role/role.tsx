@@ -25,7 +25,7 @@ const Admin: FC<IEditorRest> = ({ token, pathRest, t }) => {
   const [isModalVisible, setIsModalVisible] = React.useState(false)
   React.useEffect(() => {
     roleAPI
-      .getAdmin(token, restId)
+      .getRole(token, restId)
       .then((res: TAdmin) => {
         setIsRest(true)
         setAdmin(res)
