@@ -8,13 +8,13 @@ import { NotificationContext } from '../../../components/notification-provider/n
 import AdminPassword from '../../../components/admin-password/admin-password'
 import AdminUpdate from '../../../components/admin-update/admins-update'
 
-interface IEditorRest {
+interface IEditorRole {
   token: string
   t: (arg0: string) => string
   pathRest: string
 }
 
-const Role: FC<IEditorRest> = ({ token, pathRest, t }) => {
+const Role: FC<IEditorRole> = ({ token, pathRest, t }) => {
   const { openNotification } = useContext(NotificationContext)
   const pathname = useLocation().pathname
   const match = useRouteMatch(pathname)
@@ -23,12 +23,15 @@ const Role: FC<IEditorRest> = ({ token, pathRest, t }) => {
   const [isRest, setIsRest] = React.useState(false)
   const [value, setValue] = React.useState<string | number>(t('admin'))
   const [isModalVisible, setIsModalVisible] = React.useState(false)
+  console.log(restId)
+
   React.useEffect(() => {
     roleAPI
       .getRole(token, restId)
       .then((res: TAdmin) => {
         setIsRest(true)
         setAdmin(res)
+        console.log(res)
       })
       .catch((e) => openNotification(e, 'topRight'))
   }, [])
@@ -53,12 +56,12 @@ const Role: FC<IEditorRest> = ({ token, pathRest, t }) => {
       </h4>
       <Segmented
         block
-        options={[t('admin'), t('password')]}
+        options={[t('role'), t('users')]}
         value={value}
         onChange={setValue}
       />{' '}
       {isRest ? (
-        value === t('admin') ? (
+        value === t('role') ? (
           <AdminUpdate token={token} pathRest={pathRest} t={t} />
         ) : (
           ''
@@ -67,7 +70,7 @@ const Role: FC<IEditorRest> = ({ token, pathRest, t }) => {
         ''
       )}
       {isRest ? (
-        value === t('password') ? (
+        value === t('users') ? (
           <AdminPassword
             token={token}
             pathRest={pathRest}
