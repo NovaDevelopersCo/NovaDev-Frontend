@@ -23,7 +23,7 @@ const Roles: FC<IRoles> = ({ token, pathRest, t, dark, style }) => {
   const location = useLocation()
   React.useEffect(() => {
     roleAPI
-      .getRoles()
+      .getRoles(token)
       .then((res) => {
         setData(res)
         console.log(res)

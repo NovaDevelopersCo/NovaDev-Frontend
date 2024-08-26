@@ -13,11 +13,12 @@ export const getRole = async (token: string, id: string) => {
   }).then(async (res) => await handleResponse(res))
 }
 
-export const getRoles = async () => {
+export const getRoles = async (token: string) => {
   return await fetch(`${BASE_URL}/roles`, {
     method: 'GET',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
     }
   }).then(async (res) => await handleResponse(res))
 }
