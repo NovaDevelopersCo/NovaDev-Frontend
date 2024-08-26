@@ -102,9 +102,9 @@ const Roles: FC<IRoles> = ({ token, pathRest, t, dark }) => {
       >
         <div style={{ display: 'block', marginRight: 'auto' }}>
           <h2 style={{ fontWeight: 600, marginBottom: '0' }}>
-            {t('categories')}
+            {t('roles')}
           </h2>
-          <p style={{ marginBottom: '0' }}>{t('your-list-categories')}</p>
+          <p style={{ marginBottom: '0' }}>{t('your-list-roles')}</p>
         </div>
         <NavLink
           to={`/${pathRest}/add/category`}
