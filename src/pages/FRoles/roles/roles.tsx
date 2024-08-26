@@ -1,10 +1,10 @@
 import { Table } from 'antd'
 import { ColumnsType } from 'antd/es/table'
 import React, { FC, useContext } from 'react'
-import { ECountry, TRole } from '../../utils/typesFromBackend'
-import * as roleAPI from '../../utils/api/role-api'
+import { ECountry, TRole } from '../../../utils/typesFromBackend'
+import * as roleAPI from '../../../utils/api/role-api'
 import { Link, NavLink, useLocation } from 'react-router-dom'
-import { NotificationContext } from '../../components/notification-provider/notification-provider'
+import { NotificationContext } from '../../../components/notification-provider/notification-provider'
 import clsx from 'clsx'
 
 interface ILevelsAccess {
