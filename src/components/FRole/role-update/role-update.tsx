@@ -1,7 +1,7 @@
 import { Popconfirm, Select, Form, Button, Input } from 'antd'
 import React, { FC, useContext } from 'react'
 import { useHistory, useLocation, useRouteMatch } from 'react-router-dom'
-import { ELevelAccess, TAdmin } from '../../../utils/typesFromBackend'
+import { ELevelAccess, TRole } from '../../../utils/typesFromBackend'
 import * as roleAPI from '../../../utils/api/role-api'
 import { NotificationContext } from '../../notification-provider/notification-provider'
 
@@ -25,7 +25,7 @@ const RoleUpdate: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
   const match = useRouteMatch(pathname)
   const roleId = Object.keys(match?.params as string)[0]
   // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-  const [role, setAdmin] = React.useState<TAdmin>({} as TAdmin)
+  const [role, setAdmin] = React.useState<TRole>({} as TRole)
   const [formData, setFormData] = React.useState(() => {
     const storedFormDataString = localStorage.getItem('formDataAdmin')
     return storedFormDataString ? JSON.parse(storedFormDataString) : null
@@ -49,7 +49,7 @@ const RoleUpdate: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
   React.useEffect(() => {
     roleAPI
       .getRole(token, roleId)
-      .then((res: TAdmin) => {
+      .then((res: TRole) => {
         setAdmin(res)
       })
       .catch((e) => openNotification(e, 'topRight'))
@@ -62,7 +62,7 @@ const RoleUpdate: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
       : null
     if (parsedFormData && parsedFormData._id === role.id) {
       form.setFieldsValue({
-        nickname: parsedFormData.nickname
+        title: parsedFormData.title
       })
       form.setFieldsValue({
         level_access: parsedFormData.level_access
@@ -72,7 +72,7 @@ const RoleUpdate: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
       })
     } else {
       form.setFieldsValue({
-        nickname: role.nickname
+        title: role.title
       })
       form.setFieldsValue({
         level_access: role.level_access
@@ -86,12 +86,12 @@ const RoleUpdate: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
   const onFinish = (values: any): void => {
     const newLanguageRest: any = {
       _id: role.id,
-      nickname: values.nickname,
+      title: values.title,
       level_access: Number(values.level_access)
     }
     roleAPI
       .updateRole(token, newLanguageRest)
-      .then((res: TAdmin) => {
+      .then((res: TRole) => {
         localStorage.removeItem('formDataAdmin')
         history.push(`/${pathRest}/roles`)
       })
@@ -100,7 +100,7 @@ const RoleUpdate: FC<IGroupModifiersForDish> = ({ token, pathRest, t }) => {
 
   function confirm(): void {
     roleAPI
-      .deleteRole(token, role.id)
+      .deleteRole(token, role.id.toString())
       .then(() => history.push(`/${pathRest}/roles`))
       .catch((e) => openNotification(e, 'topRight'))
   }
