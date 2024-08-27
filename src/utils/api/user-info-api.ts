@@ -43,9 +43,7 @@ export const editUserData = async (token: string, user: any): Promise<void> => {
                     'Content-type': 'application/json',
                     Authorization: `Bearer ${token}`
                 },
-                body: JSON.stringify({
-                    ...user
-                })
+                body: JSON.stringify(user.info)
             })
             //
             if (!response.ok) {
