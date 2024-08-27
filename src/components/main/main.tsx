@@ -26,6 +26,9 @@ import UserInfo from '../../pages/user-info/user-info'
 import AdvicesTips from '../../pages/advices-tips/advices-tips'
 import AddPost from '../../pages/add-post/add-post'
 import AddCustomer from '../../pages/add-customer/add-customer'
+import Roles from '../../pages/FRoles/roles/roles'
+import Role from '../../pages/FRoles/role/role'
+import AddRole from '../../pages/FRoles/add-role/add-role'
 
 const { Header, Sider, Content } = Layout
 
@@ -42,7 +45,7 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
     (localStorage.getItem('language') as ECountry) ?? ECountry.RU
   )
   const [dark, setDark] = useState<boolean>(
-    localStorage.getItem('dark') === 'true' ?? false
+    localStorage.getItem('dark') === 'true'
   )
   const [width, setWidth] = useState<boolean>(false)
   const { t } = useTranslation()
@@ -237,6 +240,41 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
                   />
                 </ProtectedRoute>
                 <ProtectedRoute
+                  path={`/:${pathRest}/roles`}
+                  exact
+                  isLoggedIn={isLoggedIn}
+                  pathRest={pathRest}
+                >
+                  <Roles
+                    dark={dark}
+                    token={token}
+                    pathRest={pathRest}
+                    t={t}
+                    language={language}
+                  />
+                </ProtectedRoute>
+                <ProtectedRoute
+                  path={`/:${pathRest}/role/:roleId`}
+                  exact
+                  isLoggedIn={isLoggedIn}
+                  pathRest={pathRest}
+                >
+                  <Role token={token} pathRest={pathRest} t={t} style={style} />
+                </ProtectedRoute>
+                <ProtectedRoute
+                  path={`/:${pathRest}/add/role`}
+                  exact
+                  isLoggedIn={isLoggedIn}
+                  pathRest={pathRest}
+                >
+                  <AddRole
+                    token={token}
+                    pathRest={pathRest}
+                    t={t}
+                    dark={dark}
+                  />
+                </ProtectedRoute>
+                <ProtectedRoute
                   path={`/${pathRest}/customers`}
                   exact
                   isLoggedIn={isLoggedIn}
@@ -288,7 +326,7 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
                   <AllUsers token={token} pathRest={pathRest} t={t} />
                 </ProtectedRoute>
                 <ProtectedRoute
-                  path={`/:${pathRest}/dishes`}
+                  path={`/:${pathRest}/user`}
                   exact
                   isLoggedIn={isLoggedIn}
                   pathRest={pathRest}
@@ -332,7 +370,7 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
                   />
                 </ProtectedRoute>
                 <ProtectedRoute
-                  path={`/:${pathRest}/user`}
+                  path={`/:${pathRest}/user-info`}
                   exact
                   isLoggedIn={isLoggedIn}
                   pathRest={pathRest}
@@ -348,8 +386,8 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
         </Layout>
         <Footer style={style}>
           <div className='border-t flex justify-center text-center'>
-            Copyright &copy; {new Date().getFullYear()} Zoomish. All rights
-            reserved.
+            Copyright &copy; {new Date().getFullYear()} Nova Developers. All
+            rights reserved.
           </div>
         </Footer>
       </Router>

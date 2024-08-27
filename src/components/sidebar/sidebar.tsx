@@ -3,7 +3,7 @@ import { Menu, Button } from 'antd'
 import {
   ReadOutlined,
   LogoutOutlined,
-  BarsOutlined,
+  SolutionOutlined,
   UserOutlined,
   ContactsOutlined,
   TeamOutlined,
@@ -28,8 +28,8 @@ const Sidebar: FC<ISidebar> = ({
 }) => {
   const history = useHistory()
 
-  const handleCategoriesClick = (): void => {
-    history.push(`/${pathRest}/categories`)
+  const handleRolesClick = (): void => {
+    history.push(`/${pathRest}/roles`)
   }
   const handleCustomersClick = (): void => {
     history.push(`/${pathRest}/customers`)
@@ -42,7 +42,7 @@ const Sidebar: FC<ISidebar> = ({
   }
 
   const handleUserInfoClick = (): void => {
-    history.push(`/${pathRest}/user`)
+    history.push(`/${pathRest}/user-info`)
   }
   const handleTeamsClick = (): void => {
     history.push(`/${pathRest}/teams`)
@@ -62,11 +62,11 @@ const Sidebar: FC<ISidebar> = ({
       >
         {!collapse ? (
           <p>
-            <a href='https://github.com/Zoomish'>Bynarys</a>{' '}
+            <a href='https://github.com/NovaDevelopersCo'>Bynarys</a>{' '}
             <span className='font-medium'>Dev</span>
           </p>
         ) : (
-          <a className='font-medium' href='https://github.com/Zoomish'>
+          <a className='font-medium' href='https://github.com/NovaDevelopersCo'>
             ByDEV
           </a>
         )}
@@ -83,9 +83,9 @@ const Sidebar: FC<ISidebar> = ({
         }}
         defaultSelectedKeys={['1']}
       >
-        <Menu.Item key='2' onClick={handleCategoriesClick}>
-          <BarsOutlined />
-          <span>{t('categories')}</span>
+        <Menu.Item key='2' onClick={handleRolesClick}>
+          <SolutionOutlined />
+          <span>{t('roles')}</span>
         </Menu.Item>
         <Menu.Item key='3' onClick={handleUsersClick}>
           <TeamOutlined />

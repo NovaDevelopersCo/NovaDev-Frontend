@@ -328,5 +328,11 @@
   "name-of-post": "Name of post",
   "date-of-post": "Date of post",
   "name-client": "Client name",
-  "add-client": "Add client"
+  "add-client": "Add client",
+  "roles": "Roles",
+  "role": "Role",
+  "your-list-roles": "List of roles",
+  "add-role": "Add a role",
+  "add-user": "Add user",
+  "add-role-to-user": "Add a role to a user"
 }

@@ -6,7 +6,8 @@ export interface TButton {
 
 export interface TUser {
   id: number
-  role: TUserRole
+  roleId: number
+  role: TRole
   info: TUserInfo
   team: TUserTeam
   projects: TUserProjects[]
@@ -23,9 +24,12 @@ export interface TUserInfo {
   image: string
 }
 
-export interface TUserRole {
+export interface TRole {
   id: number
   title: string
+  description: string
+  level_access: number
+  users: TUser[]
 }
 
 export interface TUserTeam {
@@ -184,9 +188,12 @@ export enum ECountry {
 }
 
 export enum ELevelAccess {
-  Сustomer = '1',
-  Admin = '2',
-  Super_Admin = '3'
+  LOW = '1',
+  Mead = '2',
+  TOP = '3',
+  ANGEL = '4',
+  DEMIGOD = '5',
+  GOD = '6'
 }
 
 export interface IMultiLang {
@@ -238,7 +245,6 @@ export interface TCategory {
 export interface TSubCategories {
   subcategories: TSubCategories[] | []
   category: TCategory
-
 }
 export interface TCustomInput {
   _id: string
