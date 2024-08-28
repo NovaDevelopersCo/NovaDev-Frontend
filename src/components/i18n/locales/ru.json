@@ -235,6 +235,11 @@
   "title": "Название",
   "content": "Содержание",
   "add-post": "Добавить пост",
-  "сustomers": "Покупатели"
-
+  "profile": "Профиль",
+  "your-profile": "Ваш профиль",
+  "upload-photo": "Загрузить фото",
+  "nickname": "Имя",
+  "team": "Команда",
+  "project": "Проект",
+  "change-information-about-me": "Изменить информацию о себе"
 }
