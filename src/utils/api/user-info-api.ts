@@ -35,26 +35,14 @@ export const getUserData = async (token: string) => {
 }
 
 export const editUserData = async (token: string, user: any): Promise<void> => {
-    try {
-        if (token) {
-            const response = await fetch(`${BASE_URL}/users/me`, {
-                method: 'PUT',
-                headers: {
-                    'Content-type': 'application/json',
-                    Authorization: `Bearer ${token}`
-                },
-                body: JSON.stringify(user.info)
-            })
-            //
-            if (!response.ok) {
-                throw new Error('Failed to fetch user data')
-            }
-        } else {
-            throw new Error('Bearer токен отсутствует!')
-        }
-    } catch (error) {
-        console.error('Произошла ошибка', error)
-    }
+    return await fetch(`${BASE_URL}/users/me`, {
+        method: 'PUT',
+        headers: {
+            'Content-type': 'application/json',
+            Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify(user.info)
+    }).then(async (res) => await handleResponse(res))
 }
 
 export const editUserDataById = async (
