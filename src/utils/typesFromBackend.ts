@@ -42,6 +42,14 @@ export interface TUserProjects {
   title: string
 }
 
+export interface TTeams {
+  id: number
+  title: string
+  description: string
+  image: string
+  users: TUser[]
+}
+
 export interface TTask {
   id: number
   title: string

@@ -246,6 +246,8 @@
   "github": "GitHub",
   "payment-info": "Платежная информация",
   "team-title": "Команда",
+  "team-description": "Описание команды",
+  "team-image": "Изображение команды",
   "projects-title": "Проекты",
   "isDelivery": "Это доставка?",
   "verify-client-old-18": "Нужна ли проверка, что возраст клиента больше 18 лет?",

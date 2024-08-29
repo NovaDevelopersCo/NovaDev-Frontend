@@ -8,6 +8,7 @@ import Autorization from '../../pages/autorization/autorization'
 import NotFound from '../../pages/not-found/not-found'
 import Customers from '../../pages/customers/customers'
 import AllUsers from '../../pages/users/users'
+import Teams from '../../pages/teams/teams'
 import { ECountry } from '../../utils/typesFromBackend'
 import { useTranslation } from 'react-i18next'
 import { NotificationProvider } from '../notification-provider/notification-provider'
@@ -309,6 +310,14 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
                   pathRest={pathRest}
                 >
                   <AllUsers token={token} pathRest={pathRest} t={t} />
+                </ProtectedRoute>
+                <ProtectedRoute
+                  path={`/${pathRest}/teams`}
+                  exact
+                  isLoggedIn={isLoggedIn}
+                  pathRest={pathRest}
+                >
+                  <Teams token={token} pathRest={pathRest} t={t} />
                 </ProtectedRoute>
                 <ProtectedRoute
                   path={`/:${pathRest}/user`}

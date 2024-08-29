@@ -265,6 +265,8 @@
   "github": "GitHub",
   "payment-info": "Payment info",
   "team-title": "Team",
+  "team-description": "Team description",
+  "team-image": "Team image",
   "projects-title": "Projects",
   "isDelivery": "Is this a delivery?",
   "verify-client-old-18": "Do I need to verify that the client is over 18 years old?",
