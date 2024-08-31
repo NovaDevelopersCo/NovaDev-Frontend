@@ -335,5 +335,12 @@
   "your-list-roles": "Рөлдер тізімі",
   "add-role": "Рөл қосыңыз",
   "add-user": "Пайдаланушы қосу",
-  "add-role-to-user": "Пайдаланушыға рөл қосыңыз"
+  "add-role-to-user": "Пайдаланушыға рөл қосыңыз",
+  "projects": "Жобалар",
+  "description-project": "Жоба сипаттамасы",
+  "date-start": "Бастау күні",
+  "date-end": "Аяқтау күні",
+  "executors": "Орындаушылар",
+  "progress": "прогресс",
+  "your-list-projects": "Сіздің жобалар тізіміңіз"
 }

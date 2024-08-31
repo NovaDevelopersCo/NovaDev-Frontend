@@ -323,7 +323,7 @@
   "change-information-about-me": "Change information about me",
   "your-list-customers": " List of customers",
   "list-users": "List of users",
-  "action": "Actions",
+  "actions": "Actions",
   "name-of-post": "Name of post",
   "date-of-post": "Date of post",
   "name-client": "Client name",
@@ -333,5 +333,12 @@
   "your-list-roles": "List of roles",
   "add-role": "Add a role",
   "add-user": "Add user",
-  "add-role-to-user": "Add a role to a user"
+  "add-role-to-user": "Add a role to a user",
+  "projects": "Projects",
+  "description-project": "Description of project",
+  "date-start": "Start date",
+  "date-end": "End date",
+  "executors": "Executors",
+  "progress": "Progress",
+  "your-list-projects": "Your list of projects"
 }

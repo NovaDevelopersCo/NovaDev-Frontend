@@ -313,5 +313,12 @@
   "your-list-roles": "Список ролей",
   "add-role": "Добавить роль",
   "add-user": "Добавить пользователя",
-  "add-role-to-user": "Добавить роль пользователю"
+  "add-role-to-user": "Добавить роль пользователю",
+  "projects": "Проекты",
+  "description-project": "Описание проекта",
+  "date-start": "Дата начала",
+  "date-end": "Дата завершения",
+  "executors": "Исполнители",
+  "progress": "Прогресс",
+  "your-list-projects": "Ваш список проектов"
 }

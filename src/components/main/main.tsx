@@ -29,6 +29,7 @@ import AddCustomer from '../../pages/add-customer/add-customer'
 import Roles from '../../pages/FRoles/roles/roles'
 import Role from '../../pages/FRoles/role/role'
 import AddRole from '../../pages/FRoles/add-role/add-role'
+import Projects from '../../pages/projects/projects'
 
 const { Header, Sider, Content } = Layout
 
@@ -332,6 +333,20 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
                   pathRest={pathRest}
                 >
                   <AdvicesTips
+                    token={token}
+                    pathRest={pathRest}
+                    t={t}
+                    dark={dark}
+                    style={style}
+                  />
+                </ProtectedRoute>
+                <ProtectedRoute
+                  path={`/:${pathRest}/projects`}
+                  exact
+                  isLoggedIn={isLoggedIn}
+                  pathRest={pathRest}
+                >
+                  <Projects
                     token={token}
                     pathRest={pathRest}
                     t={t}
