@@ -315,10 +315,12 @@
   "add-user": "Добавить пользователя",
   "add-role-to-user": "Добавить роль пользователю",
   "projects": "Проекты",
-  "description-project": "Описание проекта",
+  "project-description": "Описание проекта",
   "date-start": "Дата начала",
   "date-end": "Дата завершения",
   "executors": "Исполнители",
   "progress": "Прогресс",
-  "your-list-projects": "Ваш список проектов"
+  "your-list-projects": "Ваш список проектов",
+  "project-name": "Нзвание проекта",
+  "add-project": "Добавить проект"
 }

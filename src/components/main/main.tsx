@@ -30,6 +30,7 @@ import Roles from '../../pages/FRoles/roles/roles'
 import Role from '../../pages/FRoles/role/role'
 import AddRole from '../../pages/FRoles/add-role/add-role'
 import Projects from '../../pages/projects/projects'
+import AddProject from '../../pages/add-project/add-project'
 
 const { Header, Sider, Content } = Layout
 
@@ -347,6 +348,20 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
                   pathRest={pathRest}
                 >
                   <Projects
+                    token={token}
+                    pathRest={pathRest}
+                    t={t}
+                    dark={dark}
+                    style={style}
+                  />
+                </ProtectedRoute>
+                <ProtectedRoute
+                  path={`/:${pathRest}/add/project`}
+                  exact
+                  isLoggedIn={isLoggedIn}
+                  pathRest={pathRest}
+                >
+                  <AddProject
                     token={token}
                     pathRest={pathRest}
                     t={t}

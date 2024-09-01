@@ -49,7 +49,7 @@ const Projects: FC<IProjects> = ({ token, pathRest, t }) => {
         a.name.localeCompare(b.name)
     },
     {
-      title: `${t('description-project')}`,
+      title: `${t('project-description')}`,
       dataIndex: 'description',
       key: 'description',
       sorter: (a: TProjects, b: TProjects): number =>
