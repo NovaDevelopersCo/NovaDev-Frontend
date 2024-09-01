@@ -8,7 +8,7 @@ import clsx from 'clsx'
 interface IAddProject {
   pathRest: string
   token: string
-  t: (arg0: string) => string
+  t: (key: string) => string
   dark: boolean
   style: object
 }
@@ -17,18 +17,18 @@ const AddProject: FC<IAddProject> = ({ token, pathRest, t, dark }) => {
   const { openNotification } = useContext(NotificationContext)
   const [form] = Form.useForm()
   const history = useHistory()
+  const theme = clsx(dark ? 'black' : 'white')
+  const [isModalVisible, setIsModalVisible] = useState(false)
+
   const layout = {
     labelCol: { span: 4 },
     wrapperCol: { span: 14 }
   }
-  const theme = clsx(dark ? 'black' : 'white')
-  const [isModalVisible, setIsModalVisible] = useState(false)
 
   const validateMessages = {
     // eslint-disable-next-line no-template-curly-in-string
     required: '${label} ' + `${t('it-is-necessary-to-fill-in')}!`
   }
-
   const onFinish = (values: any): void => {
     const newProject = {
       name: values.name,
@@ -41,9 +41,7 @@ const AddProject: FC<IAddProject> = ({ token, pathRest, t, dark }) => {
 
     projectAPI
       .createProject(token, newProject)
-      .then(() => {
-        history.push(`/${pathRest}/projects`)
-      })
+      .then(() => history.push(`/${pathRest}/projects`))
       .catch((e) => openNotification(e.message, 'topRight'))
   }
 
@@ -57,11 +55,11 @@ const AddProject: FC<IAddProject> = ({ token, pathRest, t, dark }) => {
         className={theme}
         title={t('alert')}
         visible={isModalVisible}
-        footer={[
+        footer={
           <Button key='ok' type='primary' onClick={handleModalClose}>
             {t('close')}
           </Button>
-        ]}
+        }
       >
         {t('field_must_not_empty')}
       </Modal>
@@ -69,12 +67,12 @@ const AddProject: FC<IAddProject> = ({ token, pathRest, t, dark }) => {
       <h4
         className={theme}
         style={{
-          marginBottom: '15px',
-          marginTop: '0',
+          marginBottom: 15,
+          marginTop: 0,
           color: '#000',
           fontSize: '1.75rem',
-          fontWeight: '600',
-          padding: '15px'
+          fontWeight: 600,
+          padding: 15
         }}
       >
         {t('add-project')}
