@@ -326,6 +326,7 @@
   "your-list-customers": " List of customers",
   "list-users": "List of users",
   "action": "Actions",
+  "your-list-teams": "Teams list",
   "name-of-post": "Name of post",
   "date-of-post": "Date of post",
   "name-client": "Client name",
@@ -335,5 +336,6 @@
   "your-list-roles": "List of roles",
   "add-role": "Add a role",
   "add-user": "Add user",
-  "add-role-to-user": "Add a role to a user"
+  "add-role-to-user": "Add a role to a user",
+  "add-user-to-team": "Add user to team"
 }

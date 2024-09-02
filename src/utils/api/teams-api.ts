@@ -14,7 +14,20 @@ export const getAllTeams = async (token: string) => {
     }).then(async (res) => await handleResponse(res))
 }
 
-export const editTeam = async (token: string, id: number, teams: any) => {
+// export const editTeam = async (token: string, id: number, teams: any) => {
+//     return await fetch(`${BASE_URL}/teams/${id}`, {
+//         method: 'PUT',
+//         headers: {
+//             'Content-type': 'application/json',
+//             Authorization: `Bearer ${token}`
+//         },
+//         body: JSON.stringify({
+//             ...teams
+//         })
+//     }).then(async (res) => await handleResponse(res))
+// }
+
+export const editTeam = async (token: string, data: object, id: string) => {
     return await fetch(`${BASE_URL}/teams/${id}`, {
         method: 'PUT',
         headers: {
@@ -22,12 +35,22 @@ export const editTeam = async (token: string, id: number, teams: any) => {
             Authorization: `Bearer ${token}`
         },
         body: JSON.stringify({
-            ...teams
+            ...data
         })
     }).then(async (res) => await handleResponse(res))
 }
 
-export const deleteTeam = async (token: string, id: number) => {
+// export const deleteTeam = async (token: string, id: number) => {
+//     return await fetch(`${BASE_URL}/teams/${id}`, {
+//         method: 'DELETE',
+//         headers: {
+//             'Content-type': 'application/json',
+//             Authorization: `Bearer ${token}`
+//         }
+//     }).then(async (res) => await handleResponse(res))
+// }
+
+export const deleteTeam = async (token: string, id: string) => {
     return await fetch(`${BASE_URL}/teams/${id}`, {
         method: 'DELETE',
         headers: {
@@ -37,7 +60,17 @@ export const deleteTeam = async (token: string, id: number) => {
     }).then(async (res) => await handleResponse(res))
 }
 
-export const getTeamById = async (token: string, id: number) => {
+// export const getTeamById = async (token: string, id: number) => {
+//     return await fetch(`${BASE_URL}/teams/${id}`, {
+//         method: 'GET',
+//         headers: {
+//             'Content-type': 'application/json',
+//             Authorization: `Bearer ${token}`
+//         }
+//     }).then(async (res) => await handleResponse(res))
+// }
+
+export const getTeamById = async (token: string, id: string) => {
     return await fetch(`${BASE_URL}/teams/${id}`, {
         method: 'GET',
         headers: {

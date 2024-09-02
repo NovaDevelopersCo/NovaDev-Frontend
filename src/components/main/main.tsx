@@ -8,7 +8,8 @@ import Autorization from '../../pages/autorization/autorization'
 import NotFound from '../../pages/not-found/not-found'
 import Customers from '../../pages/customers/customers'
 import AllUsers from '../../pages/users/users'
-import Teams from '../../pages/teams/teams'
+import Teams from '../../pages/FTeams/teams/teams'
+import Team from '../../pages/FTeams/team/team'
 import { ECountry } from '../../utils/typesFromBackend'
 import { useTranslation } from 'react-i18next'
 import { NotificationProvider } from '../notification-provider/notification-provider'
@@ -317,8 +318,24 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
                   isLoggedIn={isLoggedIn}
                   pathRest={pathRest}
                 >
-                  <Teams token={token} pathRest={pathRest} t={t} />
+                  <Teams dark={dark} token={token} pathRest={pathRest} t={t} language={language} />
                 </ProtectedRoute>
+                <ProtectedRoute
+                  path={`/:${pathRest}/team/:teamId`}
+                  exact
+                  isLoggedIn={isLoggedIn}
+                  pathRest={pathRest}
+                >
+                  <Team token={token} pathRest={pathRest} t={t} style={style} />
+                </ProtectedRoute>
+                {/* <ProtectedRoute
+                  path={`/:${pathRest}/add/team`}
+                  exact
+                  isLoggedIn={isLoggedIn}
+                  pathRest={pathRest}
+                >
+                  <AddTeam token={token} pathRest={pathRest} t={t} dark={dark} />
+                </ProtectedRoute> */}
                 <ProtectedRoute
                   path={`/:${pathRest}/user`}
                   exact
