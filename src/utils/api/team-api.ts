@@ -23,14 +23,14 @@ export const getTeam = async (token: string, id: number) => {
   }).then(async (res) => await handleResponse(res))
 }
 
-export const createTeam = async (token: string, id: number) => {
+export const createTeam = async (token: string, data: any) => {
   return await fetch(`${BASE_URL}/team`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`
     },
-    body: JSON.stringify(id)
+    body: JSON.stringify(data)
   }).then(async (res) => await handleResponse(res))
 }
 
@@ -45,7 +45,7 @@ export const updateTeam = async (token: string, id: number) => {
   }).then(async (res) => await handleResponse(res))
 }
 
-export const deleteTeam = async (token: string, id: number) => {
+export const deleteTeam = async (token: string, id: string) => {
   return await fetch(`${BASE_URL}/team/${id}`, {
     method: 'DELETE',
     headers: {
