@@ -7,7 +7,8 @@ import {
   UserOutlined,
   ContactsOutlined,
   TeamOutlined,
-  ApartmentOutlined
+  ApartmentOutlined,
+  SkinOutlined
 } from '@ant-design/icons'
 import { useHistory } from 'react-router'
 
@@ -46,6 +47,9 @@ const Sidebar: FC<ISidebar> = ({
   }
   const handleTeamsClick = (): void => {
     history.push(`/${pathRest}/teams`)
+  }
+  const handleProfileClick = (): void => {
+    history.push(`/${pathRest}/profile`)
   }
 
   const handleLogout = (): void => {
@@ -106,6 +110,10 @@ const Sidebar: FC<ISidebar> = ({
         <Menu.Item key='7' onClick={handleUserInfoClick}>
           <UserOutlined />
           <span> {t('user-info')}</span>
+        </Menu.Item>
+        <Menu.Item key='8' onClick={handleProfileClick}>
+          <SkinOutlined />
+          <span>{t('profile')}</span>
         </Menu.Item>
       </Menu>
       <Button

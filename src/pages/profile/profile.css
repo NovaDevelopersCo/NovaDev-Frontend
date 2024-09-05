@@ -16,6 +16,7 @@
   align-items: center;
   justify-content: center;
   color: #9ca3af;
+  text-align: center;
 }
 
 .add-image {
@@ -31,6 +32,7 @@
   color: transparent;
   transition: all 300ms;
   cursor: pointer;
+  text-align: center;
 }
 
 .image-box:hover .add-image {
