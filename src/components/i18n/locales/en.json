@@ -343,5 +343,6 @@
   "progress": "Progress",
   "your-list-projects": "Your list of projects",
   "project-name": "Project name",
-  "add-project": "Add project"
+  "add-project": "Add project",
+  "select-executors": "Select executors"
 }

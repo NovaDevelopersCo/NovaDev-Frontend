@@ -278,12 +278,12 @@ export interface TProfileData {
   team: string
   project: string
 }
-export interface TProjects {
-  id: string
+export interface TProject {
+  id: number
   name: string
-  text: string
+  description: string
   date: string
-  executor: string
+  executors: string
   status: string
   progress: string
 }

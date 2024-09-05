@@ -8,7 +8,7 @@
   margin-top: 1.5rem;
 }
 .black {
-  .h4{
+  .h4 {
     color: #fff !important;
   }
   .ant-select-selector {
@@ -19,28 +19,28 @@
     background-color: #0a0e14 !important;
     color: #fff !important;
   }
-  .ant-form-item-control-input-content{
-    color: #0a0e14!important;
+  .ant-form-item-control-input-content {
+    color: #0a0e14 !important;
   }
-  .ant-table-wrapper{
-    color: #0a0e14!important;
+  .ant-table-wrapper {
+    color: #0a0e14 !important;
   }
   .ant-table-cell {
     background-color: #0a0e14 !important;
     color: #fff !important;
     border: #fff;
   }
-  .ant-input{
+  .ant-input {
     color: #0a0e14 !important;
   }
-  .ant-form-item-control-input-content{
-    color:#ffffff !important;
+  .ant-form-item-control-input-content {
+    color: #ffffff !important;
   }
-  .text-blue-500{
-    color:#071de3 !important;
+  .text-blue-500 {
+    color: #071de3 !important;
   }
-  .ant-form-item-explain-error{
-    color:#e3070e !important;
+  .ant-form-item-explain-error {
+    color: #e3070e !important;
   }
   * {
     color: #fff !important;

@@ -322,5 +322,6 @@
   "progress": "Прогресс",
   "your-list-projects": "Ваш список проектов",
   "project-name": "Нзвание проекта",
-  "add-project": "Добавить проект"
+  "add-project": "Добавить проект",
+  "select-executors": "Выберите исполнителей"
 }

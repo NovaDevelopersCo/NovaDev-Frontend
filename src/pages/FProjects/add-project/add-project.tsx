@@ -1,8 +1,8 @@
 import { FC, useContext, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { Form, Input, Button, Modal, DatePicker } from 'antd'
-import { NotificationContext } from '../../components/notification-provider/notification-provider'
-import * as projectAPI from '../../utils/api/project-api'
+import { NotificationContext } from '../../../components/notification-provider/notification-provider'
+import * as projectAPI from '../../../utils/api/project-api'
 import clsx from 'clsx'
 
 interface IAddProject {
@@ -17,7 +17,6 @@ const AddProject: FC<IAddProject> = ({ token, pathRest, t, dark }) => {
   const { openNotification } = useContext(NotificationContext)
   const [form] = Form.useForm()
   const history = useHistory()
-  const theme = clsx(dark ? 'black' : 'white')
   const [isModalVisible, setIsModalVisible] = useState(false)
 
   const layout = {
@@ -33,7 +32,7 @@ const AddProject: FC<IAddProject> = ({ token, pathRest, t, dark }) => {
     const newProject = {
       name: values.name,
       description: values.description,
-      numberUsers: values.numberUsers,
+      numberExecutors: values.numberExecutors,
       category: values.category,
       startDate: values['date-start'].format('YYYY-MM-DD'),
       endDate: values['date-end'].format('YYYY-MM-DD')
@@ -48,13 +47,13 @@ const AddProject: FC<IAddProject> = ({ token, pathRest, t, dark }) => {
   const handleModalClose = (): void => {
     setIsModalVisible(false)
   }
-
+  const theme = clsx(dark ? 'black' : 'white')
   return (
     <>
       <Modal
         className={theme}
         title={t('alert')}
-        visible={isModalVisible}
+        open={isModalVisible}
         footer={
           <Button key='ok' type='primary' onClick={handleModalClose}>
             {t('close')}
@@ -67,12 +66,11 @@ const AddProject: FC<IAddProject> = ({ token, pathRest, t, dark }) => {
       <h4
         className={theme}
         style={{
-          marginBottom: 15,
-          marginTop: 0,
-          color: '#000',
+          marginBottom: '15px',
+          marginTop: '0',
           fontSize: '1.75rem',
-          fontWeight: 600,
-          padding: 15
+          fontWeight: '600',
+          padding: '15px'
         }}
       >
         {t('add-project')}

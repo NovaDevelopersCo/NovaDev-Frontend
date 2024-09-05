@@ -344,5 +344,6 @@
   "progress": "прогресс",
   "your-list-projects": "Сіздің жобалар тізіміңіз",
   "project-name": "Жобаның атауы",
-  "add-project": "Жоба қосу"
+  "add-project": "Жоба қосу",
+  "select-executors": "Орындаушыларды таңдау"
 }
