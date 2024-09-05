@@ -1,10 +1,10 @@
 import { Button, Table } from 'antd'
 import { ColumnsType } from 'antd/es/table'
 import { FC, useContext, useEffect, useState } from 'react'
-import * as teamAPI from '../../utils/api/team-api'
+import * as teamAPI from '../../../utils/api/team-api'
 import { Link, useHistory, NavLink } from 'react-router-dom'
-import { NotificationContext } from '../../components/notification-provider/notification-provider'
-import { TTeams } from '../../utils/typesFromBackend'
+import { NotificationContext } from '../../../components/notification-provider/notification-provider'
+import { TTeams } from '../../../utils/typesFromBackend'
 
 interface ITeams {
   token: string
@@ -63,25 +63,6 @@ const Teams: FC<ITeams> = ({ token, pathRest, t }) => {
       key: 'category',
       sorter: (a: TTeams, b: TTeams): number =>
         a.category.localeCompare(b.category)
-    },
-    {
-      title: `${t('actions')}`,
-      key: 'actions',
-      render: (_: any, customer: TTeams): JSX.Element => (
-        <>
-          <Button
-            type='primary'
-            onClick={() =>
-              history.push(`/${pathRest}/customer/update/${customer.id}`)
-            }
-          >
-            {t('update')}
-          </Button>
-          <Button danger onClick={() => handleDelete(customer.id)}>
-            {t('delete')}
-          </Button>
-        </>
-      )
     }
   ]
 

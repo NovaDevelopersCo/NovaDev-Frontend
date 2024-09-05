@@ -13,7 +13,7 @@ export const getAllTeams = async (token: string) => {
   }).then(async (res) => await handleResponse(res))
 }
 
-export const getTeam = async (token: string, id: string) => {
+export const getTeam = async (token: string, id: number) => {
   return await fetch(`${BASE_URL}/team/${id}`, {
     method: 'GET',
     headers: {
@@ -23,29 +23,29 @@ export const getTeam = async (token: string, id: string) => {
   }).then(async (res) => await handleResponse(res))
 }
 
-export const createTeam = async (token: string, data: any) => {
+export const createTeam = async (token: string, id: number) => {
   return await fetch(`${BASE_URL}/team`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`
     },
-    body: JSON.stringify(data)
+    body: JSON.stringify(id)
   }).then(async (res) => await handleResponse(res))
 }
 
-export const updateTeam = async (token: string, data: any) => {
+export const updateTeam = async (token: string, id: number) => {
   return await fetch(`${BASE_URL}/team/update`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`
     },
-    body: JSON.stringify(data)
+    body: JSON.stringify(id)
   }).then(async (res) => await handleResponse(res))
 }
 
-export const deleteTeam = async (token: string, id: string) => {
+export const deleteTeam = async (token: string, id: number) => {
   return await fetch(`${BASE_URL}/team/${id}`, {
     method: 'DELETE',
     headers: {

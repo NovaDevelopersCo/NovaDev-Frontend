@@ -26,8 +26,8 @@ import UserInfo from '../../pages/user-info/user-info'
 import AdvicesTips from '../../pages/advices-tips/advices-tips'
 import AddPost from '../../pages/add-post/add-post'
 import AddCustomer from '../../pages/add-customer/add-customer'
-import Teams from '../../pages/teams/teams'
-import AddTeam from '../../pages/add-team/add-team'
+import Teams from '../../pages/FTeams/teams/teams'
+import AddTeam from '../../pages/FTeams/add-team/add-team'
 
 const { Header, Sider, Content } = Layout
 

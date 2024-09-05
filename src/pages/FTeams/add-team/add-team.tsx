@@ -1,8 +1,8 @@
 import { FC, useContext, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { Form, Input, Button, Modal } from 'antd'
-import { NotificationContext } from '../../components/notification-provider/notification-provider'
-import * as teamAPI from '../../utils/api/team-api'
+import { NotificationContext } from '../../../components/notification-provider/notification-provider'
+import * as teamAPI from '../../../utils/api/team-api'
 import clsx from 'clsx'
 
 interface IAddTeam {
