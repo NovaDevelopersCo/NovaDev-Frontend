@@ -27,9 +27,9 @@ const Projects: FC<IProjects> = ({ token, pathRest, t, dark }) => {
 
   const columns: ColumnsType<TProject> = [
     {
-      title: `${t('name')}`,
-      dataIndex: 'name',
-      key: 'name',
+      title: `${t('title')}`,
+      dataIndex: 'title',
+      key: 'title',
       render: (name, project) => (
         <Link to={`/${pathRest}/project/${project.id}`}>{name}</Link>
       ),
