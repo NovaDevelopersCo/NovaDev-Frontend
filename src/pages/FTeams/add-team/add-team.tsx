@@ -1,6 +1,6 @@
 import { FC, useContext, useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import { Form, Input, Button, Modal } from 'antd'
+import { Form, Input, Button, Modal, Select } from 'antd'
 import { NotificationContext } from '../../../components/notification-provider/notification-provider'
 import * as teamAPI from '../../../utils/api/team-api'
 import clsx from 'clsx'
@@ -33,7 +33,7 @@ const AddTeam: FC<IAddTeam> = ({ token, pathRest, t, dark }) => {
     const newTeam = {
       name: values.name,
       description: values.description,
-      numberUsers: values.numberUsers,
+      executors: values.executors,
       category: values.category
     }
 
@@ -101,11 +101,11 @@ const AddTeam: FC<IAddTeam> = ({ token, pathRest, t, dark }) => {
           <Input />
         </Form.Item>
         <Form.Item
-          label={t('number-user')}
+          label={t('executors')}
           rules={[{ required: true }]}
-          name='number-users'
+          name='executors'
         >
-          <Input />
+          <Select placeholder={t('select-executors')}></Select>
         </Form.Item>
         <Form.Item
           label={t('category')}

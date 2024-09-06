@@ -51,10 +51,11 @@ const Teams: FC<ITeams> = ({ token, pathRest, t, dark }) => {
       sorter: (a: TTeams, b: TTeams): number => a.text.localeCompare(b.text)
     },
     {
-      title: `${t('number-user')}`,
-      dataIndex: 'number-user',
-      key: 'number-user',
-      sorter: (a: TTeams, b: TTeams): number => a.amount.localeCompare(b.amount)
+      title: `${t('executors')}`,
+      dataIndex: 'executors',
+      key: 'executors',
+      sorter: (a: TTeams, b: TTeams): number =>
+        a.executors.localeCompare(b.executors)
     },
     {
       title: t('category'),

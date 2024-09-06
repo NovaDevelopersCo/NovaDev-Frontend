@@ -315,5 +315,7 @@
   "team-name": "Название команды",
   "team-description": "Описание команды",
   "select-users": "Выберите участников",
-  "select-category": "Выберите категорию"
+  "select-category": "Выберите категорию",
+  "executors": "Исполнители",
+  "select-executors": "Выберите исполнителей"
 }

@@ -33,7 +33,7 @@ const Team: FC<IEditorTeam> = ({ token, pathRest, t, dark }) => {
       name: values.name,
       description: values.description,
       category: values.category,
-      numberUsers: values.numberUsers
+      executors: values.executors
     }
 
     teamAPI
@@ -82,8 +82,8 @@ const Team: FC<IEditorTeam> = ({ token, pathRest, t, dark }) => {
         <Form.Item label={t('team-description')} name='description'>
           <Input />
         </Form.Item>
-        <Form.Item label={t('users')} name='numberUsers'>
-          <Select placeholder={t('select-users')}></Select>
+        <Form.Item label={t('executors')} name='executors'>
+          <Select placeholder={t('select-executors')}></Select>
         </Form.Item>
         <Form.Item label={t('category')} name='category'>
           <Select placeholder={t('select-category')}></Select>

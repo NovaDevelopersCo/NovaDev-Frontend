@@ -337,5 +337,7 @@
   "team-name": "Team name",
   "team-description": "Team description",
   "select-users": "Select users",
-  "select-category": "Select category"
+  "select-category": "Select category",
+  "executors": "Executors",
+  "select-executors": "Select executors"
 }

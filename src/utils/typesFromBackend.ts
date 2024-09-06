@@ -282,5 +282,5 @@ export interface TTeams {
   name: string
   text: string
   category: string
-  amount: string
+  executors: string
 }

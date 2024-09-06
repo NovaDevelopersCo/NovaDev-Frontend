@@ -337,5 +337,7 @@
   "team-name": "Команда аты",
   "team-description": "Топ сипаттамасы",
   "select-users": "мүшелерді таңдау",
-  "select-category": "Санат таңдау"
+  "select-category": "Санат таңдау",
+  "executors": "Орындаушылар",
+  "select-executors": "Орындаушыны таңдау"
 }
