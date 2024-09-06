@@ -278,7 +278,7 @@ export interface TProfileData {
   project: string
 }
 export interface TTeams {
-  id: string
+  id: number
   name: string
   text: string
   category: string
