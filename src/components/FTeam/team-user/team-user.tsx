@@ -1,8 +1,9 @@
 import { Form, Button, Select, Table } from 'antd'
 import React, { FC, useContext } from 'react'
 import { Link, useLocation, useRouteMatch } from 'react-router-dom'
-import { TRole, TUser } from '../../../utils/typesFromBackend'
+import { TTeams, TUser } from '../../../utils/typesFromBackend'
 import * as userAPI from '../../../utils/api/user-api'
+import * as userInfoAPI from '../../../utils/api/user-info-api'
 import { NotificationContext } from '../../notification-provider/notification-provider'
 import { ColumnsType } from 'antd/es/table'
 
@@ -11,11 +12,6 @@ interface IGroupModifiersForUser {
   token: string
   t: (arg0: string) => string
   style: object
-}
-
-interface ILevelsAccess {
-  text: string
-  value: string
 }
 
 const TeamUser: FC<IGroupModifiersForUser> = ({
@@ -27,9 +23,10 @@ const TeamUser: FC<IGroupModifiersForUser> = ({
   const { openNotification } = useContext(NotificationContext)
   const pathname = useLocation().pathname
   const match = useRouteMatch(pathname)
-  const roleId = Number(Object.keys(match?.params as number)[0])
+  const teamId = Number(Object.keys(match?.params as number)[0])
   const [data, setData] = React.useState<TUser[]>([])
   const [users, setUsers] = React.useState<TUser[]>([])
+  const [selectedUserId, setSelectedUserId] = React.useState(null)
   const [update, setUpdate] = React.useState<boolean>(true)
   const location = useLocation()
 
@@ -40,7 +37,7 @@ const TeamUser: FC<IGroupModifiersForUser> = ({
         const users: TUser[] = []
         const Data: TUser[] = []
         res.forEach((user: TUser) => {
-          if (user.roleId === roleId) {
+          if (user.teamId === teamId) {
             Data.push(user)
           } else {
             users.push(user)
@@ -52,15 +49,12 @@ const TeamUser: FC<IGroupModifiersForUser> = ({
       .catch((e) => openNotification(e, 'topRight'))
     const currentPath = location.pathname
     window.localStorage.setItem('initialRoute', currentPath)
-  }, [roleId, update])
+  }, [teamId, update])
 
-  React.useEffect(() => {
-    const levelsAccessNames: { [key: string]: boolean } = {}
-    const resultArrayLevels: ILevelsAccess[] = []
-    for (const key of Object.keys(levelsAccessNames)) {
-      resultArrayLevels.push({ text: key, value: key })
-    }
-  }, [data])
+  const handleSelectChange = (value: any): void => {
+    setSelectedUserId(value)
+  }
+
   const columns: ColumnsType<TUser> = [
     {
       title: `${t('name')}`,
@@ -82,12 +76,14 @@ const TeamUser: FC<IGroupModifiersForUser> = ({
   const onFinish = (values: any): void => {
     userAPI
       .getUser(token, values.id)
-      .then((res: TRole) => {
+      .then((res: TTeams) => {
+        const userId = selectedUserId
         const newLanguageRest: any = {
-          roleId
+          userId,
+          teamId
         }
-        userAPI
-          .updateUser(token, values.id, newLanguageRest)
+        userInfoAPI
+          .editUserTeam(token, newLanguageRest)
           .then((res: any) => {
             setUpdate(!update)
           })
@@ -112,7 +108,7 @@ const TeamUser: FC<IGroupModifiersForUser> = ({
         style={{ paddingTop: '1.5rem', ...style }}
       >
         <Form.Item label={t('add-user')} name='id' rules={[{ required: true }]}>
-          <Select>
+          <Select onChange={handleSelectChange} >
             {users.map((user, index) => (
               <Select.Option value={user.id} key={index}>
                 {user.info.full_name}
@@ -126,7 +122,7 @@ const TeamUser: FC<IGroupModifiersForUser> = ({
           </Button>
         </Form.Item>
       </Form>
-      <Table columns={columns} dataSource={data} />
+      <Table columns={columns} dataSource={data.map(user => ({ ...user, key: user.id }))} />
     </>
   )
 }

@@ -29,6 +29,14 @@ const Teams: FC<ITeams> = ({ token, pathRest, t, dark }) => {
       window.localStorage.setItem('initialRoute', currentPath)
   }, [token, openNotification])
 
+  const [errorImages, setErrorImages] = React.useState<string[]>([])
+
+  const handleError = (image: string): void => {
+    if (!errorImages.includes(image)) {
+      setErrorImages((prev: any) => [...prev, image])
+    }
+  }
+
   const columns: ColumnsType<TTeams> = [
     {
       title: `${t('name')}`,
@@ -61,7 +69,13 @@ const Teams: FC<ITeams> = ({ token, pathRest, t, dark }) => {
       dataIndex: 'image',
       key: 'image',
       render: (image: string, team: TTeams) => (
-        <Image alt='Team image' src={image} />
+        <div>
+          {errorImages.includes(image) ? (
+            <span>Download image error!</span>
+          ) : (
+            <Image alt='Team image' src={image} onError={() => handleError(image)} />
+          )}
+        </div>
       )
     },
     {
@@ -73,7 +87,7 @@ const Teams: FC<ITeams> = ({ token, pathRest, t, dark }) => {
         return (
           <div>
             {team.users.map((user) => {
-              return <p key={user.id}>{user.info.full_name}</p>
+              return <Link to={`/${pathRest}/user/:${user.id}`} key={user.id}>{user.info.full_name}</Link>
             })}
           </div>
         )

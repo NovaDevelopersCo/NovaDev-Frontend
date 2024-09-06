@@ -10,6 +10,7 @@ export interface TUser {
   role: TRole
   info: TUserInfo
   team: TUserTeam
+  teamId: number
   projects: TUserProjects[]
 }
 
