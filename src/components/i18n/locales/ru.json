@@ -318,10 +318,10 @@
   "project-description": "Описание проекта",
   "date-start": "Дата начала",
   "date-end": "Дата завершения",
-  "executors": "Исполнители",
   "progress": "Прогресс",
   "your-list-projects": "Ваш список проектов",
   "project-name": "Нзвание проекта",
   "add-project": "Добавить проект",
-  "select-executors": "Выберите исполнителей"
+  "select-team-executor": "Выберите команду исполнитель",
+  "team-executor": "Команда исполнитель"
 }

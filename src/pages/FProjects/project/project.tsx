@@ -41,7 +41,7 @@ const Project: FC<IEditorPage> = ({ token, pathRest, t, dark }) => {
       name: values.name,
       description: values.description,
       category: values.category,
-      numberExecutors: values.numberExecutors,
+      teamExecutor: values.teamExecutor,
       startDate: values['date-start'].format('YYYY-MM-DD'),
       endDate: values['date-end'].format('YYYY-MM-DD')
     }
@@ -92,8 +92,8 @@ const Project: FC<IEditorPage> = ({ token, pathRest, t, dark }) => {
         <Form.Item label={t('project-description')} name='description'>
           <Input />
         </Form.Item>
-        <Form.Item label={t('executors')} name='numberExecutors'>
-          <Select placeholder={t('select-executors')}></Select>
+        <Form.Item label={t('team-executor')} name='teamExecutor'>
+          <Select placeholder={t('select-team-executor')}></Select>
         </Form.Item>
         <Form.Item label={t('date-start')} name='date-start'>
           <DatePicker />

@@ -1,6 +1,6 @@
 import { FC, useContext, useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import { Form, Input, Button, Modal, DatePicker } from 'antd'
+import { Form, Input, Button, Modal, DatePicker, Select } from 'antd'
 import { NotificationContext } from '../../../components/notification-provider/notification-provider'
 import * as projectAPI from '../../../utils/api/project-api'
 import clsx from 'clsx'
@@ -100,11 +100,11 @@ const AddProject: FC<IAddProject> = ({ token, pathRest, t, dark }) => {
           <Input />
         </Form.Item>
         <Form.Item
-          label={t('executors')}
+          label={t('team-executor')}
           rules={[{ required: true }]}
-          name='number-executors'
+          name='team-executor'
         >
-          <Input />
+          <Select placeholder={t('select-team-executor')}></Select>
         </Form.Item>
         <Form.Item
           label={t('date-start')}

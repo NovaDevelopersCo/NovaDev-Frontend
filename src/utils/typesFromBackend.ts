@@ -283,7 +283,7 @@ export interface TProject {
   name: string
   description: string
   date: string
-  executors: string
+  teamExecutor: string
   status: string
   progress: string
 }

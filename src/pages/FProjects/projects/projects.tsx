@@ -64,11 +64,11 @@ const Projects: FC<IProjects> = ({ token, pathRest, t, dark }) => {
       sorter: (a: TProject, b: TProject): number => a.date.localeCompare(b.date)
     },
     {
-      title: `${t('executors')}`,
-      dataIndex: 'executors',
-      key: 'executors',
+      title: `${t('team-executor')}`,
+      dataIndex: 'team-executor',
+      key: 'team-executor',
       sorter: (a: TProject, b: TProject): number =>
-        a.executors.localeCompare(b.executors)
+        a.teamExecutor.localeCompare(b.teamExecutor)
     },
     {
       title: `${t('status')}`,

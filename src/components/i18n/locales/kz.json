@@ -345,5 +345,7 @@
   "your-list-projects": "Сіздің жобалар тізіміңіз",
   "project-name": "Жобаның атауы",
   "add-project": "Жоба қосу",
-  "select-executors": "Орындаушыларды таңдау"
+  "select-executors": "Орындаушыларды таңдау",
+  "select-team-executor": "Топ орындаушысын таңдау",
+  "team-executor": "Топ орындаушысы"
 }
