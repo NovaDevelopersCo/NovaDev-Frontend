@@ -28,6 +28,7 @@ import AddPost from '../../pages/add-post/add-post'
 import AddCustomer from '../../pages/add-customer/add-customer'
 import Teams from '../../pages/FTeams/teams/teams'
 import AddTeam from '../../pages/FTeams/add-team/add-team'
+import Team from '../../pages/FTeams/team/team'
 
 const { Header, Sider, Content } = Layout
 
@@ -295,6 +296,20 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
                   pathRest={pathRest}
                 >
                   <AddTeam
+                    token={token}
+                    pathRest={pathRest}
+                    t={t}
+                    dark={dark}
+                    style={style}
+                  />
+                </ProtectedRoute>
+                <ProtectedRoute
+                  path={`/:${pathRest}/team/:teamId`}
+                  exact
+                  isLoggedIn={isLoggedIn}
+                  pathRest={pathRest}
+                >
+                  <Team
                     token={token}
                     pathRest={pathRest}
                     t={t}

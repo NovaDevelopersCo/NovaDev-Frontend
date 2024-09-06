@@ -1,10 +1,11 @@
-import { Button, Table } from 'antd'
+import { Table } from 'antd'
 import { ColumnsType } from 'antd/es/table'
 import { FC, useContext, useEffect, useState } from 'react'
 import * as teamAPI from '../../../utils/api/team-api'
-import { Link, useHistory, NavLink } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import { NotificationContext } from '../../../components/notification-provider/notification-provider'
 import { TTeams } from '../../../utils/typesFromBackend'
+import clsx from 'clsx'
 
 interface ITeams {
   token: string
@@ -14,11 +15,9 @@ interface ITeams {
   style: object
 }
 
-const Teams: FC<ITeams> = ({ token, pathRest, t }) => {
+const Teams: FC<ITeams> = ({ token, pathRest, t, dark }) => {
   const { openNotification } = useContext(NotificationContext)
   const [data, setData] = useState<TTeams[]>([])
-  const history = useHistory()
-
   useEffect(() => {
     teamAPI
       .getAllTeams(token)
@@ -26,24 +25,24 @@ const Teams: FC<ITeams> = ({ token, pathRest, t }) => {
       .catch((e: Error) => openNotification(e.message, 'topRight'))
   }, [token, openNotification])
 
-  const handleDelete = (id: string): void => {
-    teamAPI
-      .deleteTeam(token, id)
-      .then(() =>
-        setData((prev: TTeams[]) => prev.filter((team) => team.id !== id))
-      )
-      .catch((e: Error) => openNotification(e.message, 'topRight'))
-  }
-
   const columns: ColumnsType<TTeams> = [
     {
       title: `${t('name')}`,
       dataIndex: 'name',
       key: 'name',
-      render: (name: string, team: TTeams): JSX.Element => (
+      render: (name, team) => (
         <Link to={`/${pathRest}/team/${team.id}`}>{name}</Link>
       ),
-      sorter: (a: TTeams, b: TTeams): number => a.name.localeCompare(b.name)
+      sorter: (a, b) => {
+        if (a.name !== undefined && b.name !== undefined) {
+          try {
+            return a.name.localeCompare(b.name)
+          } catch (error: any) {
+            openNotification(error.message, 'topRight')
+          }
+        }
+        return 0
+      }
     },
     {
       title: `${t('description')}`,
@@ -65,7 +64,7 @@ const Teams: FC<ITeams> = ({ token, pathRest, t }) => {
         a.category.localeCompare(b.category)
     }
   ]
-
+  const theme = clsx(dark ? 'black' : 'white')
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
       <div
@@ -100,7 +99,7 @@ const Teams: FC<ITeams> = ({ token, pathRest, t }) => {
           {t('add')}
         </NavLink>
       </div>
-      <Table columns={columns} dataSource={data} />
+      <Table columns={columns} dataSource={data} className={theme} />
     </div>
   )
 }

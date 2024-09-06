@@ -333,5 +333,9 @@
   "teams": "Teams",
   "tg": "Telegram",
   "name-of-team": "Name of team",
-  "add-team": "Add team"
+  "add-team": "Add team",
+  "team-name": "Team name",
+  "team-description": "Team description",
+  "select-users": "Select users",
+  "select-category": "Select category"
 }

@@ -34,14 +34,14 @@ export const createTeam = async (token: string, data: any) => {
   }).then(async (res) => await handleResponse(res))
 }
 
-export const updateTeam = async (token: string, id: number) => {
+export const updateTeam = async (token: string, data: { name: string, description: string, category: string, startDate: string, endDate: string }) => {
   return await fetch(`${BASE_URL}/team/update`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`
     },
-    body: JSON.stringify(id)
+    body: JSON.stringify(data)
   }).then(async (res) => await handleResponse(res))
 }
 

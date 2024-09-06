@@ -333,5 +333,9 @@
   "your-list-teams": "Командалар тізімі",
   "number-user": "Пайдаланушылардың саны",
   "name-of-team": "Команда аты",
-  "add-team": "Пәрменді қосыңыз"
+  "add-team": "Пәрменді қосыңыз",
+  "team-name": "Команда аты",
+  "team-description": "Топ сипаттамасы",
+  "select-users": "мүшелерді таңдау",
+  "select-category": "Санат таңдау"
 }

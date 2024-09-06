@@ -1,81 +1,71 @@
 import { FC, useContext, useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import { Form, Input, Button, Modal } from 'antd'
+import { Form, Input, Button, Modal, Select, Popconfirm } from 'antd'
 import { NotificationContext } from '../../../components/notification-provider/notification-provider'
 import * as teamAPI from '../../../utils/api/team-api'
 import clsx from 'clsx'
 
-interface IAddTeam {
+interface IEditorTeam {
   pathRest: string
   token: string
-  t: (arg0: string) => string
+  t: (key: string) => string
   dark: boolean
   style: object
 }
 
-const AddTeam: FC<IAddTeam> = ({ token, pathRest, t, dark }) => {
+const Team: FC<IEditorTeam> = ({ token, pathRest, t, dark }) => {
   const { openNotification } = useContext(NotificationContext)
   const [form] = Form.useForm()
   const history = useHistory()
+  const [isModalVisible, setIsModalVisible] = useState(false)
+  const [team] = useState<any>(null)
   const layout = {
     labelCol: { span: 4 },
     wrapperCol: { span: 14 }
   }
-  const theme = clsx(dark ? 'black' : 'white')
-  const [isModalVisible, setIsModalVisible] = useState(false)
 
   const validateMessages = {
     // eslint-disable-next-line no-template-curly-in-string
     required: '${label} ' + `${t('it-is-necessary-to-fill-in')}!`
   }
-
   const onFinish = (values: any): void => {
-    const newTeam = {
+    const updateTeam = {
       name: values.name,
       description: values.description,
-      numberUsers: values.numberUsers,
-      category: values.category
+      category: values.category,
+      numberUsers: values.numberUsers
     }
 
     teamAPI
-      .createTeam(token, newTeam)
-      .then(() => {
-        history.push(`/${pathRest}/teams`)
-      })
+      .updateTeam(token, updateTeam)
+      .then(() => history.push(`/${pathRest}/teams`))
       .catch((e) => openNotification(e.message, 'topRight'))
   }
 
   const handleModalClose = (): void => {
     setIsModalVisible(false)
   }
-
+  const theme = clsx(dark ? 'black' : 'white')
+  function confirm(): void {
+    teamAPI
+      .deleteTeam(token, team.id.toString())
+      .then(() => history.push(`/${pathRest}/teams`))
+      .catch((e) => openNotification(e, 'topRight'))
+  }
   return (
     <>
       <Modal
         className={theme}
         title={t('alert')}
-        visible={isModalVisible}
-        footer={[
+        open={isModalVisible}
+        footer={
           <Button key='ok' type='primary' onClick={handleModalClose}>
             {t('close')}
           </Button>
-        ]}
+        }
       >
         {t('field_must_not_empty')}
       </Modal>
-
-      <h4
-        className={theme}
-        style={{
-          marginBottom: '15px',
-          marginTop: '0',
-          fontSize: '1.75rem',
-          fontWeight: '600',
-          padding: '15px'
-        }}
-      >
-        {t('add-team')}
-      </h4>
 
       <Form
         className={theme}
@@ -86,42 +76,39 @@ const AddTeam: FC<IAddTeam> = ({ token, pathRest, t, dark }) => {
         form={form}
         style={{ paddingTop: '1.5rem' }}
       >
-        <Form.Item
-          label={t('name-of-team')}
-          rules={[{ required: true }]}
-          name='name'
-        >
+        <Form.Item label={t('team-name')} name='name'>
           <Input />
         </Form.Item>
-        <Form.Item
-          label={t('description')}
-          rules={[{ required: true }]}
-          name='description'
-        >
+        <Form.Item label={t('team-description')} name='description'>
           <Input />
         </Form.Item>
-        <Form.Item
-          label={t('number-user')}
-          rules={[{ required: true }]}
-          name='number-users'
-        >
-          <Input />
+        <Form.Item label={t('users')} name='numberUsers'>
+          <Select placeholder={t('select-users')}></Select>
         </Form.Item>
-        <Form.Item
-          label={t('category')}
-          rules={[{ required: true }]}
-          name='category'
-        >
-          <Input />
+        <Form.Item label={t('category')} name='category'>
+          <Select placeholder={t('select-category')}></Select>
         </Form.Item>
+
         <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 4 }}>
           <Button type='primary' htmlType='submit'>
             {t('save')}
           </Button>
+        </Form.Item>
+        <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 4 }}>
+          <Popconfirm
+            title={t('you-sure-want-delete')}
+            onConfirm={confirm}
+            okText={t('yes')}
+            cancelText={t('no')}
+          >
+            <Button className={theme} htmlType='button'>
+              {t('delete')}
+            </Button>
+          </Popconfirm>
         </Form.Item>
       </Form>
     </>
   )
 }
 
-export default AddTeam
+export default Team
