@@ -345,5 +345,11 @@
   "project-name": "Project name",
   "add-project": "Add project",
   "select-team-executor": "Select team executor",
-  "team-executor": "Team executor"
+  "team-executor": "Team executor",
+  "technologies": "Technologies",
+  "server": "Server",
+  "documentation": "Documentation",
+  "client": "Client",
+  "upgrade-project": "Upgrade project",
+  "select-executors": "Select executors"
 }

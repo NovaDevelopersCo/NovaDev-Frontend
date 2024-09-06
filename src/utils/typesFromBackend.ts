@@ -281,9 +281,10 @@ export interface TProfileData {
 export interface TProject {
   id: number
   name: string
-  description: string
+  technologies: string
+  server: string
+  documentation: string
   date: string
-  teamExecutor: string
-  status: string
-  progress: string
+  client: string
+  executors: string
 }

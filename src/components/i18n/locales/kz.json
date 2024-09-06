@@ -347,5 +347,10 @@
   "add-project": "Жоба қосу",
   "select-executors": "Орындаушыларды таңдау",
   "select-team-executor": "Топ орындаушысын таңдау",
-  "team-executor": "Топ орындаушысы"
+  "team-executor": "Топ орындаушысы",
+  "технологиялар": "технологиялар",
+  "server": "Сервер",
+  "documentation": "Құжаттама",
+  "client": "Клиент",
+  "upgrade-project": "Жоба ақпаратын жаңарту"
 }

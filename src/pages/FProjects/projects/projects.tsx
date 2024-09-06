@@ -45,17 +45,25 @@ const Projects: FC<IProjects> = ({ token, pathRest, t, dark }) => {
       }
     },
     {
-      title: `${t('project-description')}`,
-      dataIndex: 'description',
-      key: 'description',
+      title: `${t('technologies')}`,
+      dataIndex: 'technologies',
+      key: 'technologies',
       sorter: (a: TProject, b: TProject): number =>
-        a.description.localeCompare(b.description)
+        a.technologies.localeCompare(b.technologies)
     },
     {
-      title: `${t('date-start')}`,
-      dataIndex: 'dateStart',
-      key: 'date-start',
-      sorter: (a: TProject, b: TProject): number => a.date.localeCompare(b.date)
+      title: `${t('server')}`,
+      dataIndex: 'server',
+      key: 'server',
+      sorter: (a: TProject, b: TProject): number =>
+        a.server.localeCompare(b.server)
+    },
+    {
+      title: `${t('documentation')}`,
+      dataIndex: 'documentation',
+      key: 'documentation',
+      sorter: (a: TProject, b: TProject): number =>
+        a.documentation.localeCompare(b.documentation)
     },
     {
       title: `${t('date-end')}`,
@@ -64,25 +72,18 @@ const Projects: FC<IProjects> = ({ token, pathRest, t, dark }) => {
       sorter: (a: TProject, b: TProject): number => a.date.localeCompare(b.date)
     },
     {
-      title: `${t('team-executor')}`,
-      dataIndex: 'team-executor',
-      key: 'team-executor',
+      title: `${t('client')}`,
+      dataIndex: 'client',
+      key: 'client',
       sorter: (a: TProject, b: TProject): number =>
-        a.teamExecutor.localeCompare(b.teamExecutor)
+        a.client.localeCompare(b.client)
     },
     {
-      title: `${t('status')}`,
-      dataIndex: 'status',
-      key: 'status',
+      title: `${t('executors')}`,
+      dataIndex: 'executors',
+      key: 'executors',
       sorter: (a: TProject, b: TProject): number =>
-        a.status.localeCompare(b.status)
-    },
-    {
-      title: `${t('progress')}`,
-      dataIndex: 'progress',
-      key: 'progress',
-      sorter: (a: TProject, b: TProject): number =>
-        a.progress.localeCompare(b.progress)
+        a.executors.localeCompare(b.executors)
     }
   ]
   const theme = clsx(dark ? 'black' : 'white')

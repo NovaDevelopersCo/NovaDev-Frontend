@@ -31,11 +31,12 @@ const AddProject: FC<IAddProject> = ({ token, pathRest, t, dark }) => {
   const onFinish = (values: any): void => {
     const newProject = {
       name: values.name,
-      description: values.description,
-      numberExecutors: values.numberExecutors,
-      category: values.category,
-      startDate: values['date-start'].format('YYYY-MM-DD'),
-      endDate: values['date-end'].format('YYYY-MM-DD')
+      technologies: values.technologies,
+      server: values.server,
+      documentation: values.documentation,
+      client: values.client,
+      executors: values.executors,
+      dateEnd: values['date-end'].format('YYYY-MM-DD')
     }
 
     projectAPI
@@ -81,7 +82,7 @@ const AddProject: FC<IAddProject> = ({ token, pathRest, t, dark }) => {
         {...layout}
         onFinish={onFinish}
         validateMessages={validateMessages}
-        name='team'
+        name='project'
         form={form}
         style={{ paddingTop: '1.5rem' }}
       >
@@ -93,25 +94,39 @@ const AddProject: FC<IAddProject> = ({ token, pathRest, t, dark }) => {
           <Input />
         </Form.Item>
         <Form.Item
-          label={t('project-description')}
+          label={t('technologies')}
           rules={[{ required: true }]}
-          name='description'
+          name='technologies'
         >
           <Input />
         </Form.Item>
         <Form.Item
-          label={t('team-executor')}
+          label={t('server')}
           rules={[{ required: true }]}
-          name='team-executor'
+          name='server'
         >
-          <Select placeholder={t('select-team-executor')}></Select>
+          <Input />
         </Form.Item>
         <Form.Item
-          label={t('date-start')}
+          label={t('documentation')}
           rules={[{ required: true }]}
-          name='date-start'
+          name='documentation'
         >
-          <DatePicker />
+          <Input />
+        </Form.Item>
+        <Form.Item
+          label={t('client')}
+          rules={[{ required: true }]}
+          name='client'
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
+          label={t('executors')}
+          rules={[{ required: true }]}
+          name='executors'
+        >
+          <Select placeholder={t('select-executors')}></Select>
         </Form.Item>
         <Form.Item
           label={t('date-end')}

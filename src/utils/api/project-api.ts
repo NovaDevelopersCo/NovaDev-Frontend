@@ -34,7 +34,18 @@ export const createProject = async (token: string, data: any) => {
   }).then(async (res) => await handleResponse(res))
 }
 
-export const updateProject = async (token: string, data: { name: string, description: string, category: string, startDate: string, endDate: string }) => {
+export const updateProject = async (
+  token: string,
+  data: {
+    name: string
+    technologies: string
+    server: string
+    documentation: string
+    client: string
+    executors: string
+    dateEnd: string
+  }
+) => {
   return await fetch(`${BASE_URL}/project/update`, {
     method: 'PUT',
     headers: {

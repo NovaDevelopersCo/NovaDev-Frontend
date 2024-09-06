@@ -39,11 +39,12 @@ const Project: FC<IEditorPage> = ({ token, pathRest, t, dark }) => {
   const onFinish = (values: any): void => {
     const updateProject = {
       name: values.name,
-      description: values.description,
-      category: values.category,
-      teamExecutor: values.teamExecutor,
-      startDate: values['date-start'].format('YYYY-MM-DD'),
-      endDate: values['date-end'].format('YYYY-MM-DD')
+      technologies: values.technologies,
+      server: values.server,
+      documentation: values.documentation,
+      client: values.client,
+      executors: values.executors,
+      dateEnd: values['date-end'].format('YYYY-MM-DD')
     }
 
     projectAPI
@@ -76,7 +77,18 @@ const Project: FC<IEditorPage> = ({ token, pathRest, t, dark }) => {
       >
         {t('field_must_not_empty')}
       </Modal>
-
+      <h4
+        className={theme}
+        style={{
+          marginBottom: '15px',
+          marginTop: '0',
+          fontSize: '1.75rem',
+          fontWeight: '600',
+          padding: '15px'
+        }}
+      >
+        {t('upgrade-project')}
+      </h4>
       <Form
         className={theme}
         {...layout}
@@ -89,14 +101,20 @@ const Project: FC<IEditorPage> = ({ token, pathRest, t, dark }) => {
         <Form.Item label={t('project-name')} name='name'>
           <Input />
         </Form.Item>
-        <Form.Item label={t('project-description')} name='description'>
+        <Form.Item label={t('technologies')} name='technologies'>
           <Input />
         </Form.Item>
-        <Form.Item label={t('team-executor')} name='teamExecutor'>
-          <Select placeholder={t('select-team-executor')}></Select>
+        <Form.Item label={t('server')} name='server'>
+          <Input />
         </Form.Item>
-        <Form.Item label={t('date-start')} name='date-start'>
-          <DatePicker />
+        <Form.Item label={t('documentation')} name='documentation'>
+          <Input />
+        </Form.Item>
+        <Form.Item label={t('client')} name='client'>
+          <Input />
+        </Form.Item>
+        <Form.Item label={t('executors')} name='executors'>
+          <Select placeholder={t('select-executors')}></Select>
         </Form.Item>
         <Form.Item label={t('date-end')} name='date-end'>
           <DatePicker />
