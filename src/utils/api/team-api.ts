@@ -34,7 +34,10 @@ export const createTeam = async (token: string, data: any) => {
   }).then(async (res) => await handleResponse(res))
 }
 
-export const updateTeam = async (token: string, data: { name: string, description: string, category: string }) => {
+export const updateTeam = async (
+  token: string,
+  data: { name: string; description: string; image: string }
+) => {
   return await fetch(`${BASE_URL}/team/update`, {
     method: 'PUT',
     headers: {

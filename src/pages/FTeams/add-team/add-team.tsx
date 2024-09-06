@@ -54,7 +54,7 @@ const AddTeam: FC<IAddTeam> = ({ token, pathRest, t, dark }) => {
       <Modal
         className={theme}
         title={t('alert')}
-        visible={isModalVisible}
+        open={isModalVisible}
         footer={[
           <Button key='ok' type='primary' onClick={handleModalClose}>
             {t('close')}
@@ -107,11 +107,7 @@ const AddTeam: FC<IAddTeam> = ({ token, pathRest, t, dark }) => {
         >
           <Select placeholder={t('select-executors')}></Select>
         </Form.Item>
-        <Form.Item
-          label={t('category')}
-          rules={[{ required: true }]}
-          name='category'
-        >
+        <Form.Item label={t('image')} rules={[{ required: true }]} name='image'>
           <Input />
         </Form.Item>
         <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 4 }}>

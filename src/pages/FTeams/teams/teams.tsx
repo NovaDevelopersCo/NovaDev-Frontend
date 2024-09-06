@@ -51,18 +51,17 @@ const Teams: FC<ITeams> = ({ token, pathRest, t, dark }) => {
       sorter: (a: TTeams, b: TTeams): number => a.text.localeCompare(b.text)
     },
     {
+      title: t('image'),
+      dataIndex: 'image',
+      key: 'image',
+      sorter: (a: TTeams, b: TTeams): number => a.image.localeCompare(b.image)
+    },
+    {
       title: `${t('executors')}`,
       dataIndex: 'executors',
       key: 'executors',
       sorter: (a: TTeams, b: TTeams): number =>
         a.executors.localeCompare(b.executors)
-    },
-    {
-      title: t('category'),
-      dataIndex: 'category',
-      key: 'category',
-      sorter: (a: TTeams, b: TTeams): number =>
-        a.category.localeCompare(b.category)
     }
   ]
   const theme = clsx(dark ? 'black' : 'white')

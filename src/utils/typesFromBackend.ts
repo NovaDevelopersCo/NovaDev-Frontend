@@ -238,7 +238,6 @@ export interface TCategory {
 export interface TSubCategories {
   subcategories: TSubCategories[] | []
   category: TCategory
-
 }
 export interface TCustomInput {
   _id: string
@@ -281,6 +280,6 @@ export interface TTeams {
   id: number
   name: string
   text: string
-  category: string
+  image: string
   executors: string
 }

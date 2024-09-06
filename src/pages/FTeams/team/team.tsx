@@ -32,7 +32,7 @@ const Team: FC<IEditorTeam> = ({ token, pathRest, t, dark }) => {
     const updateTeam = {
       name: values.name,
       description: values.description,
-      category: values.category,
+      image: values.image,
       executors: values.executors
     }
 
@@ -85,8 +85,8 @@ const Team: FC<IEditorTeam> = ({ token, pathRest, t, dark }) => {
         <Form.Item label={t('executors')} name='executors'>
           <Select placeholder={t('select-executors')}></Select>
         </Form.Item>
-        <Form.Item label={t('category')} name='category'>
-          <Select placeholder={t('select-category')}></Select>
+        <Form.Item label={t('image')} name='image'>
+          <Input />
         </Form.Item>
 
         <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 4 }}>
