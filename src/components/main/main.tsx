@@ -343,7 +343,7 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
                   />
                 </ProtectedRoute>
                 <ProtectedRoute
-                  path={`/:${pathRest}/projects`}
+                  path={`/:${pathRest}/project`}
                   exact
                   isLoggedIn={isLoggedIn}
                   pathRest={pathRest}

@@ -4,7 +4,7 @@ import { BASE_URL } from '../const'
 import { handleResponse } from '../helpers'
 
 export const getAllProjects = async (token: string) => {
-  return await fetch(`${BASE_URL}/projects`, {
+  return await fetch(`${BASE_URL}/project`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',

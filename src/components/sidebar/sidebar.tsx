@@ -49,7 +49,7 @@ const Sidebar: FC<ISidebar> = ({
     history.push(`/${pathRest}/teams`)
   }
   const handleProjectsClick = (): void => {
-    history.push(`/${pathRest}/projects`)
+    history.push(`/${pathRest}/project`)
   }
 
   const handleLogout = (): void => {
