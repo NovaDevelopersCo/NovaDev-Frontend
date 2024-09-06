@@ -27,12 +27,12 @@ const TeamUpdate: FC<IGroupModifiersForTeam> = ({
     wrapperCol: { span: 14 }
   }
   // eslint-disable-next-line prefer-regex-literals
-  // const { roleId } = useParams<{ roleId: string }>()
   const pathname = useLocation().pathname
   const match = useRouteMatch(pathname)
   const roleId = Object.keys(match?.params as string)[0]
   // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
   const [team, setTeam] = React.useState<TTeams>({} as TTeams)
+  // const [fileList, setFileList] = React.useState<File[]>([])
   const [formData, setFormData] = React.useState(() => {
     const storedFormDataString = localStorage.getItem('formDataTeam')
     return storedFormDataString ? JSON.parse(storedFormDataString) : null
@@ -43,6 +43,18 @@ const TeamUpdate: FC<IGroupModifiersForTeam> = ({
     const updateallValues = { ...allValues, _id: team.id }
     setFormData(updateallValues)
   }
+
+  // const handleFilesChange = ({ fileList }: { fileList: File[] }): void => {
+  //   if (info.file.status === 'done') {
+  //     setUser((prevUser) => ({
+  //       ...prevUser,
+  //       info: {
+  //         ...prevUser.info,
+  //         image: info.file.response.url
+  //       }
+  //     }))
+  //   }
+  // }
 
   React.useEffect(() => {
     if (Object.keys(team).length > 0 && formData) {
@@ -90,7 +102,8 @@ const TeamUpdate: FC<IGroupModifiersForTeam> = ({
   const onFinish = (values: any): void => {
     const newLanguageRest: any = {
       title: values.title,
-      description: values.description
+      description: values.description,
+      image: values.image
     }
     console.log(newLanguageRest)
     teamAPI
@@ -125,7 +138,7 @@ const TeamUpdate: FC<IGroupModifiersForTeam> = ({
         <Input />
       </Form.Item>
       <Form.Item label={t('image')} name='image'>
-        <Upload fileList={[]} beforeUpload={() => false}>
+        <Upload beforeUpload={() => false}>
             <Button icon={<UploadOutlined />}>Upload</Button>
         </Upload>
       </Form.Item>
