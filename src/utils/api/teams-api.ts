@@ -27,16 +27,13 @@ export const getAllTeams = async (token: string) => {
 //     }).then(async (res) => await handleResponse(res))
 // }
 
-export const editTeam = async (token: string, data: object, id: string) => {
+export const editTeam = async (token: string, data: FormData, id: string) => {
     return await fetch(`${BASE_URL}/teams/${id}`, {
         method: 'PUT',
         headers: {
-            'Content-type': 'application/json',
             Authorization: `Bearer ${token}`
         },
-        body: JSON.stringify({
-            ...data
-        })
+        body: data
     }).then(async (res) => await handleResponse(res))
 }
 

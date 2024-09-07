@@ -1,4 +1,4 @@
-import { Popconfirm, Form, Button, Input, Upload } from 'antd'
+import { Popconfirm, Form, Button, Input, Upload, UploadFile } from 'antd'
 import { UploadOutlined } from '@ant-design/icons'
 import React, { FC, useContext } from 'react'
 import { useHistory, useLocation, useRouteMatch } from 'react-router-dom'
@@ -32,7 +32,7 @@ const TeamUpdate: FC<IGroupModifiersForTeam> = ({
   const roleId = Object.keys(match?.params as string)[0]
   // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
   const [team, setTeam] = React.useState<TTeams>({} as TTeams)
-  // const [fileList, setFileList] = React.useState<File[]>([])
+  const [fileList, setFileList] = React.useState<UploadFile[]>([])
   const [formData, setFormData] = React.useState(() => {
     const storedFormDataString = localStorage.getItem('formDataTeam')
     return storedFormDataString ? JSON.parse(storedFormDataString) : null
@@ -44,17 +44,10 @@ const TeamUpdate: FC<IGroupModifiersForTeam> = ({
     setFormData(updateallValues)
   }
 
-  // const handleFilesChange = ({ fileList }: { fileList: File[] }): void => {
-  //   if (info.file.status === 'done') {
-  //     setUser((prevUser) => ({
-  //       ...prevUser,
-  //       info: {
-  //         ...prevUser.info,
-  //         image: info.file.response.url
-  //       }
-  //     }))
-  //   }
-  // }
+  const handleFilesChange = ({ fileList }: { fileList: UploadFile[] }): void => {
+    setFileList(fileList)
+    console.log(fileList)
+  }
 
   React.useEffect(() => {
     if (Object.keys(team).length > 0 && formData) {
@@ -100,14 +93,20 @@ const TeamUpdate: FC<IGroupModifiersForTeam> = ({
     required: '${label} ' + `${t('it-is-necessary-to-fill-in')}!`
   }
   const onFinish = (values: any): void => {
-    const newLanguageRest: any = {
-      title: values.title,
-      description: values.description,
-      image: values.image
+    const formData = new FormData()
+    formData.append('title', values.title)
+    formData.append('description', values.description)
+    //
+    if (fileList.length > 0 && fileList[0].originFileObj) {
+      const file = fileList[0].originFileObj
+      console.log('File to be sent:', file)
+      formData.append('image', file)
+    } else {
+      console.error('No file found in fileList')
     }
-    console.log(newLanguageRest)
+    //
     teamAPI
-      .editTeam(token, newLanguageRest, team.id.toString())
+      .editTeam(token, formData, team.id.toString())
       .then((res: TTeams) => {
         localStorage.removeItem('formDataTeam')
         history.push(`/${pathRest}/teams`)
@@ -138,7 +137,7 @@ const TeamUpdate: FC<IGroupModifiersForTeam> = ({
         <Input />
       </Form.Item>
       <Form.Item label={t('image')} name='image'>
-        <Upload beforeUpload={() => false}>
+        <Upload fileList={fileList} onChange={handleFilesChange} beforeUpload={() => false}>
             <Button icon={<UploadOutlined />}>Upload</Button>
         </Upload>
       </Form.Item>
