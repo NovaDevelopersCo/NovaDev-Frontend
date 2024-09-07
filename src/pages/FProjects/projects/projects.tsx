@@ -30,13 +30,13 @@ const Projects: FC<IProjects> = ({ token, pathRest, t, dark }) => {
       title: `${t('title')}`,
       dataIndex: 'title',
       key: 'title',
-      render: (name, project) => (
-        <Link to={`/${pathRest}/project/${project.id}`}>{name}</Link>
+      render: (title, project) => (
+        <Link to={`/${pathRest}/project/${project.id}`}>{title}</Link>
       ),
       sorter: (a, b) => {
-        if (a.name !== undefined && b.name !== undefined) {
+        if (a.title !== undefined && b.title !== undefined) {
           try {
-            return a.name.localeCompare(b.name)
+            return a.title.localeCompare(b.title)
           } catch (error: any) {
             openNotification(error.message, 'topRight')
           }
@@ -48,6 +48,7 @@ const Projects: FC<IProjects> = ({ token, pathRest, t, dark }) => {
       title: `${t('technologies')}`,
       dataIndex: 'technologies',
       key: 'technologies',
+      render: (technologies: string[]) => technologies.join(', '),
       sorter: (a: TProject, b: TProject): number =>
         a.technologies.localeCompare(b.technologies)
     },
@@ -55,6 +56,11 @@ const Projects: FC<IProjects> = ({ token, pathRest, t, dark }) => {
       title: `${t('server')}`,
       dataIndex: 'server',
       key: 'server',
+      render: (server) => (
+        <a href={server} target='_blank' rel='noopener noreferrer'>
+          {server}
+        </a>
+      ),
       sorter: (a: TProject, b: TProject): number =>
         a.server.localeCompare(b.server)
     },
@@ -62,14 +68,40 @@ const Projects: FC<IProjects> = ({ token, pathRest, t, dark }) => {
       title: `${t('documentation')}`,
       dataIndex: 'documentation',
       key: 'documentation',
+      render: (documentation) => (
+        <a href={documentation} target='_blank' rel='noopener noreferrer'>
+          {documentation}
+        </a>
+      ),
       sorter: (a: TProject, b: TProject): number =>
         a.documentation.localeCompare(b.documentation)
     },
     {
-      title: `${t('date-end')}`,
-      dataIndex: 'dateEnd',
-      key: 'date-end',
-      sorter: (a: TProject, b: TProject): number => a.date.localeCompare(b.date)
+      title: `${t('deadline')}`,
+      dataIndex: 'deadline',
+      key: 'deadline',
+      render: (deadline) => {
+        const deadlineDate = new Date(deadline)
+        const currentDate = new Date()
+        const formattedDate = deadlineDate.toLocaleString('ru-RU', {
+          day: '2-digit',
+          month: '2-digit',
+          year: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit'
+        })
+
+        return (
+          <span>
+            {formattedDate}{' '}
+            {deadlineDate < currentDate && (
+              <span style={{ color: 'red' }}>({t('expired')})</span>
+            )}
+          </span>
+        )
+      },
+      sorter: (a: TProject, b: TProject): number =>
+        a.deadline.localeCompare(b.deadline)
     },
     {
       title: `${t('client')}`,
@@ -79,11 +111,11 @@ const Projects: FC<IProjects> = ({ token, pathRest, t, dark }) => {
         a.client.localeCompare(b.client)
     },
     {
-      title: `${t('executors')}`,
+      title: `${t('users')}`,
       dataIndex: 'executors',
-      key: 'executors',
+      key: 'users',
       sorter: (a: TProject, b: TProject): number =>
-        a.executors.localeCompare(b.executors)
+        a.users.localeCompare(b.users)
     }
   ]
   const theme = clsx(dark ? 'black' : 'white')

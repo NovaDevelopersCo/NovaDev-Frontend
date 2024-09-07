@@ -352,5 +352,6 @@
   "server": "Сервер",
   "documentation": "Құжаттама",
   "client": "Клиент",
-  "upgrade-project": "Жоба ақпаратын жаңарту"
+  "upgrade-project": "Жоба ақпаратын жаңарту",
+  "expired": "Мерзімі бітті"
 }

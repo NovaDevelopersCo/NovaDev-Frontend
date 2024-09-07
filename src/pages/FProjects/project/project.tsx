@@ -49,7 +49,7 @@ const Project: FC<IEditorPage> = ({ token, pathRest, t, dark }) => {
 
     projectAPI
       .updateProject(token, updateProject)
-      .then(() => history.push(`/${pathRest}/projects`))
+      .then(() => history.push(`/${pathRest}/project`))
       .catch((e) => openNotification(e.message, 'topRight'))
   }
 
@@ -60,7 +60,7 @@ const Project: FC<IEditorPage> = ({ token, pathRest, t, dark }) => {
   function confirm(): void {
     projectAPI
       .deleteProject(token, project.id.toString())
-      .then(() => history.push(`/${pathRest}/projects`))
+      .then(() => history.push(`/${pathRest}/project`))
       .catch((e) => openNotification(e, 'topRight'))
   }
   return (

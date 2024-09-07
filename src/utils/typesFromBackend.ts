@@ -280,11 +280,11 @@ export interface TProfileData {
 }
 export interface TProject {
   id: number
-  name: string
+  title: string
   technologies: string
   server: string
   documentation: string
-  date: string
+  deadline: string
   client: string
-  executors: string
+  users: string
 }

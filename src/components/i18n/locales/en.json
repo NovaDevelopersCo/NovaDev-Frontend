@@ -351,5 +351,6 @@
   "documentation": "Documentation",
   "client": "Client",
   "upgrade-project": "Upgrade project",
-  "select-executors": "Select executors"
+  "select-executors": "Select executors",
+  "expired": "Expired"
 }
