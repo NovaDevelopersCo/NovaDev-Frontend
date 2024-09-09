@@ -132,10 +132,6 @@ const UserInfo: FC<IUserInfo> = ({ token, t }) => {
                     <div className='flex flex-col gap-6'>
                         <div className='border-2 border-black rounded-md p-4'>
                             <div className='flex gap-2'>
-                                <h2>{t('user-id')}</h2>
-                                <p className='text-base'>{user?.id ?? ''}</p>
-                            </div>
-                            <div className='flex gap-2'>
                                 <h2>{t('user-role-title')}</h2>
                                 <p className='text-base'>{user?.role?.title}</p>
                             </div>
@@ -180,7 +176,7 @@ const UserInfo: FC<IUserInfo> = ({ token, t }) => {
                                 <h4 className='text-lg font-semibold'>{t('user-profile-image')}</h4>
                             </div>
                             <div className='flex gap-2 mb-2'>
-                                <h2>{t('user-image-url')}</h2>
+                                <h2>{t('user-image')}</h2>
                                 <Image src={user?.info?.image ?? 'No image found'} alt="Profile photo" />
                             </div>
                         </div>
