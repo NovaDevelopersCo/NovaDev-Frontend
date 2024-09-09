@@ -15,6 +15,10 @@ interface IUserInfo {
 const UserInfo: FC<IUserInfo> = ({ token, t }) => {
     const { openNotification } = useContext(NotificationContext)
     //
+    const [isImageError, setIsImageError] = useState(false)
+    const handleImageError = (): void => {
+        setIsImageError(true)
+    }
     const [isEditing, setIsEditing] = useState(false)
     const handleEditing = (): void => {
         setIsEditing(true)
@@ -126,10 +130,28 @@ const UserInfo: FC<IUserInfo> = ({ token, t }) => {
                 </div>
             ) : (
                  <div className='flex flex-col mt-4'>
-                    <div className='flex items-center justify-center'>
-                        <h1 className='text-xl font-semibold mb-5'>{t('about-user-title')}</h1>
+                    <div>
+                        <div className='flex items-center justify-center'>
+                            <h1 className='text-xl font-semibold mb-5'>{t('about-user-title')}</h1>
+                        </div>
                     </div>
-                    <div className='flex flex-col gap-6'>
+                    <div className='border-2 border-black rounded-md pl-2'>
+                            <div className='flex items-center justify-center mt-2'>
+                                <h4 className='text-lg font-semibold'>{t('user-profile-image')}</h4>
+                            </div>
+                            {isImageError ? (
+                                <div className='flex justify-center mb-2'>
+                                    <p className='text-base'>Image preload error</p>
+                                </div>
+                            ) : (
+                            <div className='flex gap-2 mb-2'>
+                                <h2>{t('user-image')}</h2>
+                                <Image className='rounded-full w-24 h-24' src={user?.info?.image ?? 'No image found'} alt="Profile photo" onError={handleImageError} />
+                            </div>
+                            )
+                            }
+                        </div>
+                    <div className='flex flex-col gap-6 mt-4'>
                         <div className='border-2 border-black rounded-md p-4'>
                             <div className='flex gap-2'>
                                 <h2>{t('user-role-title')}</h2>
@@ -169,15 +191,6 @@ const UserInfo: FC<IUserInfo> = ({ token, t }) => {
                                     <h2>{t('user-tg')}</h2>
                                     <p className='text-base'>{user?.info?.tg ?? ''}</p>
                                 </div>
-                            </div>
-                        </div>
-                        <div className='border-2 border-black rounded-md pl-2'>
-                            <div className='flex items-center justify-center mt-2'>
-                                <h4 className='text-lg font-semibold'>{t('user-profile-image')}</h4>
-                            </div>
-                            <div className='flex gap-2 mb-2'>
-                                <h2>{t('user-image')}</h2>
-                                <Image src={user?.info?.image ?? 'No image found'} alt="Profile photo" />
                             </div>
                         </div>
                     </div>
