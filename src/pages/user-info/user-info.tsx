@@ -1,10 +1,11 @@
 
 import React, { FC, useState, useEffect, useContext } from 'react'
 import * as UserInfoAPI from '../../utils/api/user-info-api'
-import { Button, Form, Input, Image, Upload } from 'antd'
+import { Button, Form, Input, Image, Upload, Segmented } from 'antd'
 import { UploadOutlined } from '@ant-design/icons'
 import { TUser, ECountry } from '../../utils/typesFromBackend'
 import { NotificationContext } from '../../components/notification-provider/notification-provider'
+import { SegmentedValue } from 'antd/es/segmented'
 
 interface IUserInfo {
     token: string
@@ -19,14 +20,11 @@ const UserInfo: FC<IUserInfo> = ({ token, t }) => {
     const handleImageError = (): void => {
         setIsImageError(true)
     }
-    const [isEditing, setIsEditing] = useState(false)
-    const handleEditing = (): void => {
-        setIsEditing(true)
+    // const [isEditing, setIsEditing] = useState<string>('false')
+    const [isEditing, setIsEditing] = useState<boolean>(false)
+    const handleChangeState = (value: SegmentedValue): void => {
+        setIsEditing(value === 'Edit')
     }
-    const handleViewing = (): void => {
-        setIsEditing(false)
-    }
-    //
     // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
     const [user, setUser] = React.useState<TUser>({} as TUser)
     //
@@ -74,16 +72,11 @@ const UserInfo: FC<IUserInfo> = ({ token, t }) => {
     return (
         <div>
             <div className='flex gap-6 justify-center'>
-                <Button className='bg-gray-300' onClick={handleViewing}>
-                    <h4 className='text-base'>{t('view-info')}</h4>
-                </Button>
-                <Button className='bg-gray-300' onClick={handleEditing}>
-                    <h4 className='text-base'>{t('edit-info')}</h4>
-                </Button>
+                <Segmented options={['View', 'Edit']} value={isEditing ? 'Edit' : 'View'} onChange={handleChangeState}/>
             </div>
             { isEditing ? (
                 <div className='flex flex-col mt-4'>
-                    <div className='flex items-center justify-center'>
+                    <div className='flex items-center justify-start'>
                         <h1 className='text-xl font-semibold mb-5'>{t('about-user-title')}</h1>
                     </div>
                     <Form className='flex flex-col gap-6' onFinish={onFinish} >
