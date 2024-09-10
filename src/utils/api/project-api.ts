@@ -36,13 +36,14 @@ export const createProject = async (token: string, data: any) => {
 
 export const updateProject = async (
   token: string,
+  projectId: string,
   data: {
     name: string
     technologies: string
     server: string
     documentation: string
     client: string
-    executors: string
+    users: string
     dateEnd: string
   }
 ) => {
@@ -64,4 +65,7 @@ export const deleteProject = async (token: string, id: number) => {
       Authorization: `Bearer ${token}`
     }
   }).then(async (res) => await handleResponse(res))
+}
+export function getProjects(token: string) {
+  throw new Error('Function not implemented.')
 }

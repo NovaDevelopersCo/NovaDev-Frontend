@@ -279,6 +279,8 @@ export interface TProfileData {
   project: string
 }
 export interface TProject {
+  info: any
+  projectId: number
   id: number
   title: string
   technologies: string
