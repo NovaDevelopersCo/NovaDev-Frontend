@@ -1,4 +1,4 @@
-import { FC, useContext, useState, useEffect } from 'react'
+import { FC, useContext, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import {
   Form,
@@ -11,9 +11,7 @@ import {
 } from 'antd'
 import { NotificationContext } from '../../../components/notification-provider/notification-provider'
 import * as projectAPI from '../../../utils/api/project-api'
-import * as userAPI from '../../../utils/api/user-api'
 import clsx from 'clsx'
-import { TUser } from '../../../utils/typesFromBackend'
 
 interface IEditorPage {
   pathRest: string
@@ -28,26 +26,16 @@ const Project: FC<IEditorPage> = ({ token, pathRest, t, dark }) => {
   const [form] = Form.useForm()
   const history = useHistory()
   const [isModalVisible, setIsModalVisible] = useState(false)
-  const [project, setProject] = useState<any>(null)
-  const [users, setUsers] = useState<TUser[]>([])
+  const [project] = useState<any>(null)
   const layout = {
     labelCol: { span: 4 },
     wrapperCol: { span: 14 }
   }
 
-  useEffect(() => {
-    // Fetch users for the Select component
-    userAPI
-      .getUsers(token)
-      .then((res: TUser[]) => setUsers(res))
-      .catch((e) => openNotification(e.message, 'topRight'))
-  }, [token, openNotification])
-
   const validateMessages = {
     // eslint-disable-next-line no-template-curly-in-string
     required: '${label} ' + `${t('it-is-necessary-to-fill-in')}!`
   }
-
   const onFinish = (values: any): void => {
     const updateProject = {
       name: values.name,
@@ -55,12 +43,12 @@ const Project: FC<IEditorPage> = ({ token, pathRest, t, dark }) => {
       server: values.server,
       documentation: values.documentation,
       client: values.client,
-      users: values.users,
-      dateEnd: values['date-end']?.format('YYYY-MM-DD')
+      executors: values.executors,
+      dateEnd: values['date-end'].format('YYYY-MM-DD')
     }
 
     projectAPI
-      .updateProject(token, project.id, updateProject)
+      .updateProject(token, updateProject)
       .then(() => history.push(`/${pathRest}/project`))
       .catch((e) => openNotification(e.message, 'topRight'))
   }
@@ -68,16 +56,13 @@ const Project: FC<IEditorPage> = ({ token, pathRest, t, dark }) => {
   const handleModalClose = (): void => {
     setIsModalVisible(false)
   }
-
   const theme = clsx(dark ? 'black' : 'white')
-
   function confirm(): void {
     projectAPI
       .deleteProject(token, project.id.toString())
       .then(() => history.push(`/${pathRest}/project`))
-      .catch((e) => openNotification(e.message, 'topRight'))
+      .catch((e) => openNotification(e, 'topRight'))
   }
-
   return (
     <>
       <Modal
@@ -129,13 +114,7 @@ const Project: FC<IEditorPage> = ({ token, pathRest, t, dark }) => {
           <Input />
         </Form.Item>
         <Form.Item label={t('executors')} name='executors'>
-          <Select placeholder={t('select-executors')}>
-            {users.map((user: TUser, index: number) => (
-              <Select.Option value={user.id} key={index}>
-                {user.info.full_name}
-              </Select.Option>
-            ))}
-          </Select>
+          <Select placeholder={t('select-executors')}></Select>
         </Form.Item>
         <Form.Item label={t('date-end')} name='date-end'>
           <DatePicker />
