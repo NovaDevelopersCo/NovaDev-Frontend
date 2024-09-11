@@ -1,78 +1,78 @@
 import { Button, Table } from 'antd'
 import { ColumnsType } from 'antd/es/table'
 import { FC, useContext, useEffect, useState } from 'react'
-import * as customerAPI from '../../utils/api/customers-api'
+import * as clientAPI from '../../utils/api/customers-api'
 import { Link, useHistory, NavLink } from 'react-router-dom'
 import { NotificationContext } from '../../components/notification-provider/notification-provider'
-import { TCustomer } from '../../utils/typesFromBackend'
+import { TClient } from '../../utils/typesFromBackend'
 
-interface ICustomers {
+interface IClient {
   token: string
   pathRest: string
   t: (arg0: string) => string
 }
 
-const Customers: FC<ICustomers> = ({ token, pathRest, t }) => {
+const Clients: FC<IClient> = ({ token, pathRest, t }) => {
   const { openNotification } = useContext(NotificationContext)
-  const [data, setData] = useState<TCustomer[]>([])
+  const [data, setData] = useState<TClient[]>([])
   const history = useHistory()
 
   useEffect(() => {
-    customerAPI
-      .getAllCustomers(token)
-      .then((res: TCustomer[]) => setData(res))
+    clientAPI
+      .getAllClients(token)
+      .then((res: TClient[]) => setData(res))
       .catch((e: Error) => openNotification(e.message, 'topRight'))
   }, [token, openNotification])
 
   const handleDelete = (id: string): void => {
-    customerAPI
-      .deleteCustomer(token, id)
+    clientAPI
+      .deleteClient(token, id)
       .then(() =>
-        setData((prev: TCustomer[]) =>
-          prev.filter((customer) => customer.id !== id)
+        setData((prev: TClient[]) =>
+          prev.filter((client) => client.id !== id)
         )
       )
       .catch((e: Error) => openNotification(e.message, 'topRight'))
   }
 
-  const columns: ColumnsType<TCustomer> = [
+  const columns: ColumnsType<TClient> = [
     {
       title: `${t('name')}`,
       dataIndex: 'name',
       key: 'name',
-      render: (name: string, customer: TCustomer): JSX.Element => (
-        <Link to={`/${pathRest}/customer/${customer.id}`}>{name}</Link>
+      render: (name: string, client: TClient): JSX.Element => (
+        <Link to={`/${pathRest}/customer/${client.id}`}>{name}</Link>
       ),
-      sorter: (a: TCustomer, b: TCustomer): number =>
+      sorter: (a: TClient, b: TClient): number =>
         a.name.localeCompare(b.name)
     },
     {
       title: `${t('email')}`,
       dataIndex: 'email',
       key: 'email',
-      sorter: (a: TCustomer, b: TCustomer): number =>
+      sorter: (a: TClient, b: TClient): number =>
         a.email.localeCompare(b.email)
     },
     {
       title: `${t('tg')}`,
       dataIndex: 'tg',
       key: 'tg',
-      sorter: (a: TCustomer, b: TCustomer): number => a.tg.localeCompare(b.tg)
+      sorter: (a: TClient, b: TClient): number => a.tg.localeCompare(b.tg)
     },
     {
       title: `${t('actions')}`,
       key: 'actions',
-      render: (_: any, customer: TCustomer): JSX.Element => (
+      render: (_: any, client: TClient): JSX.Element => (
         <>
           <Button
             type='primary'
             onClick={() =>
-              history.push(`/${pathRest}/customer/update/${customer.id}`)
+              history.push(`/${pathRest}/customer/update/${client.id}`)
             }
           >
             {t('update')}
           </Button>
-          <Button danger onClick={() => handleDelete(customer.id)}>
+          <Button danger onClick={() => handleDelete(client.id)}>
             {t('delete')}
           </Button>
         </>
@@ -121,4 +121,4 @@ const Customers: FC<ICustomers> = ({ token, pathRest, t }) => {
   )
 }
 
-export default Customers
+export default Clients

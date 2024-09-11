@@ -3,8 +3,8 @@
 import { BASE_URL } from '../const'
 import { handleResponse } from '../helpers'
 
-export const getAllCustomers = async (token: string) => {
-  return await fetch(`${BASE_URL}/customers`, {
+export const getAllClients = async (token: string) => {
+  return await fetch(`${BASE_URL}/clients`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -13,18 +13,23 @@ export const getAllCustomers = async (token: string) => {
   }).then(async (res) => await handleResponse(res))
 }
 
-export const getCustomer = async (token: string, id: string) => {
-  return await fetch(`${BASE_URL}/customer/${id}`, {
+export const getClients = async (token: string, id: string) => {
+  const response = await fetch(`${BASE_URL}/client/${id}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`
     }
-  }).then(async (res) => await handleResponse(res))
-}
+  })
 
-export const deleteCustomer = async (token: string, id: string) => {
-  return await fetch(`${BASE_URL}/customer/${id}`, {
+  if (!response.ok) {
+    throw new Error('Failed to fetch client')
+  }
+
+  return await response.json()
+}
+export const deleteClient = async (token: string, id: string) => {
+  return await fetch(`${BASE_URL}/client/${id}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
@@ -33,8 +38,8 @@ export const deleteCustomer = async (token: string, id: string) => {
   }).then(async (res) => await handleResponse(res))
 }
 
-export const updateCustomer = async (token: string, data: any) => {
-  return await fetch(`${BASE_URL}/customer/update`, {
+export const updateClient = async (token: string, data: any) => {
+  return await fetch(`${BASE_URL}/client/update`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',

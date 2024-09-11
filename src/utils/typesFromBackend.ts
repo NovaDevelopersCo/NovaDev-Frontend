@@ -260,7 +260,7 @@ export interface TAdmin {
   password: string
   rest_id?: string
 }
-export interface TCustomer {
+export interface TClient {
   id: string
   name: string
   email: string
