@@ -36,13 +36,44 @@ const UserInfo: FC<IUserInfo> = ({ token, t }) => {
             }).catch((e) => openNotification(e, 'topRight'))
     }, [token])
     //
-    const onFinish = (e: React.FormEvent<HTMLFormElement>): void => {
+    const onFinish = (user: any): void => {
+        // console.log(user.info.public_nickname)
+        const formData = new FormData()
+        formData.append('info', JSON.stringify(user.info))
+        //
+        if (user.info) {
+            formData.append('public_nickname', user.info.public_nickname)
+            formData.append('full_name', user.info.full_name)
+            formData.append('image', user.info.file)
+            formData.append('phone', user.info.phone)
+            formData.append('email', user.info.email)
+            formData.append('github', user.info.github)
+            formData.append('payment_info', user.info.payment_info)
+            formData.append('tg', user.info.tg)
+        }
+        //
         UserInfoAPI
-            .editUserData(token, user).then(() => {
+            .editUserData(token, formData).then(() => {
                 openNotification('The user data is saved!', 'topRight')
             })
             .catch((e) => openNotification(e, 'topRight'))
     }
+    //
+    // const onFinish = (e: React.FormEvent<HTMLFormElement>): void => {
+    //     UserInfoAPI
+    //         .editUserData(token, formData).then(() => {
+    //             openNotification('The user data is saved!', 'topRight')
+    //         })
+    //         .catch((e) => openNotification(e, 'topRight'))
+    // }
+    //
+    // const onFinish = (e: React.FormEvent<HTMLFormElement>): void => {
+    //     UserInfoAPI
+    //         .editUserData(token, user).then(() => {
+    //             openNotification('The user data is saved!', 'topRight')
+    //         })
+    //         .catch((e) => openNotification(e, 'topRight'))
+    // }
     //
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
         const { name, value } = e.target
@@ -91,7 +122,7 @@ const UserInfo: FC<IUserInfo> = ({ token, t }) => {
                                 <Input className='w-64' type="text" value={user?.info?.full_name ?? ''} name='full_name' onChange={handleChange} />
                             </Form.Item>
                             <Form.Item label={t('user-image')} rules={[{ required: false, message: t('enter-your-image') }]}>
-                                <Upload onChange={handleUploadChange} >
+                                <Upload onChange={handleUploadChange} beforeUpload={() => false} >
                                     <Button className='flex items-center'>
                                         <UploadOutlined />
                                         {t('upload-image')}

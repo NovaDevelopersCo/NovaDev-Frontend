@@ -34,16 +34,27 @@ export const getUserData = async (token: string) => {
     }).then(async (res) => await handleResponse(res))
 }
 
-export const editUserData = async (token: string, user: any): Promise<void> => {
-    return await fetch(`${BASE_URL}/users/me`, {
-        method: 'PUT',
-        headers: {
-            'Content-type': 'application/json',
-            Authorization: `Bearer ${token}`
-        },
-        body: JSON.stringify(user.info)
-    }).then(async (res) => await handleResponse(res))
+export const editUserData = async (token: string, data: FormData): Promise<void> => {
+  return await fetch(`${BASE_URL}/users/me`, {
+      method: 'PUT',
+      headers: {
+          Authorization: `Bearer ${token}`
+      },
+      body: data
+      // body: JSON.stringify(user.info)
+  }).then(async (res) => await handleResponse(res))
 }
+
+// export const editUserData = async (token: string, user: any): Promise<void> => {
+//     return await fetch(`${BASE_URL}/users/me`, {
+//         method: 'PUT',
+//         headers: {
+//             'Content-type': 'application/json',
+//             Authorization: `Bearer ${token}`
+//         },
+//         body: JSON.stringify(user.info)
+//     }).then(async (res) => await handleResponse(res))
+// }
 
 export const editUserDataById = async (
   token: string,
