@@ -1,10 +1,10 @@
 import { Table } from 'antd'
 import { ColumnsType } from 'antd/es/table'
-import { FC, useContext, useEffect, useState } from 'react'
 import * as projectAPI from '../../../utils/api/project-api'
+import { FC, useContext, useEffect, useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { NotificationContext } from '../../../components/notification-provider/notification-provider'
-import { TProject } from '../../../utils/typesFromBackend'
+import { TProject, TProjectUser } from '../../../utils/typesFromBackend' // Используем ваши типы
 import clsx from 'clsx'
 
 interface IProjects {
@@ -18,6 +18,7 @@ interface IProjects {
 const Projects: FC<IProjects> = ({ token, pathRest, t, dark }) => {
   const { openNotification } = useContext(NotificationContext)
   const [data, setData] = useState<TProject[]>([])
+
   useEffect(() => {
     projectAPI
       .getAllProjects(token)
@@ -30,18 +31,16 @@ const Projects: FC<IProjects> = ({ token, pathRest, t, dark }) => {
       title: `${t('title')}`,
       dataIndex: 'title',
       key: 'title',
-      render: (title, project) => (
+      render: (title: string, project: TProject) => (
         <Link to={`/${pathRest}/project/${project.id}`}>{title}</Link>
       ),
-      sorter: (a, b) => {
-        if (a.title !== undefined && b.title !== undefined) {
-          try {
-            return a.title.localeCompare(b.title)
-          } catch (error: any) {
-            openNotification(error.message, 'topRight')
-          }
+      sorter: (a: TProject, b: TProject) => {
+        try {
+          return (a.title ?? '').localeCompare(b.title ?? '')
+        } catch (error: any) {
+          openNotification(error.message, 'topRight')
+          return 0
         }
-        return 0
       }
     },
     {
@@ -49,38 +48,41 @@ const Projects: FC<IProjects> = ({ token, pathRest, t, dark }) => {
       dataIndex: 'technologies',
       key: 'technologies',
       render: (technologies: string[]) => technologies.join(', '),
-      sorter: (a: TProject, b: TProject): number =>
-        a.technologies.localeCompare(b.technologies)
+      sorter: (a: TProject, b: TProject) => {
+        const techA = a.technologies.join(', ')
+        const techB = b.technologies.join(', ')
+        return techA.localeCompare(techB)
+      }
     },
     {
       title: `${t('server')}`,
       dataIndex: 'server',
       key: 'server',
-      render: (server) => (
+      render: (server: string) => (
         <a href={server} target='_blank' rel='noopener noreferrer'>
           {server}
         </a>
       ),
-      sorter: (a: TProject, b: TProject): number =>
-        a.server.localeCompare(b.server)
+      sorter: (a: TProject, b: TProject) =>
+        (a.server ?? '').localeCompare(b.server ?? '')
     },
     {
       title: `${t('documentation')}`,
       dataIndex: 'documentation',
       key: 'documentation',
-      render: (documentation) => (
+      render: (documentation: string) => (
         <a href={documentation} target='_blank' rel='noopener noreferrer'>
           {documentation}
         </a>
       ),
-      sorter: (a: TProject, b: TProject): number =>
-        a.documentation.localeCompare(b.documentation)
+      sorter: (a: TProject, b: TProject) =>
+        (a.documentation ?? '').localeCompare(b.documentation ?? '')
     },
     {
       title: `${t('deadline')}`,
       dataIndex: 'deadline',
       key: 'deadline',
-      render: (deadline) => {
+      render: (deadline: string) => {
         const deadlineDate = new Date(deadline)
         const currentDate = new Date()
         const formattedDate = deadlineDate.toLocaleString('ru-RU', {
@@ -100,25 +102,48 @@ const Projects: FC<IProjects> = ({ token, pathRest, t, dark }) => {
           </span>
         )
       },
-      sorter: (a: TProject, b: TProject): number =>
-        a.deadline.localeCompare(b.deadline)
+      sorter: (a: TProject, b: TProject) => {
+        const dateA = new Date(a.deadline).getTime()
+        const dateB = new Date(b.deadline).getTime()
+        return dateA - dateB
+      }
     },
     {
       title: `${t('client')}`,
-      dataIndex: 'client',
-      key: 'client',
-      sorter: (a: TProject, b: TProject): number =>
-        a.client.localeCompare(b.client)
+      dataIndex: 'clientId',
+      key: 'clientId',
+      render: (clientId: number | string) => clientId,
+      sorter: (a: TProject, b: TProject) => {
+        const idA = a.clientId ?? ''
+        const idB = b.clientId ?? ''
+        if (typeof idA === 'number' && typeof idB === 'number') {
+          return idA - idB
+        } else {
+          return (idA.toString() ?? '').localeCompare(idB.toString() ?? '')
+        }
+      }
     },
     {
       title: `${t('users')}`,
-      dataIndex: 'executors',
+      dataIndex: 'users',
       key: 'users',
-      sorter: (a: TProject, b: TProject): number =>
-        a.users.localeCompare(b.users)
+      render: (users: TProjectUser[]) => {
+        if (users.length === 0) return 'No users'
+        const userNames = users
+          .map((user) => user.user.info.full_name)
+          .join(', ')
+        return userNames
+      },
+      sorter: (a: TProject, b: TProject) => {
+        const aUser = a.users.length > 0 ? a.users[0].user.info.full_name : ''
+        const bUser = b.users.length > 0 ? b.users[0].user.info.full_name : ''
+        return aUser.localeCompare(bUser)
+      }
     }
   ]
+
   const theme = clsx(dark ? 'black' : 'white')
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
       <div

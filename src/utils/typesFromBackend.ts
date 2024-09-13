@@ -281,10 +281,20 @@ export interface TProfileData {
 export interface TProject {
   id: number
   title: string
-  technologies: string
+  technologies: string[]
   server: string
   documentation: string
   deadline: string
-  client: string
-  users: string
+  clientId: number
+  createdAt: string
+  updatedAt: string
+  users: TProjectUser[]
+}
+
+export interface TProjectUser {
+  createdAt: string
+  projectId: number
+  updatedAt: string
+  user: TUser
+  userId: number
 }
