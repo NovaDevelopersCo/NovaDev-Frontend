@@ -341,7 +341,7 @@
   "date-end": "End date",
   "executors": "Executors",
   "progress": "Progress",
-  "your-list-projects": "Your list of projects",
+  "full-list-projects": "Full list of projects",
   "project-name": "Project name",
   "add-project": "Add project",
   "select-team-executor": "Select team executor",
@@ -351,6 +351,8 @@
   "documentation": "Documentation",
   "client": "Client",
   "upgrade-project": "Upgrade project",
-  "select-executors": "Select executors",
-  "expired": "Expired"
+  "select-users": "Select users",
+  "expired": "Expired",
+  "deadline": "Deadline",
+  "info-project": "Info about project"
 }

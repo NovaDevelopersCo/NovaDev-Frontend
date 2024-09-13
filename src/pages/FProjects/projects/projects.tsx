@@ -59,24 +59,25 @@ const Projects: FC<IProjects> = ({ token, pathRest, t, dark }) => {
       dataIndex: 'server',
       key: 'server',
       render: (server: string) => (
-        <a href={server} target='_blank' rel='noopener noreferrer'>
+        <Link href={server} target='_blank' rel='noopener noreferrer' to={''}>
           {server}
-        </a>
-      ),
-      sorter: (a: TProject, b: TProject) =>
-        (a.server ?? '').localeCompare(b.server ?? '')
+        </Link>
+      )
     },
     {
       title: `${t('documentation')}`,
       dataIndex: 'documentation',
       key: 'documentation',
       render: (documentation: string) => (
-        <a href={documentation} target='_blank' rel='noopener noreferrer'>
+        <Link
+          href={documentation}
+          target='_blank'
+          rel='noopener noreferrer'
+          to={''}
+        >
           {documentation}
-        </a>
-      ),
-      sorter: (a: TProject, b: TProject) =>
-        (a.documentation ?? '').localeCompare(b.documentation ?? '')
+        </Link>
+      )
     },
     {
       title: `${t('deadline')}`,
@@ -159,7 +160,7 @@ const Projects: FC<IProjects> = ({ token, pathRest, t, dark }) => {
           <h2 style={{ fontWeight: 600, marginBottom: '0' }}>
             {t('projects')}
           </h2>
-          <p style={{ marginBottom: '0' }}>{t('your-list-projects')}</p>
+          <p style={{ marginBottom: '0' }}>{t('full-list-projects')}</p>
         </div>
         <NavLink
           to={`/${pathRest}/add/project`}

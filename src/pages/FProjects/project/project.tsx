@@ -103,7 +103,7 @@ const Project: FC<IEditorPage> = ({ token, pathRest, t, dark }) => {
       </h4>
       <Segmented
         block
-        options={[t('update-project'), t('add-delete-executors')]}
+        options={[t('project'), t('users')]}
         value={activeTab}
         onChange={(value) => setActiveTab(value.toString())}
       />

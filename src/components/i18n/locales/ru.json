@@ -319,12 +319,12 @@
   "date-start": "Дата начала",
   "date-end": "Дата завершения",
   "progress": "Прогресс",
-  "your-list-projects": "Ваш список проектов",
+  "full-list-projects": "Весь список проектов",
   "project-name": "Нзвание проекта",
   "add-project": "Добавить проект",
   "select-team-executor": "Выберите команду исполнитель",
   "team-executor": "Команда исполнитель",
-  "select-executors": "Выбрать исполнителей",
+  "select-users": "Выбрать пользователей",
   "technologies": "Технологии",
   "server": "Сервер",
   "documentation": "Документация",
@@ -335,5 +335,6 @@
   "info-project": "Информация о проекте",
   "add-delete-executors": "Добавление / удаление исполнителей",
   "add-executors": "Добавить исполнителей",
-  "delete-executors": "Удалить исполнителей"
+  "delete-executors": "Удалить исполнителей",
+  "deadline": "Дата завершения"
 }

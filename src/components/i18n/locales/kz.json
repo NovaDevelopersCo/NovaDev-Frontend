@@ -342,16 +342,18 @@
   "date-end": "Аяқтау күні",
   "executors": "Орындаушылар",
   "progress": "прогресс",
-  "your-list-projects": "Сіздің жобалар тізіміңіз",
+  "full-list-projects": "Жобалардың толық тізімі",
   "project-name": "Жобаның атауы",
   "add-project": "Жоба қосу",
-  "select-executors": "Орындаушыларды таңдау",
+  "select-users": "Пайдаланушыларды таңдаңыз",
   "select-team-executor": "Топ орындаушысын таңдау",
   "team-executor": "Топ орындаушысы",
-  "технологиялар": "технологиялар",
+  "technologies": "Технологиялар",
   "server": "Сервер",
   "documentation": "Құжаттама",
   "client": "Клиент",
   "upgrade-project": "Жоба ақпаратын жаңарту",
-  "expired": "Мерзімі бітті"
+  "expired": "Мерзімі бітті",
+  "deadline": "Мерзімі",
+  "info-project": "Жоба туралы ақпарат"
 }

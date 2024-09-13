@@ -121,12 +121,8 @@ const AddProject: FC<IAddProject> = ({ token, pathRest, t, dark }) => {
         >
           <Input />
         </Form.Item>
-        <Form.Item
-          label={t('executors')}
-          rules={[{ required: true }]}
-          name='executors'
-        >
-          <Select placeholder={t('select-executors')}></Select>
+        <Form.Item label={t('users')} rules={[{ required: true }]} name='users'>
+          <Select placeholder={t('select-users')}></Select>
         </Form.Item>
         <Form.Item
           label={t('date-end')}
