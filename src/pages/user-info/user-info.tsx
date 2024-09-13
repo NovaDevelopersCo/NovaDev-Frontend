@@ -1,7 +1,7 @@
 
 import React, { FC, useState, useEffect, useContext } from 'react'
 import * as UserInfoAPI from '../../utils/api/user-info-api'
-import { Button, Form, Input, Image, Upload, Segmented } from 'antd'
+import { Button, Form, Input, Image, Upload, UploadFile, Segmented } from 'antd'
 import { UploadOutlined } from '@ant-design/icons'
 import { TUser, ECountry } from '../../utils/typesFromBackend'
 import { NotificationContext } from '../../components/notification-provider/notification-provider'
@@ -27,6 +27,7 @@ const UserInfo: FC<IUserInfo> = ({ token, t }) => {
     }
     // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
     const [user, setUser] = React.useState<TUser>({} as TUser)
+    const [fileList, setFileList] = React.useState<UploadFile[]>([])
     //
     useEffect(() => {
             UserInfoAPI.getUserData(token).then(res => {
@@ -34,23 +35,30 @@ const UserInfo: FC<IUserInfo> = ({ token, t }) => {
                     setUser(res)
                 }
             }).catch((e) => openNotification(e, 'topRight'))
+            console.log(user)
     }, [token])
     //
     const onFinish = (user: any): void => {
-        // console.log(user.info.public_nickname)
         const formData = new FormData()
-        formData.append('info', JSON.stringify(user.info))
         //
         if (user.info) {
             formData.append('public_nickname', user.info.public_nickname)
             formData.append('full_name', user.info.full_name)
-            formData.append('image', user.info.file)
-            formData.append('phone', user.info.phone)
+            // formData.append('image', user.info.image)
+            formData.append('phone', user.info.phone.toString())
             formData.append('email', user.info.email)
             formData.append('github', user.info.github)
             formData.append('payment_info', user.info.payment_info)
             formData.append('tg', user.info.tg)
         }
+        //
+        if (fileList.length > 0 && fileList[0].originFileObj) {
+            const file = fileList[0].originFileObj
+            console.log('File to be sent:', file)
+            formData.append('image', file)
+          } else {
+            console.error('No file found in fileList')
+          }
         //
         UserInfoAPI
             .editUserData(token, formData).then(() => {
@@ -58,22 +66,6 @@ const UserInfo: FC<IUserInfo> = ({ token, t }) => {
             })
             .catch((e) => openNotification(e, 'topRight'))
     }
-    //
-    // const onFinish = (e: React.FormEvent<HTMLFormElement>): void => {
-    //     UserInfoAPI
-    //         .editUserData(token, formData).then(() => {
-    //             openNotification('The user data is saved!', 'topRight')
-    //         })
-    //         .catch((e) => openNotification(e, 'topRight'))
-    // }
-    //
-    // const onFinish = (e: React.FormEvent<HTMLFormElement>): void => {
-    //     UserInfoAPI
-    //         .editUserData(token, user).then(() => {
-    //             openNotification('The user data is saved!', 'topRight')
-    //         })
-    //         .catch((e) => openNotification(e, 'topRight'))
-    // }
     //
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
         const { name, value } = e.target
@@ -88,16 +80,9 @@ const UserInfo: FC<IUserInfo> = ({ token, t }) => {
         }
     }
     //
-    const handleUploadChange = (info: any): void => {
-        if (info.file.status === 'done') {
-          setUser((prevUser) => ({
-            ...prevUser,
-            info: {
-              ...prevUser.info,
-              image: info.file.response.url
-            }
-          }))
-        }
+    const handleUploadChange = ({ fileList }: { fileList: UploadFile[] }): void => {
+        setFileList(fileList)
+        console.log(fileList)
     }
     //
     return (
@@ -122,7 +107,7 @@ const UserInfo: FC<IUserInfo> = ({ token, t }) => {
                                 <Input className='w-64' type="text" value={user?.info?.full_name ?? ''} name='full_name' onChange={handleChange} />
                             </Form.Item>
                             <Form.Item label={t('user-image')} rules={[{ required: false, message: t('enter-your-image') }]}>
-                                <Upload onChange={handleUploadChange} beforeUpload={() => false} >
+                                <Upload onChange={handleUploadChange} fileList={fileList} beforeUpload={() => false} >
                                     <Button className='flex items-center'>
                                         <UploadOutlined />
                                         {t('upload-image')}
@@ -170,7 +155,9 @@ const UserInfo: FC<IUserInfo> = ({ token, t }) => {
                         ) : (
                             <div className='flex gap-2 mb-2'>
                                 <h2>{t('user-image')}</h2>
-                                <Image className='rounded-full w-24 h-24' src={user?.info?.image ?? 'No image found'} alt="Profile photo" onError={handleImageError} />
+                                <div className='flex items-center justify-center'>
+                                    <Image className='rounded-lg overflow-hidden' width={200} height={200} src={user?.info?.image} alt="Profile photo" onError={handleImageError} />
+                                </div>
                             </div>
                         )
                         }
