@@ -330,6 +330,10 @@
   "documentation": "Документация",
   "client": "Клиент",
   "executors": "Исполнители",
-  "upgrade-project": "Обновить информацию об проекте",
-  "expired": "Просрочен"
+  "update-project": "Обновить информацию об проекте",
+  "expired": "Просрочен",
+  "info-project": "Информация о проекте",
+  "add-delete-executors": "Добавление / удаление исполнителей",
+  "add-executors": "Добавить исполнителей",
+  "delete-executors": "Удалить исполнителей"
 }

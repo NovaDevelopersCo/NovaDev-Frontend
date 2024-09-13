@@ -42,7 +42,7 @@ export const updateProject = async (
     server: string
     documentation: string
     client: string
-    executors: string
+    users: string
     dateEnd: string
   }
 ) => {

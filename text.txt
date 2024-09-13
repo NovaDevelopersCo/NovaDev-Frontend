@@ -30,8 +30,9 @@ const Project: FC<IEditorPage> = ({ token, pathRest, t, dark }) => {
   const history = useHistory()
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [project] = useState<any>(null)
-  const [activeTab, setActiveTab] = useState<string>(t('update-project'))
+  const [value, setValue] = useState<string | number>(t('update-user-info'))
   const [users, setUsers] = useState<TUser[]>([])
+  const [isRole, setIsRole] = useState<boolean>(true)
 
   const layout = {
     labelCol: { span: 4 },
@@ -46,7 +47,7 @@ const Project: FC<IEditorPage> = ({ token, pathRest, t, dark }) => {
       documentation: values.documentation,
       client: values.client,
       users: values.users,
-      dateEnd: values['date-end']?.format('YYYY-MM-DD')
+      dateEnd: values['date-end'].format('YYYY-MM-DD')
     }
 
     projectAPI
@@ -74,7 +75,6 @@ const Project: FC<IEditorPage> = ({ token, pathRest, t, dark }) => {
       .then((res: TUser[]) => setUsers(res))
       .catch((e) => openNotification(e.message, 'topRight'))
   }, [token, openNotification])
-
   return (
     <>
       <Modal
@@ -103,61 +103,70 @@ const Project: FC<IEditorPage> = ({ token, pathRest, t, dark }) => {
       </h4>
       <Segmented
         block
-        options={[t('update-project'), t('add-delete-executors')]}
-        value={activeTab}
-        onChange={(value) => setActiveTab(value.toString())}
+        options={[t('update-project'), t('add-delete-users')]}
+        value={value}
+        onChange={setValue}
       />
-      <>
-        {activeTab === t('update-project') && (
-          <Form form={form} onFinish={onFinish} layout='vertical'>
-            <Form.Item label={t('project-name')} name='name'>
-              <Input />
-            </Form.Item>
-            <Form.Item label={t('technologies')} name='technologies'>
-              <Input />
-            </Form.Item>
-            <Form.Item label={t('server')} name='server'>
-              <Input />
-            </Form.Item>
-            <Form.Item label={t('documentation')} name='documentation'>
-              <Input />
-            </Form.Item>
-            <Form.Item label={t('client')} name='client'>
-              <Input />
-            </Form.Item>
-            <Form.Item label={t('date-end')} name='date-end'>
-              <DatePicker />
-            </Form.Item>
-            <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 4 }}>
-              <Button type='primary' htmlType='submit'>
-                {t('save')}
-              </Button>
-            </Form.Item>
-          </Form>
-        )}
-        {activeTab === t('add-delete-executors') && (
+      {isRole ? (
+        value === t('update-user-info') ? (
           <>
-            <Form.Item label={t('add-executors')} name='add-executors'>
-              <Select placeholder={t('select-executors')}>
-                {users.map((user: TUser, index: number) => (
-                  <Select.Option value={user.id} key={index}>
-                    {user.info.full_name}
-                  </Select.Option>
-                ))}
-              </Select>
-            </Form.Item>
-            <Form.Item label={t('delete-executors')} name='delete-executors'>
-              <Select placeholder={t('select-executors')}>
-                {users.map((user: TUser, index: number) => (
-                  <Select.Option value={user.id} key={index}>
-                    {user.info.full_name}
-                  </Select.Option>
-                ))}
-              </Select>
-            </Form.Item>
+            <Form form={form} onFinish={onFinish} layout='vertical'>
+              <Form.Item label={t('project-name')} name='name'>
+                <Input />
+              </Form.Item>
+              <Form.Item label={t('technologies')} name='technologies'>
+                <Input />
+              </Form.Item>
+              <Form.Item label={t('server')} name='server'>
+                <Input />
+              </Form.Item>
+              <Form.Item label={t('documentation')} name='documentation'>
+                <Input />
+              </Form.Item>
+              <Form.Item label={t('client')} name='client'>
+                <Input />
+              </Form.Item>
+              <Form.Item label={t('date-end')} name='date-end'>
+                <DatePicker />
+              </Form.Item>
+              <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 4 }}>
+                <Button type='primary' htmlType='submit'>
+                  {t('save')}
+                </Button>
+              </Form.Item>
+            </Form>
           </>
-        )}
-      </>
+        ) : (
+          ''
+        )
+      ) : (
+        ''
+      )}
+      {isRole ? (
+        value === t('add-delete-executors') ? (
+          <><Form.Item label={t('add-executors')} name='executors'>
+            <Select placeholder={t('select-executors')}>
+              {users.map((user: TUser, index: number) => (
+                <Select.Option value={user.id} key={index}>
+                  {user.info.full_name}
+                </Select.Option>
+              ))}
+            </Select>
+          </Form.Item><Form.Item label={t('delete-executors')} name='executors'>
+              <Select placeholder={t('select-executors')}>
+                {users.map((user: TUser, index: number) => (
+                  <Select.Option value={user.id} key={index}>
+                    {user.info.full_name}
+                  </Select.Option>
+                ))}
+              </Select>
+            </Form.Item></>
+        ) : (
+          ''
+        )
+      ) : (
+        ''
+      )}
       <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 4 }}>
         <Popconfirm
           title={t('you-sure-want-delete')}
