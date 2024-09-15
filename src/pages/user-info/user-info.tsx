@@ -1,9 +1,8 @@
-
 import React, { FC, useState, useEffect, useContext } from 'react'
 import * as UserInfoAPI from '../../utils/api/user-info-api'
 import { Button, Form, Input, Image, Upload, UploadFile, Segmented } from 'antd'
 import { UploadOutlined } from '@ant-design/icons'
-import { TUser, ECountry } from '../../utils/typesFromBackend'
+import { TUser, TUserInfo, ECountry } from '../../utils/typesFromBackend'
 import { NotificationContext } from '../../components/notification-provider/notification-provider'
 import { SegmentedValue } from 'antd/es/segmented'
 
@@ -16,18 +15,44 @@ interface IUserInfo {
 const UserInfo: FC<IUserInfo> = ({ token, t }) => {
     const { openNotification } = useContext(NotificationContext)
     //
+    const [form] = Form.useForm()
+    //
     const [isImageError, setIsImageError] = useState(false)
     const handleImageError = (): void => {
         setIsImageError(true)
     }
-    // const [isEditing, setIsEditing] = useState<string>('false')
     const [isEditing, setIsEditing] = useState<boolean>(false)
     const handleChangeState = (value: SegmentedValue): void => {
         setIsEditing(value === 'Edit')
     }
     // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
     const [user, setUser] = React.useState<TUser>({} as TUser)
+    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+    const [userInfo, setUserInfo] = React.useState<TUserInfo>({} as TUserInfo)
     const [fileList, setFileList] = React.useState<UploadFile[]>([])
+    const [formData, setFormData] = React.useState(() => {
+        const storedFormDataString = localStorage.getItem('formDataUser')
+        return storedFormDataString ? JSON.parse(storedFormDataString) : null
+    })
+    //
+    const handleFormChange = (): void => {
+        const allValues = form.getFieldsValue()
+        const updateAllValues = { ...allValues, _id: user.id }
+        setFormData(updateAllValues)
+    }
+    //
+    const handleUploadChange = ({ fileList }: { fileList: UploadFile[] }): void => {
+        setFileList(fileList)
+    }
+    //
+    React.useEffect(() => {
+        if (Object.keys(user).length > 0 && formData) {
+          if (user.id !== formData._id) {
+            localStorage.removeItem('formDataUser')
+          }
+        }
+        localStorage.setItem('formDataUser', JSON.stringify(formData))
+    }, [formData])
     //
     useEffect(() => {
             UserInfoAPI.getUserData(token).then(res => {
@@ -35,26 +60,79 @@ const UserInfo: FC<IUserInfo> = ({ token, t }) => {
                     setUser(res)
                 }
             }).catch((e) => openNotification(e, 'topRight'))
-            console.log(user)
     }, [token])
     //
-    const onFinish = (user: any): void => {
-        const formData = new FormData()
-        //
-        if (user.info) {
-            formData.append('public_nickname', user.info.public_nickname)
-            formData.append('full_name', user.info.full_name)
-            // formData.append('image', user.info.image)
-            formData.append('phone', user.info.phone.toString())
-            formData.append('email', user.info.email)
-            formData.append('github', user.info.github)
-            formData.append('payment_info', user.info.payment_info)
-            formData.append('tg', user.info.tg)
+    useEffect(() => {
+        UserInfoAPI.getUserData(token).then(res => {
+            if (res.info) {
+                setUserInfo(res.info)
+            }
+        }).catch((e) => openNotification(e, 'topRight'))
+    }, [token])
+    //
+    React.useEffect(() => {
+        const storedFormDataString = localStorage.getItem('formDataUser')
+        const parsedFormData = storedFormDataString
+          ? JSON.parse(storedFormDataString)
+          : null
+        if (parsedFormData && parsedFormData.id === user.id) {
+          form.setFieldsValue({
+            public_nickname: parsedFormData.public_nickname
+          })
+          form.setFieldsValue({
+            full_name: parsedFormData.full_name
+          })
+          form.setFieldsValue({
+            phone: parsedFormData.phone
+          })
+          form.setFieldsValue({
+            email: parsedFormData.email
+          })
+          form.setFieldsValue({
+            github: parsedFormData.github
+          })
+          form.setFieldsValue({
+            payment_info: parsedFormData.payment_info
+          })
+          form.setFieldsValue({
+            tg: parsedFormData.tg
+          })
+        } else {
+          form.setFieldsValue({
+            public_nickname: userInfo?.public_nickname
+          })
+          form.setFieldsValue({
+            full_name: userInfo?.full_name
+          })
+          form.setFieldsValue({
+            phone: userInfo?.phone
+          })
+          form.setFieldsValue({
+            email: userInfo?.email
+          })
+          form.setFieldsValue({
+            github: userInfo?.github
+          })
+          form.setFieldsValue({
+            payment_info: userInfo?.payment_info
+          })
+          form.setFieldsValue({
+            tg: userInfo?.tg
+          })
         }
-        //
+      }, [userInfo])
+    //
+    const onFinish = (values: any): void => {
+            const formData = new FormData()
+            formData.append('public_nickname', values.public_nickname)
+            formData.append('full_name', values.full_name)
+            formData.append('phone', values.phone)
+            formData.append('email', values.email)
+            formData.append('github', values.github)
+            formData.append('payment_info', values.payment_info)
+            formData.append('tg', values.tg)
         if (fileList.length > 0 && fileList[0].originFileObj) {
             const file = fileList[0].originFileObj
-            console.log('File to be sent:', file)
             formData.append('image', file)
           } else {
             console.error('No file found in fileList')
@@ -62,27 +140,10 @@ const UserInfo: FC<IUserInfo> = ({ token, t }) => {
         //
         UserInfoAPI
             .editUserData(token, formData).then(() => {
+                localStorage.removeItem('formDataUser')
                 openNotification('The user data is saved!', 'topRight')
             })
             .catch((e) => openNotification(e, 'topRight'))
-    }
-    //
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        const { name, value } = e.target
-        if (name in user.info) {
-          setUser((prevUser) => ({
-            ...prevUser,
-            info: {
-              ...prevUser.info,
-              [name]: value
-            }
-          }))
-        }
-    }
-    //
-    const handleUploadChange = ({ fileList }: { fileList: UploadFile[] }): void => {
-        setFileList(fileList)
-        console.log(fileList)
     }
     //
     return (
@@ -95,16 +156,16 @@ const UserInfo: FC<IUserInfo> = ({ token, t }) => {
                     <div className='flex items-center justify-start'>
                         <h1 className='text-xl font-semibold mb-5'>{t('about-user-title')}</h1>
                     </div>
-                    <Form className='flex flex-col gap-6' onFinish={onFinish} >
+                    <Form className='flex flex-col gap-6' name='user' form={form} onFinish={onFinish} onValuesChange={handleFormChange} >
                         <div>
                             <div className='flex items-center justify-center mt-2 mb-3'>
                                 <h4 className='text-lg font-semibold'>{t('base-info-title')}</h4>
                             </div>
-                            <Form.Item label={t('user-public-nickname')} rules={[{ required: false, message: t('enter-your-public-nickname') }]}>
-                                <Input className='w-64' type="text" value={user?.info?.public_nickname ?? ''} name='public_nickname' onChange={handleChange} />
+                            <Form.Item label={t('user-public-nickname')} name='public_nickname' rules={[{ required: false, message: t('enter-your-public-nickname') }]}>
+                                <Input />
                             </Form.Item>
-                            <Form.Item label={t('user-full-name')} rules={[{ required: false, message: t('enter-your-full-name') }]}>
-                                <Input className='w-64' type="text" value={user?.info?.full_name ?? ''} name='full_name' onChange={handleChange} />
+                            <Form.Item label={t('user-full-name')} name='full_name' rules={[{ required: false, message: t('enter-your-full-name') }]}>
+                                <Input />
                             </Form.Item>
                             <Form.Item label={t('user-image')} rules={[{ required: false, message: t('enter-your-image') }]}>
                                 <Upload onChange={handleUploadChange} fileList={fileList} beforeUpload={() => false} >
@@ -114,20 +175,20 @@ const UserInfo: FC<IUserInfo> = ({ token, t }) => {
                                     </Button>
                                 </Upload>
                             </Form.Item>
-                            <Form.Item label={t('user-phone')} rules={[{ required: false, message: t('enter-your-phone') }]}>
-                                <Input className='w-64' type="number" value={user?.info?.phone ?? ''} name='phone' onChange={handleChange} />
+                            <Form.Item label={t('user-phone')} name='phone' rules={[{ required: false, message: t('enter-your-phone') }]}>
+                                <Input />
                             </Form.Item>
-                            <Form.Item label={t('user-email')} rules={[{ required: false, message: t('enter-your-email') }]}>
-                                <Input className='w-64' type="text" value={user?.info?.email ?? ''} name='email' onChange={handleChange} />
+                            <Form.Item label={t('user-email')} name='email' rules={[{ required: false, message: t('enter-your-email') }]}>
+                                <Input />
                             </Form.Item>
-                            <Form.Item label={t('user-github')} rules={[{ required: false, message: t('enter-your-github') }]}>
-                                <Input className='w-64' type="text" value={user?.info?.github ?? ''} name='github' onChange={handleChange} />
+                            <Form.Item label={t('user-github')} name='github' rules={[{ required: false, message: t('enter-your-github') }]}>
+                                <Input />
                             </Form.Item>
-                            <Form.Item label={t('user-payment-info')} rules={[{ required: false, message: t('enter-your-payment-info') }]}>
-                                <Input className='w-64' type="text" value={user?.info?.payment_info ?? ''} name='payment_info' onChange={handleChange} />
+                            <Form.Item label={t('user-payment-info')} name='payment_info' rules={[{ required: false, message: t('enter-your-payment-info') }]}>
+                                <Input />
                             </Form.Item>
-                            <Form.Item label={t('user-tg')} rules={[{ required: false, message: t('enter-your-tg') }]}>
-                                <Input className='w-64' type="text" value={user?.info?.tg ?? ''} name='tg' onChange={handleChange} />
+                            <Form.Item label={t('user-tg')} name='tg' rules={[{ required: false, message: t('enter-your-tg') }]}>
+                                <Input />
                             </Form.Item>
                         </div>
                         <div className='flex justify-center'>
