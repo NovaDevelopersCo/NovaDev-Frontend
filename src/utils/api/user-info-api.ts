@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { BASE_URL } from '../const'
-// import { TUser } from '../typesFromBackend'
+import { TUser } from '../typesFromBackend'
 import { handleResponse } from '../helpers'
 
 export const getAllUsers = async (token: string) => {
@@ -132,7 +132,7 @@ export const deleteUserProject = async (token: string, formProjectsData: any): P
       }).then(async (res) => await handleResponse(res))
 }
 
-export const fetchUserById = async (token: string, id: number): Promise<void> => {
+export const fetchUserById = async (token: string, id: number): Promise<TUser | null> => {
       return await fetch(`${BASE_URL}/users/${id}`, {
         method: 'GET',
         headers: {
