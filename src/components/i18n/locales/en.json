@@ -355,6 +355,8 @@
   "expired": "Expired",
   "deadline": "Deadline",
   "info-project": "Info about project",
+  "add-delete-executors": "Add / delete executors",
   "add-delete-clients": "Add / delete client",
-  "delete-client": "Delete client"
+  "delete-client": "Delete client",
+  "select-executors": "Select executors"
 }

@@ -356,6 +356,10 @@
   "expired": "Мерзімі бітті",
   "deadline": "Мерзімі",
   "info-project": "Жоба туралы ақпарат",
-  "add-delete-clients": "Клиентті қосу/жою",
-  "delete-client": "Клиентті жою"
+  "add-delete-clients": "Клиентті қосу / жою",
+  "delete-client": "Клиентті жою",
+  "select-executors": "Орындаушыларды таңдау",
+  "add-delete-executors": "Орындаушыларды қосу / жою",
+  "add-executors": "Орындаушыларды қосу",
+  "delete-executors": "Орындаушыларды жою"
 }
