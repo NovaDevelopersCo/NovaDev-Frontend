@@ -2,14 +2,13 @@ import React, { FC, useState, useEffect, useContext } from 'react'
 import * as UserInfoAPI from '../../utils/api/user-info-api'
 import { Button, Form, Input, Image, Upload, UploadFile, Segmented } from 'antd'
 import { UploadOutlined } from '@ant-design/icons'
-import { TUser, TUserInfo, ECountry } from '../../utils/typesFromBackend'
+import { TUser, TUserInfo } from '../../utils/typesFromBackend'
 import { NotificationContext } from '../../components/notification-provider/notification-provider'
 import { SegmentedValue } from 'antd/es/segmented'
 
 interface IUserInfo {
     token: string
     t: (arg0: string) => string
-    language: ECountry
 }
 
 const UserInfo: FC<IUserInfo> = ({ token, t }) => {
