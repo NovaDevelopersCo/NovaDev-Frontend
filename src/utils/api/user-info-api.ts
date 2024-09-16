@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { BASE_URL } from '../const'
-import { TUser, TUserTeam } from '../typesFromBackend'
+// import { TUser } from '../typesFromBackend'
 import { handleResponse } from '../helpers'
 
 export const getAllUsers = async (token: string) => {
@@ -41,29 +41,11 @@ export const editUserData = async (token: string, data: FormData): Promise<void>
           Authorization: `Bearer ${token}`
       },
       body: data
-      // body: JSON.stringify(user.info)
   }).then(async (res) => await handleResponse(res))
 }
 
-// export const editUserData = async (token: string, user: any): Promise<void> => {
-//     return await fetch(`${BASE_URL}/users/me`, {
-//         method: 'PUT',
-//         headers: {
-//             'Content-type': 'application/json',
-//             Authorization: `Bearer ${token}`
-//         },
-//         body: JSON.stringify(user.info)
-//     }).then(async (res) => await handleResponse(res))
-// }
-
-export const editUserDataById = async (
-  token: string,
-  formData: any,
-  userId: number
-): Promise<void> => {
-  try {
-    if (token) {
-      const response = await fetch(`${BASE_URL}/users/${userId}`, {
+export const editUserDataById = async (token: string, formData: any, userId: number): Promise<void> => {
+      return await fetch(`${BASE_URL}/users/${userId}`, {
         method: 'PUT',
         headers: {
           'Content-type': 'application/json',
@@ -72,65 +54,21 @@ export const editUserDataById = async (
         body: JSON.stringify({
           ...formData
         })
-      })
-      //
-      if (!response.ok) {
-        throw new Error('Failed to fetch user data')
-      }
-    } else {
-      throw new Error('Bearer токен отсутствует!')
-    }
-  } catch (error) {
-    console.error('Произошла ошибка', error)
-  }
+      }).then(async (res) => await handleResponse(res))
 }
 
-export const getUserTeam = async (
-  token: string,
-  userTeam: any,
-  setUserTeam: any
-): Promise<void> => {
-  try {
-    if (token) {
-      const response = await fetch(`${BASE_URL}/users/me`, {
+export const getUserTeam = async (token: string): Promise<void> => {
+      return await fetch(`${BASE_URL}/users/me`, {
         method: 'POST',
         headers: {
           'Content-type': 'application/json',
           Authorization: `Bearer ${token}`
         }
-      })
-
-      if (!response.ok) {
-        throw new Error('Failed to fetch user data')
-      }
-
-      const data = await response.json()
-
-      if (data && Object.keys(data).length > 0) {
-        const formattedData: TUserTeam = {
-          id: data.team.id as number,
-          title: data.team.title as string
-        }
-
-        setUserTeam(formattedData)
-      } else {
-        console.error('Received empty data from the server')
-      }
-    } else {
-      throw new Error('Bearer токен отсутствует!')
-    }
-  } catch (error) {
-    console.error('Произошла ошибка', error)
-  }
+      }).then(async (res) => await handleResponse(res))
 }
 
-export const editUserTeam = async (
-  token: string,
-  formTeamData: any
-): Promise<void> => {
-  try {
-    if (token) {
-      const response = await fetch(`${BASE_URL}/teams/add`, {
+export const editUserTeam = async (token: string, formTeamData: any): Promise<void> => {
+      return await fetch(`${BASE_URL}/teams/add`, {
         method: 'POST',
         headers: {
           'Content-type': 'application/json',
@@ -139,26 +77,11 @@ export const editUserTeam = async (
         body: JSON.stringify({
           ...formTeamData
         })
-      })
-      //
-      if (!response.ok) {
-        throw new Error('Failed to fetch user data')
-      }
-    } else {
-      throw new Error('Bearer токен отсутствует!')
-    }
-  } catch (error) {
-    console.error('Произошла ошибка', error)
-  }
+      }).then(async (res) => await handleResponse(res))
 }
 
-export const deleteUserTeam = async (
-  token: string,
-  formTeamData: any
-): Promise<void> => {
-  try {
-    if (token) {
-      const response = await fetch(`${BASE_URL}/teams/cut`, {
+export const deleteUserTeam = async (token: string, formTeamData: any): Promise<void> => {
+      return await fetch(`${BASE_URL}/teams/cut`, {
         method: 'POST',
         headers: {
           'Content-type': 'application/json',
@@ -167,27 +90,11 @@ export const deleteUserTeam = async (
         body: JSON.stringify({
           ...formTeamData
         })
-      })
-      //
-      if (!response.ok) {
-        throw new Error('Failed to fetch user data')
-      }
-    } else {
-      throw new Error('Bearer токен отсутствует!')
-    }
-  } catch (error) {
-    console.error('Произошла ошибка', error)
-  }
+      }).then(async (res) => await handleResponse(res))
 }
 
-export const editUserRole = async (
-  token: string,
-  formRoleData: any,
-  userId: number
-): Promise<void> => {
-  try {
-    if (token) {
-      const response = await fetch(`${BASE_URL}/users/${userId}`, {
+export const editUserRole = async (token: string, formRoleData: any, userId: number): Promise<void> => {
+      return await fetch(`${BASE_URL}/users/${userId}`, {
         method: 'PUT',
         headers: {
           'Content-type': 'application/json',
@@ -196,26 +103,11 @@ export const editUserRole = async (
         body: JSON.stringify({
           ...formRoleData
         })
-      })
-      //
-      if (!response.ok) {
-        throw new Error('Failed to fetch user data')
-      }
-    } else {
-      throw new Error('Bearer токен отсутствует!')
-    }
-  } catch (error) {
-    console.error('Произошла ошибка', error)
-  }
+      }).then(async (res) => await handleResponse(res))
 }
 
-export const editUserProject = async (
-  token: string,
-  formProjectsData: any
-): Promise<void> => {
-  try {
-    if (token) {
-      const response = await fetch(`${BASE_URL}/project/add`, {
+export const editUserProject = async (token: string, formProjectsData: any): Promise<void> => {
+      return await fetch(`${BASE_URL}/project/add`, {
         method: 'POST',
         headers: {
           'Content-type': 'application/json',
@@ -224,26 +116,11 @@ export const editUserProject = async (
         body: JSON.stringify({
           ...formProjectsData
         })
-      })
-      //
-      if (!response.ok) {
-        throw new Error('Failed to fetch user data')
-      }
-    } else {
-      throw new Error('Bearer токен отсутствует!')
-    }
-  } catch (error) {
-    console.error('Произошла ошибка', error)
-  }
+      }).then(async (res) => await handleResponse(res))
 }
 
-export const deleteUserProject = async (
-  token: string,
-  formProjectsData: any
-): Promise<void> => {
-  try {
-    if (token) {
-      const response = await fetch(`${BASE_URL}/project/cut`, {
+export const deleteUserProject = async (token: string, formProjectsData: any): Promise<void> => {
+      return await fetch(`${BASE_URL}/project/cut`, {
         method: 'POST',
         headers: {
           'Content-type': 'application/json',
@@ -252,42 +129,15 @@ export const deleteUserProject = async (
         body: JSON.stringify({
           ...formProjectsData
         })
-      })
-      //
-      if (!response.ok) {
-        throw new Error('Failed to fetch user data')
-      }
-    } else {
-      throw new Error('Bearer токен отсутствует!')
-    }
-  } catch (error) {
-    console.error('Произошла ошибка', error)
-  }
+      }).then(async (res) => await handleResponse(res))
 }
 
-export const fetchUserById = async (
-  token: string,
-  id: number
-): Promise<TUser | null> => {
-  try {
-    if (token) {
-      const response = await fetch(`${BASE_URL}/users/${id}`, {
+export const fetchUserById = async (token: string, id: number): Promise<void> => {
+      return await fetch(`${BASE_URL}/users/${id}`, {
         method: 'GET',
         headers: {
           'Content-type': 'application/json',
           Authorization: `Bearer ${token}`
         }
-      })
-
-      if (!response.ok) {
-        throw new Error('Failed to fetch ')
-      }
-
-      return (await response.json()) ?? null
-    }
-    return null
-  } catch (error) {
-    console.error('Произошла ошибка', error)
-    return null
-  }
+      }).then(async (res) => await handleResponse(res))
 }
