@@ -13,9 +13,7 @@ interface IUserInfo {
 
 const UserInfo: FC<IUserInfo> = ({ token, t }) => {
     const { openNotification } = useContext(NotificationContext)
-    //
     const [form] = Form.useForm()
-    //
     const [isImageError, setIsImageError] = useState(false)
     const handleImageError = (): void => {
         setIsImageError(true)
@@ -33,26 +31,22 @@ const UserInfo: FC<IUserInfo> = ({ token, t }) => {
         const storedFormDataString = localStorage.getItem('formDataUser')
         return storedFormDataString ? JSON.parse(storedFormDataString) : null
     })
-    //
     const handleFormChange = (): void => {
         const allValues = form.getFieldsValue()
-        const updateAllValues = { ...allValues, _id: user.id }
+        const updateAllValues = { ...allValues, id: user.id }
         setFormData(updateAllValues)
     }
-    //
     const handleUploadChange = ({ fileList }: { fileList: UploadFile[] }): void => {
         setFileList(fileList)
     }
-    //
     React.useEffect(() => {
         if (Object.keys(user).length > 0 && formData) {
-          if (user.id !== formData._id) {
+          if (user.id !== formData.id) {
             localStorage.removeItem('formDataUser')
           }
         }
         localStorage.setItem('formDataUser', JSON.stringify(formData))
     }, [formData])
-    //
     useEffect(() => {
             UserInfoAPI.getUserData(token).then(res => {
                 if (res) {
@@ -60,7 +54,6 @@ const UserInfo: FC<IUserInfo> = ({ token, t }) => {
                 }
             }).catch((e) => openNotification(e, 'topRight'))
     }, [token])
-    //
     useEffect(() => {
         UserInfoAPI.getUserData(token).then(res => {
             if (res.info) {
@@ -68,7 +61,6 @@ const UserInfo: FC<IUserInfo> = ({ token, t }) => {
             }
         }).catch((e) => openNotification(e, 'topRight'))
     }, [token])
-    //
     React.useEffect(() => {
         const storedFormDataString = localStorage.getItem('formDataUser')
         const parsedFormData = storedFormDataString
@@ -120,7 +112,6 @@ const UserInfo: FC<IUserInfo> = ({ token, t }) => {
           })
         }
       }, [userInfo])
-    //
     const onFinish = (values: any): void => {
             const formData = new FormData()
             formData.append('public_nickname', values.public_nickname)
@@ -136,7 +127,6 @@ const UserInfo: FC<IUserInfo> = ({ token, t }) => {
           } else {
             console.error('No file found in fileList')
           }
-        //
         UserInfoAPI
             .editUserData(token, formData).then(() => {
                 localStorage.removeItem('formDataUser')
@@ -144,7 +134,6 @@ const UserInfo: FC<IUserInfo> = ({ token, t }) => {
             })
             .catch((e) => openNotification(e, 'topRight'))
     }
-    //
     return (
         <div>
             <div className='flex gap-6 justify-center'>
