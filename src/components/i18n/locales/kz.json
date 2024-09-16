@@ -355,5 +355,7 @@
   "upgrade-project": "Жоба ақпаратын жаңарту",
   "expired": "Мерзімі бітті",
   "deadline": "Мерзімі",
-  "info-project": "Жоба туралы ақпарат"
+  "info-project": "Жоба туралы ақпарат",
+  "add-delete-clients": "Клиентті қосу/жою",
+  "delete-client": "Клиентті жою"
 }

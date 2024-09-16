@@ -336,5 +336,7 @@
   "add-delete-executors": "Добавление / удаление исполнителей",
   "add-executors": "Добавить исполнителей",
   "delete-executors": "Удалить исполнителей",
-  "deadline": "Дата завершения"
+  "deadline": "Дата завершения",
+  "add-delete-clients": "Добавление / удаление клиента",
+  "delete-client": "Удалить клиента"
 }

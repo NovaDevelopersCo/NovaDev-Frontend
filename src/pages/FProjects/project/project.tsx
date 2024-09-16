@@ -30,14 +30,13 @@ const Project: FC<IEditorPage> = ({ token, pathRest, t, dark }) => {
   const history = useHistory()
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [project] = useState<any>(null)
-  const [activeTab, setActiveTab] = useState<string>(t('update-project'))
+  const [activeTab, setActiveTab] = useState<string>(t('project'))
   const [users, setUsers] = useState<TUser[]>([])
 
   const layout = {
-    labelCol: { span: 4 },
-    wrapperCol: { span: 14 }
+    labelCol: { span: 6 },
+    wrapperCol: { span: 12 }
   }
-
   const onFinish = (values: any): void => {
     const updateProject = {
       name: values.name,
@@ -103,13 +102,25 @@ const Project: FC<IEditorPage> = ({ token, pathRest, t, dark }) => {
       </h4>
       <Segmented
         block
-        options={[t('project'), t('users')]}
+        options={[
+          t('project'),
+          t('add-delete-executors'),
+          t('add-delete-clients')
+        ]}
         value={activeTab}
         onChange={(value) => setActiveTab(value.toString())}
       />
       <>
-        {activeTab === t('update-project') && (
-          <Form form={form} onFinish={onFinish} layout='vertical'>
+        {activeTab === t('project') && (
+          <Form
+            form={form}
+            onFinish={onFinish}
+            layout='vertical'
+            style={{
+              marginTop: '20px',
+              maxWidth: '50%'
+            }}
+          >
             <Form.Item label={t('project-name')} name='name'>
               <Input />
             </Form.Item>
@@ -122,21 +133,35 @@ const Project: FC<IEditorPage> = ({ token, pathRest, t, dark }) => {
             <Form.Item label={t('documentation')} name='documentation'>
               <Input />
             </Form.Item>
-            <Form.Item label={t('client')} name='client'>
-              <Input />
-            </Form.Item>
             <Form.Item label={t('date-end')} name='date-end'>
               <DatePicker />
             </Form.Item>
-            <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 4 }}>
+            <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 6 }}>
               <Button type='primary' htmlType='submit'>
                 {t('save')}
               </Button>
             </Form.Item>
+            <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 6 }}>
+              <Popconfirm
+                title={t('you-sure-want-delete')}
+                onConfirm={confirm}
+                okText={t('yes')}
+                cancelText={t('no')}
+              >
+                <Button danger className={theme} htmlType='button'>
+                  {t('delete')}
+                </Button>
+              </Popconfirm>
+            </Form.Item>
           </Form>
         )}
         {activeTab === t('add-delete-executors') && (
-          <>
+          <Form
+            style={{
+              marginTop: '20px',
+              maxWidth: '50%'
+            }}
+          >
             <Form.Item label={t('add-executors')} name='add-executors'>
               <Select placeholder={t('select-executors')}>
                 {users.map((user: TUser, index: number) => (
@@ -155,21 +180,55 @@ const Project: FC<IEditorPage> = ({ token, pathRest, t, dark }) => {
                 ))}
               </Select>
             </Form.Item>
-          </>
+            <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 6 }}>
+              <Button type='primary' htmlType='submit'>
+                {t('save')}
+              </Button>
+            </Form.Item>
+            <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 6 }}>
+              <Popconfirm
+                title={t('you-sure-want-delete')}
+                onConfirm={confirm}
+                okText={t('yes')}
+                cancelText={t('no')}
+              >
+                <Button danger className={theme} htmlType='button'>
+                  {t('delete')}
+                </Button>
+              </Popconfirm>
+            </Form.Item>
+          </Form>
+        )}
+        {activeTab === t('add-delete-clients') && (
+          <Form
+            style={{
+              marginTop: '20px',
+              maxWidth: '50%'
+            }}
+          >
+            <Form.Item label={t('client')} name='client'>
+              <Input />
+            </Form.Item>
+            <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 6 }}>
+              <Button type='primary' htmlType='submit'>
+                {t('save')}
+              </Button>
+            </Form.Item>
+            <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 6 }}>
+              <Popconfirm
+                title={t('you-sure-want-delete-client')}
+                onConfirm={confirm}
+                okText={t('yes')}
+                cancelText={t('no')}
+              >
+                <Button danger className={theme} htmlType='button'>
+                  {t('delete-client')}
+                </Button>
+              </Popconfirm>
+            </Form.Item>
+          </Form>
         )}
       </>
-      <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 4 }}>
-        <Popconfirm
-          title={t('you-sure-want-delete')}
-          onConfirm={confirm}
-          okText={t('yes')}
-          cancelText={t('no')}
-        >
-          <Button className={theme} htmlType='button'>
-            {t('delete')}
-          </Button>
-        </Popconfirm>
-      </Form.Item>
     </>
   )
 }

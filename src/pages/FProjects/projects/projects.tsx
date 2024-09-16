@@ -1,10 +1,10 @@
 import { Table } from 'antd'
 import { ColumnsType } from 'antd/es/table'
 import * as projectAPI from '../../../utils/api/project-api'
-import { FC, useContext, useEffect, useState } from 'react'
+import React, { FC, useContext, useEffect, useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { NotificationContext } from '../../../components/notification-provider/notification-provider'
-import { TProject, TProjectUser } from '../../../utils/typesFromBackend' // Используем ваши типы
+import { TProject, TProjectUser } from '../../../utils/typesFromBackend'
 import clsx from 'clsx'
 
 interface IProjects {
@@ -130,10 +130,14 @@ const Projects: FC<IProjects> = ({ token, pathRest, t, dark }) => {
       key: 'users',
       render: (users: TProjectUser[]) => {
         if (users.length === 0) return 'No users'
-        const userNames = users
-          .map((user) => user.user.info.full_name)
-          .join(', ')
-        return userNames
+        return users.map((user, index) => (
+          <React.Fragment key={user.user.id}>
+            <Link to={`/${pathRest}/user/${user.user.id}`}>
+              {user.user.info.full_name}
+            </Link>
+            {index < users.length - 1 ? ', ' : ''}
+          </React.Fragment>
+        ))
       },
       sorter: (a: TProject, b: TProject) => {
         const aUser = a.users.length > 0 ? a.users[0].user.info.full_name : ''
