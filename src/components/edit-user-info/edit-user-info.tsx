@@ -168,7 +168,7 @@ const EditUserInfo: FC<IEditUserInfo> = ({ token, t }) => {
                             </Form.Item>
                         </div>
                         <div className='flex justify-center'>
-                            <Button className='flex justify-center items-center text-lg w-28 mt-5' htmlType='submit'>
+                            <Button type='primary' className='flex justify-center items-center text-lg w-28 mt-5' htmlType='submit'>
                                 <h4 className='p-2'>{t('changed-data')}</h4>
                             </Button>
                         </div>
