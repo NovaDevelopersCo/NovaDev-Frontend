@@ -1,5 +1,6 @@
 
 import React, { FC, useState, useEffect, useContext } from 'react'
+import { Link } from 'react-router-dom'
 import * as UserInfoAPI from '../../utils/api/user-info-api'
 import { Image } from 'antd'
 import { TUser } from '../../utils/typesFromBackend'
@@ -7,10 +8,11 @@ import { NotificationContext } from '../../components/notification-provider/noti
 
 interface IViewUserInfo {
     token: string
+    pathRest: string
     t: (arg0: string) => string
 }
 
-const ViewUserInfo: FC<IViewUserInfo> = ({ token, t }) => {
+const ViewUserInfo: FC<IViewUserInfo> = ({ token, pathRest, t }) => {
     const { openNotification } = useContext(NotificationContext)
     const [isImageError, setIsImageError] = useState(false)
     const handleImageError = (): void => {
@@ -22,6 +24,7 @@ const ViewUserInfo: FC<IViewUserInfo> = ({ token, t }) => {
         UserInfoAPI.getUserData(token).then(res => {
             if (res) {
                 setUser(res)
+                // setUserRoleId(res.role.id)
             }
         }).catch((e) => openNotification(e, 'topRight'))
     }, [token])
@@ -48,9 +51,10 @@ const ViewUserInfo: FC<IViewUserInfo> = ({ token, t }) => {
                     </div>
                     <div className='flex flex-col gap-6 mt-4'>
                         <div>
-                            <div className='flex gap-2'>
+                            <div className='flex gap-2 items-center'>
                                 <h2>{t('user-role-title')}</h2>
-                                <p className='text-base'>{user?.role?.title}</p>
+                                <Link to={`/${pathRest}/role/:${user.roleId}`} className='text-base'>{user?.role?.title}</Link>
+                                {/* <Link to={`/${pathRest}/role/`} className='text-base'>{user?.role?.title}</Link> */}
                             </div>
                         </div>
                         <div>
@@ -76,15 +80,15 @@ const ViewUserInfo: FC<IViewUserInfo> = ({ token, t }) => {
                                 </div>
                                 <div className='flex gap-2 items-center'>
                                     <h2>{t('user-github')}</h2>
-                                    <p className='text-base'>{user?.info?.github ?? ''}</p>
+                                    <a className='text-base'>{user?.info?.github ?? ''}</a>
                                 </div>
                                 <div className='flex gap-2 items-center'>
                                     <h2>{t('user-payment-info')}</h2>
-                                    <p className='text-base'>{user?.info?.payment_info ?? ''}</p>
+                                    <a className='text-base'>{user?.info?.payment_info ?? ''}</a>
                                 </div>
                                 <div className='flex gap-2 items-center'>
                                     <h2>{t('user-tg')}</h2>
-                                    <p className='text-base'>{user?.info?.tg ?? ''}</p>
+                                    <a className='text-base'>{user?.info?.tg ?? ''}</a>
                                 </div>
                             </div>
                         </div>
@@ -94,7 +98,7 @@ const ViewUserInfo: FC<IViewUserInfo> = ({ token, t }) => {
                             <div className='flex items-center justify-center mt-2'>
                                 <h4 className='text-lg font-semibold'>{t('team-info-title')}</h4>
                             </div>
-                            <div className='flex gap-2 mb-2'>
+                            <div className='flex gap-2 mb-2 items-center'>
                                 <h2>{t('user-team-title')}</h2>
                                 <p className='text-base'>{user?.team?.title ?? ''}</p>
                             </div>

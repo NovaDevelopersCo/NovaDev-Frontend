@@ -360,7 +360,7 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
                   isLoggedIn={isLoggedIn}
                   pathRest={pathRest}
                 >
-                  <UserInfo token={token} t={t} />
+                  <UserInfo token={token} pathRest={pathRest} t={t} />
                 </ProtectedRoute>
                 <Route path='*'>
                   <NotFound t={t} />

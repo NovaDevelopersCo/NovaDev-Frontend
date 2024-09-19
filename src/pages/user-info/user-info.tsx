@@ -6,10 +6,11 @@ import ViewUserInfo from '../../components/view-user-info/view-user-info'
 
 interface IUserInfo {
     token: string
+    pathRest: string
     t: (arg0: string) => string
 }
 
-const UserInfo: FC<IUserInfo> = ({ token, t }) => {
+const UserInfo: FC<IUserInfo> = ({ token, pathRest, t }) => {
     const [isEditing, setIsEditing] = useState<boolean>(false)
     const viewLabel = t('view')
     const editLabel = t('edit')
@@ -24,7 +25,7 @@ const UserInfo: FC<IUserInfo> = ({ token, t }) => {
             { isEditing ? (
                 <EditUserInfo token={token} t={t} />
             ) : (
-                <ViewUserInfo token={token} t={t} />
+                <ViewUserInfo token={token} pathRest={pathRest} t={t} />
             )
         }
         </div>
