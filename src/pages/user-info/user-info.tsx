@@ -11,13 +11,15 @@ interface IUserInfo {
 
 const UserInfo: FC<IUserInfo> = ({ token, t }) => {
     const [isEditing, setIsEditing] = useState<boolean>(false)
+    const viewLabel = t('view')
+    const editLabel = t('edit')
     const handleChangeState = (value: SegmentedValue): void => {
-        setIsEditing(value === 'Edit')
+        setIsEditing(value === editLabel)
     }
     return (
         <div>
             <div className='flex gap-6 justify-center'>
-                <Segmented options={['View', 'Edit']} value={isEditing ? 'Edit' : 'View'} onChange={handleChangeState}/>
+                <Segmented options={[viewLabel, editLabel]} value={isEditing ? editLabel : viewLabel} onChange={handleChangeState}/>
             </div>
             { isEditing ? (
                 <EditUserInfo token={token} t={t} />
