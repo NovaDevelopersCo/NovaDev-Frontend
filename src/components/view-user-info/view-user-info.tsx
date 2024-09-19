@@ -24,7 +24,6 @@ const ViewUserInfo: FC<IViewUserInfo> = ({ token, pathRest, t }) => {
         UserInfoAPI.getUserData(token).then(res => {
             if (res) {
                 setUser(res)
-                // setUserRoleId(res.role.id)
             }
         }).catch((e) => openNotification(e, 'topRight'))
     }, [token])
@@ -54,7 +53,6 @@ const ViewUserInfo: FC<IViewUserInfo> = ({ token, pathRest, t }) => {
                             <div className='flex gap-2 items-center'>
                                 <h2>{t('user-role-title')}</h2>
                                 <Link to={`/${pathRest}/role/:${user.roleId}`} className='text-base'>{user?.role?.title}</Link>
-                                {/* <Link to={`/${pathRest}/role/`} className='text-base'>{user?.role?.title}</Link> */}
                             </div>
                         </div>
                         <div>
@@ -72,7 +70,7 @@ const ViewUserInfo: FC<IViewUserInfo> = ({ token, pathRest, t }) => {
                                 </div>
                                 <div className='flex gap-2 items-center'>
                                     <h2>{t('user-email')}</h2>
-                                    <p className='text-base'>{user?.info?.email ?? ''}</p>
+                                    <a href={`mailto:${user?.info?.email}`} className='text-base'>{user?.info?.email ?? ''}</a>
                                 </div>
                                 <div className='flex gap-2 items-center'>
                                     <h2>{t('user-phone')}</h2>
@@ -80,15 +78,15 @@ const ViewUserInfo: FC<IViewUserInfo> = ({ token, pathRest, t }) => {
                                 </div>
                                 <div className='flex gap-2 items-center'>
                                     <h2>{t('user-github')}</h2>
-                                    <a className='text-base'>{user?.info?.github ?? ''}</a>
+                                    <a href={`${user?.info?.github}`} className='text-base'>{user?.info?.github ?? ''}</a>
                                 </div>
                                 <div className='flex gap-2 items-center'>
                                     <h2>{t('user-payment-info')}</h2>
-                                    <a className='text-base'>{user?.info?.payment_info ?? ''}</a>
+                                    <a href={`${user?.info?.payment_info}`} className='text-base'>{user?.info?.payment_info ?? ''}</a>
                                 </div>
                                 <div className='flex gap-2 items-center'>
                                     <h2>{t('user-tg')}</h2>
-                                    <a className='text-base'>{user?.info?.tg ?? ''}</a>
+                                    <a href={`${user?.info?.tg}`} className='text-base'>{user?.info?.tg ?? ''}</a>
                                 </div>
                             </div>
                         </div>
