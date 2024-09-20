@@ -52,7 +52,7 @@ const ViewUserInfo: FC<IViewUserInfo> = ({ token, pathRest, t }) => {
                         <div>
                             <div className='flex gap-2 items-center'>
                                 <h2>{t('user-role-title')}</h2>
-                                <Link to={`/${pathRest}/role/:${user.roleId}`} className='text-base'>{user?.role?.title}</Link>
+                                <Link to={`/${pathRest}/role/:${user.roleId}`}>{user?.role?.title}</Link>
                             </div>
                         </div>
                         <div>
@@ -62,31 +62,31 @@ const ViewUserInfo: FC<IViewUserInfo> = ({ token, pathRest, t }) => {
                             <div className='flex flex-col gap-3 mb-2'>
                                 <div className='flex gap-2 items-center'>
                                     <h2>{t('user-public-nickname')}</h2>
-                                    <p className='text-base'>{user?.info?.public_nickname ?? ''}</p>
+                                    <p>{user?.info?.public_nickname ?? ''}</p>
                                 </div>
                                 <div className='flex gap-2 items-center'>
                                     <h2>{t('user-full-name')}</h2>
-                                    <p className='text-base'>{user?.info?.full_name ?? ''}</p>
+                                    <p>{user?.info?.full_name ?? ''}</p>
                                 </div>
                                 <div className='flex gap-2 items-center'>
                                     <h2>{t('user-email')}</h2>
-                                    <a href={`mailto:${user?.info?.email}`} className='text-base'>{user?.info?.email ?? ''}</a>
+                                    <a href={`mailto:${user?.info?.email}`}>{user?.info?.email ?? ''}</a>
                                 </div>
                                 <div className='flex gap-2 items-center'>
                                     <h2>{t('user-phone')}</h2>
-                                    <p className='text-base'>{user?.info?.phone ?? null}</p>
+                                    <p>{user?.info?.phone ?? null}</p>
                                 </div>
                                 <div className='flex gap-2 items-center'>
                                     <h2>{t('user-github')}</h2>
-                                    <a href={`${user?.info?.github}`} className='text-base'>{user?.info?.github ?? ''}</a>
+                                    <a href={`${user?.info?.github}`}>{user?.info?.github ?? ''}</a>
                                 </div>
                                 <div className='flex gap-2 items-center'>
                                     <h2>{t('user-payment-info')}</h2>
-                                    <a href={`${user?.info?.payment_info}`} className='text-base'>{user?.info?.payment_info ?? ''}</a>
+                                    <a href={`${user?.info?.payment_info}`}>{user?.info?.payment_info ?? ''}</a>
                                 </div>
                                 <div className='flex gap-2 items-center'>
                                     <h2>{t('user-tg')}</h2>
-                                    <a href={`${user?.info?.tg}`} className='text-base'>{user?.info?.tg ?? ''}</a>
+                                    <a href={`${user?.info?.tg}`}>{user?.info?.tg ?? ''}</a>
                                 </div>
                             </div>
                         </div>
@@ -98,7 +98,7 @@ const ViewUserInfo: FC<IViewUserInfo> = ({ token, pathRest, t }) => {
                             </div>
                             <div className='flex gap-2 mb-2 items-center'>
                                 <h2>{t('user-team-title')}</h2>
-                                <p className='text-base'>{user?.team?.title ?? ''}</p>
+                                <p>{user?.team?.title ?? ''}</p>
                             </div>
                         </div>
                     </div>
