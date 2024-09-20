@@ -4,6 +4,7 @@ import { useHistory, useLocation, useRouteMatch } from 'react-router-dom'
 import { ELevelAccess, TRole } from '../../../utils/typesFromBackend'
 import * as roleAPI from '../../../utils/api/role-api'
 import { NotificationContext } from '../../notification-provider/notification-provider'
+import TextArea from 'antd/es/input/TextArea'
 
 interface IGroupModifiersForDish {
   pathRest: string
@@ -128,7 +129,7 @@ const RoleUpdate: FC<IGroupModifiersForDish> = ({
         <Input />
       </Form.Item>
       <Form.Item label={t('description')} name='description'>
-        <Input />
+        <TextArea />
       </Form.Item>
       <Form.Item label={t('level_access')} name='level_access'>
         <Select>

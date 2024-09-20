@@ -2,7 +2,7 @@
 import * as roleAPI from '../../../utils/api/role-api'
 import React, { FC, useContext } from 'react'
 import { useLocation, useRouteMatch } from 'react-router-dom'
-import { TAdmin } from '../../../utils/typesFromBackend'
+import { TRole } from '../../../utils/typesFromBackend'
 import { Button, Modal, Segmented } from 'antd'
 import { NotificationContext } from '../../../components/notification-provider/notification-provider'
 import RoleUpdate from '../../../components/FRole/role-update/role-update'
@@ -20,7 +20,7 @@ const Role: FC<IEditorRole> = ({ token, pathRest, t, style }) => {
   const pathname = useLocation().pathname
   const match = useRouteMatch(pathname)
   const restId = Object.keys(match?.params as string)[0]
-  const [admin, setAdmin] = React.useState<TAdmin>({} as TAdmin)
+  const [role, setRole] = React.useState<TRole>({} as TRole)
   const [isRole, setIsRole] = React.useState(false)
   const [value, setValue] = React.useState<string | number>(t('role'))
   const [isModalVisible, setIsModalVisible] = React.useState(false)
@@ -28,9 +28,9 @@ const Role: FC<IEditorRole> = ({ token, pathRest, t, style }) => {
   React.useEffect(() => {
     roleAPI
       .getRole(token, restId)
-      .then((res: TAdmin) => {
+      .then((res: TRole) => {
         setIsRole(true)
-        setAdmin(res)
+        setRole(res)
       })
       .catch((e) => openNotification(e, 'topRight'))
   }, [])
@@ -50,7 +50,7 @@ const Role: FC<IEditorRole> = ({ token, pathRest, t, style }) => {
           padding: '15px'
         }}
       >
-        {admin?.nickname ? admin.nickname : ''}
+        {role?.title ? role.title : ''}
       </h4>
       <Segmented
         block
