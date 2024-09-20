@@ -58,7 +58,7 @@ const Role: FC<IEditorRole> = ({ token, pathRest, t, style, dark }) => {
         block
         options={[t('role'), t('users')]}
         value={value}
-        style={style}
+        className={theme}
         onChange={setValue}
       />{' '}
       {isRole ? (

@@ -11,6 +11,14 @@
   .h4{
     color: #fff !important;
   }
+  .ant-segmented-group{
+    background-color: #0a0e14 !important;
+    color: #fff !important;
+  }
+  .ant-segmented-item-selected{
+    background-color: #8d8f91 !important;
+    color: #fff !important;
+  }
   .ant-select-selector {
     background-color: #0a0e14 !important;
     color: #fff !important;
