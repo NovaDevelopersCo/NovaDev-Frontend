@@ -51,7 +51,7 @@ const ViewUserInfo: FC<IViewUserInfo> = ({ token, pathRest, t }) => {
                     <div className='flex flex-col gap-6 mt-4'>
                         <div>
                             <div className='flex gap-2 items-center'>
-                                <h2>{t('user-role-title')}</h2>
+                                <h2 className='font-semibold'>{t('user-role-title')}</h2>
                                 <Link to={`/${pathRest}/role/:${user.roleId}`}>{user?.role?.title}</Link>
                             </div>
                         </div>
