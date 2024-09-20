@@ -18,11 +18,18 @@ interface IProjects {
 const Projects: FC<IProjects> = ({ token, pathRest, t, dark }) => {
   const { openNotification } = useContext(NotificationContext)
   const [data, setData] = useState<TProject[]>([])
+  const [technologies, setTechnologies] = useState<string[]>([])
 
   useEffect(() => {
     projectAPI
       .getAllProjects(token)
-      .then((res: TProject[]) => setData(res))
+      .then((res: TProject[]) => {
+        setData(res)
+        const allTechnologies = Array.from(
+          new Set(res.flatMap((project) => project.technologies))
+        )
+        setTechnologies(allTechnologies)
+      })
       .catch((e: Error) => openNotification(e.message, 'topRight'))
   }, [token, openNotification])
 
@@ -48,11 +55,11 @@ const Projects: FC<IProjects> = ({ token, pathRest, t, dark }) => {
       dataIndex: 'technologies',
       key: 'technologies',
       render: (technologies: string[]) => technologies.join(', '),
-      sorter: (a: TProject, b: TProject) => {
-        const techA = a.technologies.join(', ')
-        const techB = b.technologies.join(', ')
-        return techA.localeCompare(techB)
-      }
+      filters: technologies.map((tech) => ({ text: tech, value: tech })),
+      filterMode: 'tree',
+      filterSearch: true,
+      onFilter: (value: string | number | boolean, record: TProject) =>
+        record.technologies.includes(value.toString())
     },
     {
       title: `${t('server')}`,
