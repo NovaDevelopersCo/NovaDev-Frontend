@@ -11,13 +11,15 @@ interface IGroupModifiersForDish {
   token: string
   t: (arg0: string) => string
   style: object
+  theme: string
 }
 
 const RoleUpdate: FC<IGroupModifiersForDish> = ({
   token,
   pathRest,
   t,
-  style
+  style,
+  theme
 }) => {
   const { openNotification } = useContext(NotificationContext)
   const [form] = Form.useForm()
@@ -132,7 +134,7 @@ const RoleUpdate: FC<IGroupModifiersForDish> = ({
         <TextArea style={style} />
       </Form.Item>
       <Form.Item label={t('level_access')} name='level_access' style={style}>
-        <Select style={style}>
+        <Select style={style} className={theme}>
           {Object.values(ELevelAccess).map((levelAccess: ELevelAccess) => (
             <Select.Option value={levelAccess} key={levelAccess} style={style}>
               {levelAccess}
@@ -152,7 +154,7 @@ const RoleUpdate: FC<IGroupModifiersForDish> = ({
           okText={t('yes')}
           cancelText={t('no')}
         >
-          <Button htmlType='button'>{t('delete')}</Button>
+          <Button htmlType='button' style={style}>{t('delete')}</Button>
         </Popconfirm>
       </Form.Item>
     </Form>

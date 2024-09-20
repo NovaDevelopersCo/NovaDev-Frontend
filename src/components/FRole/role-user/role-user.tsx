@@ -119,9 +119,9 @@ const RoleUser: FC<IGroupModifiersForDish> = ({
           rules={[{ required: true }]}
           style={style}
         >
-          <Select style={style}>
+          <Select style={style} className={theme}>
             {users.map((user, index) => (
-              <Select.Option value={user.id} key={index} style={style}>
+              <Select.Option value={user.id} key={index} style={style} className={theme}>
                 {user.info.full_name}
               </Select.Option>
             ))}
