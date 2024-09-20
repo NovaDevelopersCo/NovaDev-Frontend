@@ -7,15 +7,17 @@ import { Button, Modal, Segmented } from 'antd'
 import { NotificationContext } from '../../../components/notification-provider/notification-provider'
 import RoleUpdate from '../../../components/FRole/role-update/role-update'
 import RoleUser from '../../../components/FRole/role-user/role-user'
+import clsx from 'clsx'
 
 interface IEditorRole {
   token: string
   t: (arg0: string) => string
   pathRest: string
   style: object
+  dark: boolean
 }
 
-const Role: FC<IEditorRole> = ({ token, pathRest, t, style }) => {
+const Role: FC<IEditorRole> = ({ token, pathRest, t, style, dark }) => {
   const { openNotification } = useContext(NotificationContext)
   const pathname = useLocation().pathname
   const match = useRouteMatch(pathname)
@@ -24,7 +26,7 @@ const Role: FC<IEditorRole> = ({ token, pathRest, t, style }) => {
   const [isRole, setIsRole] = React.useState(false)
   const [value, setValue] = React.useState<string | number>(t('role'))
   const [isModalVisible, setIsModalVisible] = React.useState(false)
-
+  const theme = clsx(dark ? 'black' : 'white')
   React.useEffect(() => {
     roleAPI
       .getRole(token, restId)
@@ -70,6 +72,7 @@ const Role: FC<IEditorRole> = ({ token, pathRest, t, style }) => {
       {isRole ? (
         value === t('users') ? (
           <RoleUser
+            theme={theme}
             token={token}
             pathRest={pathRest}
             t={t}

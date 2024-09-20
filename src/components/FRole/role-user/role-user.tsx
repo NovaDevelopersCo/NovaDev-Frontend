@@ -11,6 +11,7 @@ interface IGroupModifiersForDish {
   token: string
   t: (arg0: string) => string
   style: object
+  theme: string
 }
 
 interface ILevelsAccess {
@@ -22,7 +23,8 @@ const RoleUser: FC<IGroupModifiersForDish> = ({
   token,
   pathRest,
   t,
-  style
+  style,
+  theme
 }) => {
   const { openNotification } = useContext(NotificationContext)
   const pathname = useLocation().pathname
@@ -126,7 +128,7 @@ const RoleUser: FC<IGroupModifiersForDish> = ({
           </Button>
         </Form.Item>
       </Form>
-      <Table columns={columns} dataSource={data} />
+      <Table columns={columns} dataSource={data} className={theme} />
     </>
   )
 }
