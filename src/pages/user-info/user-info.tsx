@@ -23,7 +23,7 @@ const UserInfo: FC<IUserInfo> = ({ token, pathRest, t, dark, style }) => {
     }
     return (
         <div>
-            <div className={theme} style={style}>
+            <div className={`${theme} flex justify-center`} style={style}>
                 <Segmented className={theme} style={style} options={[viewLabel, editLabel]} value={isEditing ? editLabel : viewLabel} onChange={handleChangeState}/>
             </div>
             { isEditing ? (

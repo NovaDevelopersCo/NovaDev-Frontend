@@ -61,31 +61,31 @@ const ViewUserInfo: FC<IViewUserInfo> = ({ token, pathRest, t }) => {
                             </div>
                             <div className='flex flex-col gap-3 mb-2'>
                                 <div className='flex gap-2 items-center'>
-                                    <h2>{t('user-public-nickname')}</h2>
+                                    <h2 className='font-semibold'>{t('user-public-nickname')}</h2>
                                     <p>{user?.info?.public_nickname ?? ''}</p>
                                 </div>
                                 <div className='flex gap-2 items-center'>
-                                    <h2>{t('user-full-name')}</h2>
+                                    <h2 className='font-semibold'>{t('user-full-name')}</h2>
                                     <p>{user?.info?.full_name ?? ''}</p>
                                 </div>
                                 <div className='flex gap-2 items-center'>
-                                    <h2>{t('user-email')}</h2>
+                                    <h2 className='font-semibold'>{t('user-email')}</h2>
                                     <a href={`mailto:${user?.info?.email}`}>{user?.info?.email ?? ''}</a>
                                 </div>
                                 <div className='flex gap-2 items-center'>
-                                    <h2>{t('user-phone')}</h2>
+                                    <h2 className='font-semibold'>{t('user-phone')}</h2>
                                     <p>{user?.info?.phone ?? null}</p>
                                 </div>
                                 <div className='flex gap-2 items-center'>
-                                    <h2>{t('user-github')}</h2>
+                                    <h2 className='font-semibold'>{t('user-github')}</h2>
                                     <a href={`${user?.info?.github}`}>{user?.info?.github ?? ''}</a>
                                 </div>
                                 <div className='flex gap-2 items-center'>
-                                    <h2>{t('user-payment-info')}</h2>
+                                    <h2 className='font-semibold'>{t('user-payment-info')}</h2>
                                     <a href={`${user?.info?.payment_info}`}>{user?.info?.payment_info ?? ''}</a>
                                 </div>
                                 <div className='flex gap-2 items-center'>
-                                    <h2>{t('user-tg')}</h2>
+                                    <h2 className='font-semibold'>{t('user-tg')}</h2>
                                     <a href={`${user?.info?.tg}`}>{user?.info?.tg ?? ''}</a>
                                 </div>
                             </div>
