@@ -36,8 +36,8 @@ const ViewUserInfo: FC<IViewUserInfo> = ({ token, pathRest, t }) => {
                                 </div>
                         ) : (
                             <div className='flex gap-2 mb-2  items-center justify-center'>
-                                <div>
-                                    <Image className='rounded-lg overflow-hidden  border-2 border-black object-cover' width={200} height={200} src={user?.info?.image} alt="Profile photo" onError={handleImageError} />
+                                <div className='w-40 h-40 overflow-hidden rounded-full flex items-center justify-center'>
+                                    <Image width={200} height={200} src={user?.info?.image} alt="Profile photo" onError={handleImageError} />
                                 </div>
                             </div>
                         )
