@@ -41,7 +41,7 @@ export const updateProject = async (
     technologies: string
     server: string
     documentation: string
-    dateEnd: string
+    deadline: string
   }
 ) => {
   return await fetch(`${BASE_URL}/project/update`, {

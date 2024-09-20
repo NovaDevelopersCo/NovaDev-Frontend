@@ -285,7 +285,7 @@ export interface TProject {
   server: string
   documentation: string
   deadline: string
-  clientId: number
+  clientId: string
   createdAt: string
   updatedAt: string
   users: TProjectUser[]
