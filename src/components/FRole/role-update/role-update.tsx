@@ -128,7 +128,7 @@ const RoleUpdate: FC<IGroupModifiersForDish> = ({
       onValuesChange={handleFormChange}
     >
       <Form.Item label={t('title')} name='title' style={style}>
-        <Input style={style} />
+        <Input style={style}/>
       </Form.Item>
       <Form.Item label={t('description')} name='description' style={style}>
         <TextArea style={style} />
