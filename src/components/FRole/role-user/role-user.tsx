@@ -11,6 +11,7 @@ interface IGroupModifiersForDish {
   token: string
   t: (arg0: string) => string
   style: object
+  theme: string
 }
 
 interface ILevelsAccess {
@@ -22,7 +23,8 @@ const RoleUser: FC<IGroupModifiersForDish> = ({
   token,
   pathRest,
   t,
-  style
+  style,
+  theme
 }) => {
   const { openNotification } = useContext(NotificationContext)
   const pathname = useLocation().pathname
@@ -111,10 +113,15 @@ const RoleUser: FC<IGroupModifiersForDish> = ({
         validateMessages={validateMessages}
         style={{ paddingTop: '1.5rem', ...style }}
       >
-        <Form.Item label={t('add-user')} name='id' rules={[{ required: true }]}>
-          <Select>
+        <Form.Item
+          label={t('add-user')}
+          name='id'
+          rules={[{ required: true }]}
+          style={style}
+        >
+          <Select style={style} className={theme}>
             {users.map((user, index) => (
-              <Select.Option value={user.id} key={index}>
+              <Select.Option value={user.id} key={index} style={style} className={theme}>
                 {user.info.full_name}
               </Select.Option>
             ))}
@@ -126,7 +133,7 @@ const RoleUser: FC<IGroupModifiersForDish> = ({
           </Button>
         </Form.Item>
       </Form>
-      <Table columns={columns} dataSource={data} />
+      <Table columns={columns} dataSource={data} className={theme} />
     </>
   )
 }
