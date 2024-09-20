@@ -97,7 +97,7 @@ const ViewUserInfo: FC<IViewUserInfo> = ({ token, pathRest, t }) => {
                                 <h4 className='text-lg font-semibold'>{t('team-info-title')}</h4>
                             </div>
                             <div className='flex gap-2 mb-2 items-center'>
-                                <h2>{t('user-team-title')}</h2>
+                                <h2 className='font-semibold'>{t('user-team-title')}</h2>
                                 <p>{user?.team?.title ?? ''}</p>
                             </div>
                         </div>
