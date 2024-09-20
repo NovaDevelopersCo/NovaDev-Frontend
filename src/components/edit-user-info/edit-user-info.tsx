@@ -135,18 +135,18 @@ const EditUserInfo: FC<IEditUserInfo> = ({ token, t, dark, style }) => {
                     <div className='flex items-center justify-start'>
                         <h1 className='text-xl font-semibold mb-5'>{t('about-user-title')}</h1>
                     </div>
-                    <Form className='flex flex-col gap-6' name='user' form={form} onFinish={onFinish} onValuesChange={handleFormChange} >
+                    <Form className='flex flex-col gap-4' name='user' form={form} onFinish={onFinish} onValuesChange={handleFormChange} >
                         <div>
                             <div className='flex items-center justify-center mt-2 mb-3'>
-                                <h4 className='text-lg font-semibold'>{t('base-info-title')}</h4>
+                                <h4 className={`${theme} text-lg font-semibold`} style={style}>{t('base-info-title')}</h4>
                             </div>
-                            <Form.Item className={theme} style={style} label={t('user-public-nickname')} name='public_nickname' rules={[{ required: false, message: t('enter-your-public-nickname') }]}>
+                            <Form.Item label={<span className={theme} style={style}>{t('user-public-nickname')}</span>} name='public_nickname' rules={[{ required: false, message: t('enter-your-public-nickname') }]}>
                                 <Input />
                             </Form.Item>
-                            <Form.Item className={theme} style={style} label={t('user-full-name')} name='full_name' rules={[{ required: false, message: t('enter-your-full-name') }]}>
+                            <Form.Item label={<span className={theme} style={style}>{t('user-full-name')}</span>} name='full_name' rules={[{ required: false, message: t('enter-your-full-name') }]}>
                                 <Input />
                             </Form.Item>
-                            <Form.Item className={theme} style={style} label={t('user-image')} rules={[{ required: false, message: t('enter-your-image') }]}>
+                            <Form.Item label={<span className={theme} style={style}>{t('user-image')}</span>} rules={[{ required: false, message: t('enter-your-image') }]}>
                                 <Upload onChange={handleUploadChange} fileList={fileList} beforeUpload={() => false} >
                                     <Button className={`${theme} flex items-center`} style={style}>
                                         <UploadOutlined />
@@ -154,24 +154,24 @@ const EditUserInfo: FC<IEditUserInfo> = ({ token, t, dark, style }) => {
                                     </Button>
                                 </Upload>
                             </Form.Item>
-                            <Form.Item className={theme} style={style} label={t('user-phone')} name='phone' rules={[{ required: false, message: t('enter-your-phone') }]}>
+                            <Form.Item label={<span className={theme} style={style}>{t('user-phone')}</span>} name='phone' rules={[{ required: false, message: t('enter-your-phone') }]}>
                                 <Input />
                             </Form.Item>
-                            <Form.Item className={theme} style={style} label={t('user-email')} name='email' rules={[{ required: false, message: t('enter-your-email') }]}>
+                            <Form.Item label={<span className={theme} style={style}>{t('user-email')}</span>} name='email' rules={[{ required: false, message: t('enter-your-email') }]}>
                                 <Input />
                             </Form.Item>
-                            <Form.Item className={theme} style={style} label={t('user-github')} name='github' rules={[{ required: false, message: t('enter-your-github') }]}>
+                            <Form.Item label={<span className={theme} style={style}>{t('user-github')}</span>} name='github' rules={[{ required: false, message: t('enter-your-github') }]}>
                                 <Input />
                             </Form.Item>
-                            <Form.Item className={theme} style={style} label={t('user-payment-info')} name='payment_info' rules={[{ required: false, message: t('enter-your-payment-info') }]}>
+                            <Form.Item label={<span className={theme} style={style}>{t('user-payment-info')}</span>} name='payment_info' rules={[{ required: false, message: t('enter-your-payment-info') }]}>
                                 <Input />
                             </Form.Item>
-                            <Form.Item className={theme} style={style} label={t('user-tg')} name='tg' rules={[{ required: false, message: t('enter-your-tg') }]}>
+                            <Form.Item label={<span className={theme} style={style}>{t('user-tg')}</span>} name='tg' rules={[{ required: false, message: t('enter-your-tg') }]}>
                                 <Input />
                             </Form.Item>
                         </div>
                         <div className='flex justify-center'>
-                            <Button type='primary' className='flex justify-center items-center text-lg w-28 mt-5' htmlType='submit'>
+                            <Button type='primary' className='flex justify-center items-center text-lg w-28 mb-6' htmlType='submit'>
                                 <h4 className='p-2'>{t('changed-data')}</h4>
                             </Button>
                         </div>
