@@ -7,9 +7,16 @@
   height: auto !important;
   margin-top: 1.5rem;
 }
+:where(.css-dev-only-do-not-override-1ij74fp).ant-form-item .ant-form-item-label >label{
+  color: #ffffff !important;
+}
 .black {
   .h4{
     color: #fff !important;
+  }
+  :where(.css-dev-only-do-not-override-1ij74fp).ant-form-item .ant-form-item-label >label{
+    background-color: #0a0e14 !important;
+    color: #ffffff !important;
   }
   .ant-segmented-group{
     background-color: #0a0e14 !important;
