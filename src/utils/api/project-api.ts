@@ -41,8 +41,6 @@ export const updateProject = async (
     technologies: string
     server: string
     documentation: string
-    client: string
-    users: string
     dateEnd: string
   }
 ) => {

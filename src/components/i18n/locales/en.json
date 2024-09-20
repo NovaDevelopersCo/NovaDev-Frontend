@@ -358,5 +358,8 @@
   "add-delete-executors": "Add / delete executors",
   "add-delete-clients": "Add / delete client",
   "delete-client": "Delete client",
-  "select-executors": "Select executors"
+  "select-executors": "Select executors",
+  "add-executors": "Add executors",
+  "clients": "Clients",
+  "select-client": "Select client"
 }

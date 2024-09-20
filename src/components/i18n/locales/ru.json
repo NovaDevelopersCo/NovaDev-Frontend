@@ -339,5 +339,7 @@
   "deadline": "Дата завершения",
   "add-delete-clients": "Добавление / удаление клиента",
   "delete-client": "Удалить клиента",
-  "select-executors": "Выбрать исполнителей"
+  "select-executors": "Выберите исполнителей",
+  "clients": "Клиенты",
+  "select-client": "Выберите клиента"
 }

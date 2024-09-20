@@ -361,5 +361,7 @@
   "select-executors": "Орындаушыларды таңдау",
   "add-delete-executors": "Орындаушыларды қосу / жою",
   "add-executors": "Орындаушыларды қосу",
-  "delete-executors": "Орындаушыларды жою"
+  "delete-executors": "Орындаушыларды жою",
+  "clients": "Клиенттер",
+  "select-client": "Клиентті таңдаңыз"
 }
