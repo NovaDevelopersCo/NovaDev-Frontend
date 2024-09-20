@@ -5,16 +5,19 @@ import { Button, Form, Input, Upload, UploadFile } from 'antd'
 import { UploadOutlined } from '@ant-design/icons'
 import { TUser, TUserInfo } from '../../utils/typesFromBackend'
 import { NotificationContext } from '../../components/notification-provider/notification-provider'
-// import { SegmentedValue } from 'antd/es/segmented'
+import clsx from 'clsx'
 
 interface IEditUserInfo {
     token: string
     t: (arg0: string) => string
+    dark: boolean
+    style: object
 }
 
-const EditUserInfo: FC<IEditUserInfo> = ({ token, t }) => {
+const EditUserInfo: FC<IEditUserInfo> = ({ token, t, dark, style }) => {
         const { openNotification } = useContext(NotificationContext)
         const [form] = Form.useForm()
+        const theme = clsx(dark ? 'black' : 'white')
         // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
         const [user, setUser] = React.useState<TUser>({} as TUser)
         // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
@@ -137,33 +140,33 @@ const EditUserInfo: FC<IEditUserInfo> = ({ token, t }) => {
                             <div className='flex items-center justify-center mt-2 mb-3'>
                                 <h4 className='text-lg font-semibold'>{t('base-info-title')}</h4>
                             </div>
-                            <Form.Item label={t('user-public-nickname')} name='public_nickname' rules={[{ required: false, message: t('enter-your-public-nickname') }]}>
+                            <Form.Item className={theme} style={style} label={t('user-public-nickname')} name='public_nickname' rules={[{ required: false, message: t('enter-your-public-nickname') }]}>
                                 <Input />
                             </Form.Item>
-                            <Form.Item label={t('user-full-name')} name='full_name' rules={[{ required: false, message: t('enter-your-full-name') }]}>
+                            <Form.Item className={theme} style={style} label={t('user-full-name')} name='full_name' rules={[{ required: false, message: t('enter-your-full-name') }]}>
                                 <Input />
                             </Form.Item>
-                            <Form.Item label={t('user-image')} rules={[{ required: false, message: t('enter-your-image') }]}>
+                            <Form.Item className={theme} style={style} label={t('user-image')} rules={[{ required: false, message: t('enter-your-image') }]}>
                                 <Upload onChange={handleUploadChange} fileList={fileList} beforeUpload={() => false} >
-                                    <Button className='flex items-center'>
+                                    <Button className={`${theme} flex items-center`} style={style}>
                                         <UploadOutlined />
                                         {t('upload-image')}
                                     </Button>
                                 </Upload>
                             </Form.Item>
-                            <Form.Item label={t('user-phone')} name='phone' rules={[{ required: false, message: t('enter-your-phone') }]}>
+                            <Form.Item className={theme} style={style} label={t('user-phone')} name='phone' rules={[{ required: false, message: t('enter-your-phone') }]}>
                                 <Input />
                             </Form.Item>
-                            <Form.Item label={t('user-email')} name='email' rules={[{ required: false, message: t('enter-your-email') }]}>
+                            <Form.Item className={theme} style={style} label={t('user-email')} name='email' rules={[{ required: false, message: t('enter-your-email') }]}>
                                 <Input />
                             </Form.Item>
-                            <Form.Item label={t('user-github')} name='github' rules={[{ required: false, message: t('enter-your-github') }]}>
+                            <Form.Item className={theme} style={style} label={t('user-github')} name='github' rules={[{ required: false, message: t('enter-your-github') }]}>
                                 <Input />
                             </Form.Item>
-                            <Form.Item label={t('user-payment-info')} name='payment_info' rules={[{ required: false, message: t('enter-your-payment-info') }]}>
+                            <Form.Item className={theme} style={style} label={t('user-payment-info')} name='payment_info' rules={[{ required: false, message: t('enter-your-payment-info') }]}>
                                 <Input />
                             </Form.Item>
-                            <Form.Item label={t('user-tg')} name='tg' rules={[{ required: false, message: t('enter-your-tg') }]}>
+                            <Form.Item className={theme} style={style} label={t('user-tg')} name='tg' rules={[{ required: false, message: t('enter-your-tg') }]}>
                                 <Input />
                             </Form.Item>
                         </div>
