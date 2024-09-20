@@ -30,11 +30,6 @@ const ViewUserInfo: FC<IViewUserInfo> = ({ token, pathRest, t }) => {
     return (
         <div className='flex flex-col mt-4'>
                     <div>
-                        <div className='flex items-center justify-start'>
-                            <h1 className='text-xl font-semibold mb-5'>{t('about-user-title')}</h1>
-                        </div>
-                    </div>
-                    <div>
                         {isImageError ? (
                                 <div className='flex justify-center mb-2'>
                                     <p className='text-base'>Image preload error</p>
@@ -47,6 +42,9 @@ const ViewUserInfo: FC<IViewUserInfo> = ({ token, pathRest, t }) => {
                             </div>
                         )
                         }
+                    </div>
+                    <div className='flex justify-center items-center mt-5'>
+                        <h1 className='text-xl font-semibold mb-5'>{t('about-user-title')}</h1>
                     </div>
                     <div className='flex flex-col gap-6 mt-4'>
                         <div>
