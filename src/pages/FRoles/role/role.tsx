@@ -63,7 +63,12 @@ const Role: FC<IEditorRole> = ({ token, pathRest, t, style, dark }) => {
       />{' '}
       {isRole ? (
         value === t('role') ? (
-          <RoleUpdate token={token} pathRest={pathRest} t={t} style={style} />
+          <RoleUpdate
+            token={token}
+            pathRest={pathRest}
+            t={t}
+            style={style}
+          />
         ) : (
           ''
         )

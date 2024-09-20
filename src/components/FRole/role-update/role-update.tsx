@@ -126,15 +126,15 @@ const RoleUpdate: FC<IGroupModifiersForDish> = ({
       onValuesChange={handleFormChange}
     >
       <Form.Item label={t('title')} name='title'>
-        <Input />
+        <Input style={style} />
       </Form.Item>
       <Form.Item label={t('description')} name='description'>
-        <TextArea />
+        <TextArea style={style} />
       </Form.Item>
       <Form.Item label={t('level_access')} name='level_access'>
-        <Select>
+        <Select style={style}>
           {Object.values(ELevelAccess).map((levelAccess: ELevelAccess) => (
-            <Select.Option value={levelAccess} key={levelAccess}>
+            <Select.Option value={levelAccess} key={levelAccess} style={style}>
               {levelAccess}
             </Select.Option>
           ))}
