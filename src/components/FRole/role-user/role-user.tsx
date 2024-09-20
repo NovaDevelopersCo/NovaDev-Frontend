@@ -113,10 +113,15 @@ const RoleUser: FC<IGroupModifiersForDish> = ({
         validateMessages={validateMessages}
         style={{ paddingTop: '1.5rem', ...style }}
       >
-        <Form.Item label={t('add-user')} name='id' rules={[{ required: true }]}>
-          <Select>
+        <Form.Item
+          label={t('add-user')}
+          name='id'
+          rules={[{ required: true }]}
+          style={style}
+        >
+          <Select style={style}>
             {users.map((user, index) => (
-              <Select.Option value={user.id} key={index}>
+              <Select.Option value={user.id} key={index} style={style}>
                 {user.info.full_name}
               </Select.Option>
             ))}

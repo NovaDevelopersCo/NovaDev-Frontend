@@ -125,13 +125,13 @@ const RoleUpdate: FC<IGroupModifiersForDish> = ({
       style={{ paddingTop: '1.5rem', ...style }}
       onValuesChange={handleFormChange}
     >
-      <Form.Item label={t('title')} name='title'>
+      <Form.Item label={t('title')} name='title' style={style}>
         <Input style={style} />
       </Form.Item>
-      <Form.Item label={t('description')} name='description'>
+      <Form.Item label={t('description')} name='description' style={style}>
         <TextArea style={style} />
       </Form.Item>
-      <Form.Item label={t('level_access')} name='level_access'>
+      <Form.Item label={t('level_access')} name='level_access' style={style}>
         <Select style={style}>
           {Object.values(ELevelAccess).map((levelAccess: ELevelAccess) => (
             <Select.Option value={levelAccess} key={levelAccess} style={style}>
