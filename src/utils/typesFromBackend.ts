@@ -35,6 +35,7 @@ export interface TRole {
 export interface TUserTeam {
   id: number
   title: string
+  users: TUser[]
 }
 
 export interface TUserProjects {

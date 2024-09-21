@@ -2,8 +2,9 @@
 import React, { FC, useState, useEffect, useContext } from 'react'
 import { Link } from 'react-router-dom'
 import * as UserInfoAPI from '../../utils/api/user-info-api'
+import * as TeamAPI from '../../utils/api/team-api'
 import { Image } from 'antd'
-import { TUser } from '../../utils/typesFromBackend'
+import { TUser, TUserTeam } from '../../utils/typesFromBackend'
 import { NotificationContext } from '../../components/notification-provider/notification-provider'
 
 interface IViewUserInfo {
@@ -20,13 +21,27 @@ const ViewUserInfo: FC<IViewUserInfo> = ({ token, pathRest, t }) => {
     }
     // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
     const [user, setUser] = React.useState<TUser>({} as TUser)
+    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+    const [teamMembers, setTeamMembers] = React.useState<TUserTeam>({} as TUserTeam)
+    // const [teamId, setTeamId] = React.useState<number | null>(null)
+    const [teamId, setTeamId] = React.useState<number>()
     useEffect(() => {
         UserInfoAPI.getUserData(token).then(res => {
             if (res) {
                 setUser(res)
+                setTeamId(res.team.id)
             }
         }).catch((e) => openNotification(e, 'topRight'))
     }, [token])
+    useEffect(() => {
+        if (teamId) {
+            TeamAPI.getTeamById(token, teamId).then(res => {
+                if (res) {
+                    setTeamMembers(res)
+                }
+            }).catch((e) => openNotification(e, 'topRight'))
+        }
+    }, [token, user, teamId])
     return (
         <div className='flex flex-col mt-4'>
                     <div>
@@ -97,6 +112,16 @@ const ViewUserInfo: FC<IViewUserInfo> = ({ token, pathRest, t }) => {
                             <div className='flex gap-2 mb-2 items-center'>
                                 <h2 className='font-semibold'>{t('user-team-title')}</h2>
                                 <p>{user?.team?.title ?? ''}</p>
+                            </div>
+                            <div className='flex gap-2 mb-2 items-center'>
+                                <h2 className='font-semibold'>{t('team-members')}</h2>
+                                <div>
+                                    {teamMembers?.users?.map((user) => {
+                                        return (
+                                            <p key={user.id}>{user?.info?.public_nickname}</p>
+                                        )
+                                    })}
+                                </div>
                             </div>
                         </div>
                     </div>
