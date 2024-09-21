@@ -115,10 +115,10 @@ const ViewUserInfo: FC<IViewUserInfo> = ({ token, pathRest, t }) => {
                             </div>
                             <div className='flex gap-2 mb-2 items-center'>
                                 <h2 className='font-semibold'>{t('team-members')}</h2>
-                                <div>
+                                <div className='flex-row'>
                                     {teamMembers?.users?.map((user) => {
                                         return (
-                                            <p key={user.id}>{user?.info?.public_nickname}</p>
+                                            <p className='mr-2' key={user.id}>{user?.info?.public_nickname}</p>
                                         )
                                     })}
                                 </div>
