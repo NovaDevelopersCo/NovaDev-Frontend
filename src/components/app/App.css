@@ -7,10 +7,10 @@
   height: auto !important;
   margin-top: 1.5rem;
 }
-:where(.css-dev-only-do-not-override-1ij74fp).ant-form-item .ant-form-item-label >label{
-  color: #ffffff !important;
-}
 .black {
+  :where(.css-dev-only-do-not-override-1ij74fp).ant-form-item .ant-form-item-label >label{
+    color: #ffffff !important;
+  }
   .h4{
     color: #fff !important;
   }

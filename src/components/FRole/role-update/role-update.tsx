@@ -124,6 +124,7 @@ const RoleUpdate: FC<IGroupModifiersForDish> = ({
       validateMessages={validateMessages}
       name='role'
       form={form}
+      className={theme}
       style={{ paddingTop: '1.5rem', ...style }}
       onValuesChange={handleFormChange}
     >
