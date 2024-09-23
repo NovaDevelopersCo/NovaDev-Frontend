@@ -116,12 +116,17 @@ const RoleUser: FC<IGroupModifiersForDish> = ({
         <Form.Item
           label={t('add-user')}
           name='id'
+          className={theme}
           rules={[{ required: true }]}
           style={style}
         >
           <Select style={style} className={theme}>
             {users.map((user, index) => (
-              <Select.Option value={user.id} key={index} style={style} className={theme}>
+              <Select.Option
+                value={user.id}
+                key={index}
+                style={style}
+              >
                 {user.info.full_name}
               </Select.Option>
             ))}
