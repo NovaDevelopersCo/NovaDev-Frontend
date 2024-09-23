@@ -141,10 +141,10 @@ const EditUserInfo: FC<IEditUserInfo> = ({ token, t, dark, style }) => {
                                 <h4 className={`${theme} text-lg font-semibold`} style={style}>{t('base-info-title')}</h4>
                             </div>
                             <Form.Item label={<span className={theme} style={style}>{t('user-public-nickname')}</span>} name='public_nickname' rules={[{ required: false, message: t('enter-your-public-nickname') }]}>
-                                <Input />
+                                <Input className={theme} style={style} />
                             </Form.Item>
                             <Form.Item label={<span className={theme} style={style}>{t('user-full-name')}</span>} name='full_name' rules={[{ required: false, message: t('enter-your-full-name') }]}>
-                                <Input />
+                                <Input className={theme} style={style} />
                             </Form.Item>
                             <Form.Item label={<span className={theme} style={style}>{t('user-image')}</span>} rules={[{ required: false, message: t('enter-your-image') }]}>
                                 <Upload onChange={handleUploadChange} fileList={fileList} beforeUpload={() => false} >
@@ -155,19 +155,19 @@ const EditUserInfo: FC<IEditUserInfo> = ({ token, t, dark, style }) => {
                                 </Upload>
                             </Form.Item>
                             <Form.Item label={<span className={theme} style={style}>{t('user-phone')}</span>} name='phone' rules={[{ required: false, message: t('enter-your-phone') }]}>
-                                <Input />
+                                <Input className={theme} style={style} />
                             </Form.Item>
                             <Form.Item label={<span className={theme} style={style}>{t('user-email')}</span>} name='email' rules={[{ required: false, message: t('enter-your-email') }]}>
-                                <Input />
+                                <Input className={theme} style={style} />
                             </Form.Item>
                             <Form.Item label={<span className={theme} style={style}>{t('user-github')}</span>} name='github' rules={[{ required: false, message: t('enter-your-github') }]}>
-                                <Input />
+                                <Input className={theme} style={style} />
                             </Form.Item>
                             <Form.Item label={<span className={theme} style={style}>{t('user-payment-info')}</span>} name='payment_info' rules={[{ required: false, message: t('enter-your-payment-info') }]}>
-                                <Input />
+                                <Input className={theme} style={style} />
                             </Form.Item>
                             <Form.Item label={<span className={theme} style={style}>{t('user-tg')}</span>} name='tg' rules={[{ required: false, message: t('enter-your-tg') }]}>
-                                <Input />
+                                <Input className={theme} style={style} />
                             </Form.Item>
                         </div>
                         <div className='flex justify-center'>

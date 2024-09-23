@@ -52,7 +52,7 @@ const ViewUserInfo: FC<IViewUserInfo> = ({ token, pathRest, t }) => {
                         ) : (
                             <div className='flex gap-2 mb-2  items-center justify-center'>
                                 <div className='w-40 h-40 overflow-hidden rounded-full flex items-center justify-center'>
-                                    <Image width={200} height={200} src={user?.info?.image} alt="Profile photo" onError={handleImageError} />
+                                    <Image width={200} height={200} className='object-contain' src={user?.info?.image} alt="Profile photo" onError={handleImageError} />
                                 </div>
                             </div>
                         )
@@ -111,14 +111,14 @@ const ViewUserInfo: FC<IViewUserInfo> = ({ token, pathRest, t }) => {
                             </div>
                             <div className='flex gap-2 mb-2 items-center'>
                                 <h2 className='font-semibold'>{t('user-team-title')}</h2>
-                                <p>{user?.team?.title ?? ''}</p>
+                                <p>{user?.team?.title ?? 'Team not found!'}</p>
                             </div>
                             <div className='flex gap-2 mb-2 items-center'>
                                 <h2 className='font-semibold'>{t('team-members')}</h2>
                                 <div className='flex-row'>
                                     {teamMembers?.users?.map((user) => {
                                         return (
-                                            <p className='mr-2' key={user.id}>{user?.info?.public_nickname}</p>
+                                            <p className='mr-2' key={user.id}>{user?.info?.public_nickname ?? 'Team members not found!'}</p>
                                         )
                                     })}
                                 </div>
