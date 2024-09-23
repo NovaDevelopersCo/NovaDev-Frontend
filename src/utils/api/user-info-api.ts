@@ -60,6 +60,16 @@ export const getUserData = async (
   }
 }
 
+export const getMeData = async (token: string) => {
+  return await fetch(`${BASE_URL}/users/me`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    }
+  }).then(async (res) => await handleResponse(res))
+}
+
 export const editUserData = async (token: string, user: any): Promise<void> => {
   try {
     if (token) {
@@ -156,10 +166,8 @@ export const getUserTeam = async (
 export const editUserTeam = async (
   token: string,
   formTeamData: any
-): Promise<void> => {
-  try {
-    if (token) {
-      const response = await fetch(`${BASE_URL}/teams/add`, {
+) => {
+      return await fetch(`${BASE_URL}/teams/add`, {
         method: 'POST',
         headers: {
           'Content-type': 'application/json',
@@ -168,26 +176,14 @@ export const editUserTeam = async (
         body: JSON.stringify({
           ...formTeamData
         })
-      })
-      //
-      if (!response.ok) {
-        throw new Error('Failed to fetch user data')
-      }
-    } else {
-      throw new Error('Bearer токен отсутствует!')
-    }
-  } catch (error) {
-    console.error('Произошла ошибка', error)
-  }
+      }).then(async (res) => await handleResponse(res))
 }
 
 export const deleteUserTeam = async (
   token: string,
   formTeamData: any
 ): Promise<void> => {
-  try {
-    if (token) {
-      const response = await fetch(`${BASE_URL}/teams/cut`, {
+      return await fetch(`${BASE_URL}/teams/cut`, {
         method: 'POST',
         headers: {
           'Content-type': 'application/json',
@@ -196,17 +192,7 @@ export const deleteUserTeam = async (
         body: JSON.stringify({
           ...formTeamData
         })
-      })
-      //
-      if (!response.ok) {
-        throw new Error('Failed to fetch user data')
-      }
-    } else {
-      throw new Error('Bearer токен отсутствует!')
-    }
-  } catch (error) {
-    console.error('Произошла ошибка', error)
-  }
+      }).then(async (res) => await handleResponse(res))
 }
 
 export const editUserRole = async (

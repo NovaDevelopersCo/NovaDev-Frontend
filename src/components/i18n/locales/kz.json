@@ -264,6 +264,8 @@
   "github": "GitHub",
   "payment-info": "Төлем туралы ақпарат",
   "team-title": "Команда",
+  "team-description": "Команда сипаттамасы",
+  "team-image": "Команда бейнесі",
   "projects-title": "Жобалар",
   "isDelivery": "Бұл жеткізу ме?",
   "verify-client-old-18": "Клиенттің жасы 18 жастан асқанын тексеру керек пе?",
@@ -321,6 +323,7 @@
   "project": "Жоба",
   "change-information-about-me": "Өзіңіз туралы ақпаратты өзгертіңіз",
   "your-list-customers": " Клиенттер тізімі",
+  "your-list-teams": "Командалар тізімі",
   "teams": "Командалар",
   "list-users": "Пайдаланушылар тізімі",
   "tg": "Жеделхат",
@@ -335,5 +338,6 @@
   "your-list-roles": "Рөлдер тізімі",
   "add-role": "Рөл қосыңыз",
   "add-user": "Пайдаланушы қосу",
-  "add-role-to-user": "Пайдаланушыға рөл қосыңыз"
+  "add-role-to-user": "Пайдаланушыға рөл қосыңыз",
+  "add-user-to-team": "Пайдаланушыны пәрменге қосу"
 }

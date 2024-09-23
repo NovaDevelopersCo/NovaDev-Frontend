@@ -10,6 +10,7 @@ export interface TUser {
   role: TRole
   info: TUserInfo
   team: TUserTeam
+  teamId: number
   projects: TUserProjects[]
 }
 
@@ -40,6 +41,14 @@ export interface TUserTeam {
 export interface TUserProjects {
   id: number
   title: string
+}
+
+export interface TTeams {
+  id: number
+  title: string
+  description: string
+  image: string
+  users: TUser[]
 }
 
 export interface TTask {

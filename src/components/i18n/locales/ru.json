@@ -246,6 +246,8 @@
   "github": "GitHub",
   "payment-info": "Платежная информация",
   "team-title": "Команда",
+  "team-description": "Описание команды",
+  "team-image": "Изображение команды",
   "projects-title": "Проекты",
   "isDelivery": "Это доставка?",
   "verify-client-old-18": "Нужна ли проверка, что возраст клиента больше 18 лет?",
@@ -301,6 +303,7 @@
   "change-information-about-me": "Изменить информацию о себе",
   "your-list-customers": "Список клиентов",
   "teams": "Команды",
+  "your-list-teams": "Список команд",
   "tg": "Телеграм",
   "list-users": "Список пользователей",
   "actions": "Действия",
@@ -313,5 +316,6 @@
   "your-list-roles": "Список ролей",
   "add-role": "Добавить роль",
   "add-user": "Добавить пользователя",
-  "add-role-to-user": "Добавить роль пользователю"
+  "add-role-to-user": "Добавить роль пользователю",
+  "add-user-to-team": "Добавить пользователя в команду"
 }
