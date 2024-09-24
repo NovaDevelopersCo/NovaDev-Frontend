@@ -116,11 +116,16 @@ const ViewUserInfo: FC<IViewUserInfo> = ({ token, pathRest, t }) => {
                             <div className='flex gap-2 mb-2 items-center'>
                                 <h2 className='font-semibold'>{t('team-members')}</h2>
                                 <div className='flex-row'>
-                                    {teamMembers?.users?.map((user) => {
-                                        return (
-                                            <p className='mr-2' key={user.id}>{user?.info?.public_nickname ?? 'Team members not found!'}</p>
-                                        )
-                                    })}
+                                    {teamMembers?.users?.length ? (
+                                        teamMembers?.users?.map((user) => {
+                                            return (
+                                                <p className='mr-2' key={user.id}>{user?.info?.public_nickname ?? 'Team members not found!'}</p>
+                                            )
+                                        })
+                                    ) : (
+                                        <p>Team members not found!</p>
+                                    )
+                                    }
                                 </div>
                             </div>
                         </div>
