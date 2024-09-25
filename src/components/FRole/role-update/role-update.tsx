@@ -129,7 +129,7 @@ const RoleUpdate: FC<IGroupModifiersForDish> = ({
       onValuesChange={handleFormChange}
     >
       <Form.Item label={t('title')} name='title' style={style}>
-        <Input style={style}/>
+        <Input style={style} />
       </Form.Item>
       <Form.Item label={t('description')} name='description' style={style}>
         <TextArea style={style} />
@@ -155,7 +155,9 @@ const RoleUpdate: FC<IGroupModifiersForDish> = ({
           okText={t('yes')}
           cancelText={t('no')}
         >
-          <Button htmlType='button' style={style}>{t('delete')}</Button>
+          <Button htmlType='button' style={style}>
+            {t('delete')}
+          </Button>
         </Popconfirm>
       </Form.Item>
     </Form>

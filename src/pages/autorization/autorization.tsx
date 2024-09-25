@@ -114,7 +114,7 @@ const Autorization: FC<IAutorization> = ({
         name='private_nickname'
         rules={[{ required: true, message: t('enter-your-username') }]}
       >
-        <Input style={style}/>
+        <Input style={style} />
       </Form.Item>
 
       <Form.Item
@@ -122,7 +122,7 @@ const Autorization: FC<IAutorization> = ({
         name='password'
         rules={[{ required: true, message: t('enter-your-password') }]}
       >
-        <Input.Password style={style}/>
+        <Input.Password style={style} />
       </Form.Item>
 
       <Form.Item {...tailLayout}>

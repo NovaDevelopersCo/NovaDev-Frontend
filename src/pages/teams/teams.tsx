@@ -1,7 +1,7 @@
 import { Button, Table } from 'antd'
 import { ColumnsType } from 'antd/es/table'
 import { FC, useContext, useEffect, useState } from 'react'
-import * as customerAPI from '../../utils/api/customers-api'
+import * as customerAPI from '../../utils/api/clients-api'
 import { Link, useHistory, NavLink } from 'react-router-dom'
 import { NotificationContext } from '../../components/notification-provider/notification-provider'
 import { TCustomer } from '../../utils/typesFromBackend'
@@ -41,17 +41,10 @@ const Customers: FC<ICustomers> = ({ token, pathRest, t }) => {
       dataIndex: 'name',
       key: 'name',
       render: (name: string, customer: TCustomer): JSX.Element => (
-        <Link to={`/${pathRest}/customer/${customer.id}`}>{name}</Link>
+        <Link to={`/${pathRest}/clients/${customer.id}`}>{name}</Link>
       ),
       sorter: (a: TCustomer, b: TCustomer): number =>
         a.name.localeCompare(b.name)
-    },
-    {
-      title: `${t('email')}`,
-      dataIndex: 'email',
-      key: 'email',
-      sorter: (a: TCustomer, b: TCustomer): number =>
-        a.email.localeCompare(b.email)
     },
     {
       title: `${t('tg')}`,
@@ -67,7 +60,7 @@ const Customers: FC<ICustomers> = ({ token, pathRest, t }) => {
           <Button
             type='primary'
             onClick={() =>
-              history.push(`/${pathRest}/customer/update/${customer.id}`)
+              history.push(`/${pathRest}/clients/update/${customer.id}`)
             }
           >
             {t('update')}
@@ -92,10 +85,8 @@ const Customers: FC<ICustomers> = ({ token, pathRest, t }) => {
         }}
       >
         <div style={{ display: 'block', marginRight: 'auto' }}>
-          <h2 style={{ fontWeight: 600, marginBottom: '0' }}>
-            {t('customers')}
-          </h2>
-          <p style={{ marginBottom: '0' }}>{t('your-list-customers')}</p>
+          <h2 style={{ fontWeight: 600, marginBottom: '0' }}>{t('clients')}</h2>
+          <p style={{ marginBottom: '0' }}>{t('your-list-clients')}</p>
         </div>
         <NavLink
           to={`/${pathRest}/add/category`}

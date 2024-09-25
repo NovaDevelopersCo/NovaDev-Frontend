@@ -6,7 +6,7 @@ import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons'
 import fullscreenIcon from '../../assets/images/fullscreen.svg'
 import Autorization from '../../pages/autorization/autorization'
 import NotFound from '../../pages/not-found/not-found'
-import Customers from '../../pages/customers/customers'
+import Customers from '../../pages/clients/clients'
 import AllUsers from '../../pages/users/users'
 import { ECountry } from '../../utils/typesFromBackend'
 import { useTranslation } from 'react-i18next'
@@ -29,6 +29,7 @@ import AddCustomer from '../../pages/add-customer/add-customer'
 import Roles from '../../pages/FRoles/roles/roles'
 import Role from '../../pages/FRoles/role/role'
 import AddRole from '../../pages/FRoles/add-role/add-role'
+import CustomerDetails from '../../pages/clients/client-details'
 
 const { Header, Sider, Content } = Layout
 
@@ -259,7 +260,13 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
                   isLoggedIn={isLoggedIn}
                   pathRest={pathRest}
                 >
-                  <Role dark={dark} token={token} pathRest={pathRest} t={t} style={style} />
+                  <Role
+                    dark={dark}
+                    token={token}
+                    pathRest={pathRest}
+                    t={t}
+                    style={style}
+                  />
                 </ProtectedRoute>
                 <ProtectedRoute
                   path={`/:${pathRest}/add/role`}
@@ -275,7 +282,7 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
                   />
                 </ProtectedRoute>
                 <ProtectedRoute
-                  path={`/${pathRest}/customers`}
+                  path={`/${pathRest}/clients`}
                   exact
                   isLoggedIn={isLoggedIn}
                   pathRest={pathRest}
@@ -289,7 +296,21 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
                   />
                 </ProtectedRoute>
                 <ProtectedRoute
-                  path={`/:${pathRest}/add/customer`}
+                  path={`/${pathRest}/clients/:id`}
+                  exact
+                  isLoggedIn={isLoggedIn}
+                  pathRest={pathRest}
+                >
+                  <CustomerDetails
+                    token={token}
+                    pathRest={pathRest}
+                    t={t}
+                    dark={dark}
+                    style={style}
+                  />
+                </ProtectedRoute>
+                <ProtectedRoute
+                  path={`/:${pathRest}/add/clients`}
                   exact
                   isLoggedIn={isLoggedIn}
                   pathRest={pathRest}
