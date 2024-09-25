@@ -32,7 +32,7 @@ const Sidebar: FC<ISidebar> = ({
     history.push(`/${pathRest}/roles`)
   }
   const handleCustomersClick = (): void => {
-    history.push(`/${pathRest}/customers`)
+    history.push(`/${pathRest}/clients`)
   }
   const handleUsersClick = (): void => {
     history.push(`/${pathRest}/users`)

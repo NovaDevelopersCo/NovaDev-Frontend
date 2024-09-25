@@ -263,8 +263,8 @@ export interface TAdmin {
 export interface TCustomer {
   id: string
   name: string
-  email: string
   tg: string
+  phone: string
 }
 export interface TAdvice {
   id: string
