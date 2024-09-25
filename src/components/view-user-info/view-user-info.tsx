@@ -45,7 +45,7 @@ const ViewUserInfo: FC<IViewUserInfo> = ({ token, pathRest, t }) => {
     return (
         <div className='flex flex-col mt-4'>
                     <div>
-                        {isImageError ? (
+                        {isImageError || !user?.info?.image ? (
                                 <div className='flex justify-center mb-2'>
                                     <p className='text-base'>Image preload error</p>
                                 </div>
