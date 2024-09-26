@@ -29,7 +29,7 @@ const ViewUserInfo: FC<IViewUserInfo> = ({ token, pathRest, t }) => {
         UserInfoAPI.getUserData(token).then(res => {
             if (res) {
                 setUser(res)
-                setTeamId(res.team.id)
+                setTeamId(res.team?.id)
             }
         }).catch((e) => openNotification(e, 'topRight'))
     }, [token])
