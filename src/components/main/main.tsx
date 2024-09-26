@@ -355,12 +355,12 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
                   />
                 </ProtectedRoute>
                 <ProtectedRoute
-                  path={`/:${pathRest}/user`}
+                  path={`/:${pathRest}/user-info`}
                   exact
                   isLoggedIn={isLoggedIn}
                   pathRest={pathRest}
                 >
-                  <UserInfo token={token} t={t} language={language} />
+                  <UserInfo token={token} pathRest={pathRest} t={t} dark={dark} style={style} />
                 </ProtectedRoute>
                 <Route path='*'>
                   <NotFound t={t} />

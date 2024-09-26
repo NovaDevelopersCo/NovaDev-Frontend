@@ -42,7 +42,7 @@ const Sidebar: FC<ISidebar> = ({
   }
 
   const handleUserInfoClick = (): void => {
-    history.push(`/${pathRest}/user`)
+    history.push(`/${pathRest}/user-info`)
   }
   const handleTeamsClick = (): void => {
     history.push(`/${pathRest}/teams`)
