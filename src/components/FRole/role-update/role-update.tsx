@@ -4,19 +4,22 @@ import { useHistory, useLocation, useRouteMatch } from 'react-router-dom'
 import { ELevelAccess, TRole } from '../../../utils/typesFromBackend'
 import * as roleAPI from '../../../utils/api/role-api'
 import { NotificationContext } from '../../notification-provider/notification-provider'
+import TextArea from 'antd/es/input/TextArea'
 
 interface IGroupModifiersForDish {
   pathRest: string
   token: string
   t: (arg0: string) => string
   style: object
+  theme: string
 }
 
 const RoleUpdate: FC<IGroupModifiersForDish> = ({
   token,
   pathRest,
   t,
-  style
+  style,
+  theme
 }) => {
   const { openNotification } = useContext(NotificationContext)
   const [form] = Form.useForm()
@@ -121,19 +124,20 @@ const RoleUpdate: FC<IGroupModifiersForDish> = ({
       validateMessages={validateMessages}
       name='role'
       form={form}
+      className={theme}
       style={{ paddingTop: '1.5rem', ...style }}
       onValuesChange={handleFormChange}
     >
-      <Form.Item label={t('title')} name='title'>
-        <Input />
+      <Form.Item label={t('title')} name='title' style={style}>
+        <Input style={style}/>
       </Form.Item>
-      <Form.Item label={t('description')} name='description'>
-        <Input />
+      <Form.Item label={t('description')} name='description' style={style}>
+        <TextArea style={style} />
       </Form.Item>
-      <Form.Item label={t('level_access')} name='level_access'>
-        <Select>
+      <Form.Item label={t('level_access')} name='level_access' style={style}>
+        <Select style={style} className={theme}>
           {Object.values(ELevelAccess).map((levelAccess: ELevelAccess) => (
-            <Select.Option value={levelAccess} key={levelAccess}>
+            <Select.Option value={levelAccess} key={levelAccess} style={style}>
               {levelAccess}
             </Select.Option>
           ))}
@@ -151,7 +155,7 @@ const RoleUpdate: FC<IGroupModifiersForDish> = ({
           okText={t('yes')}
           cancelText={t('no')}
         >
-          <Button htmlType='button'>{t('delete')}</Button>
+          <Button htmlType='button' style={style}>{t('delete')}</Button>
         </Popconfirm>
       </Form.Item>
     </Form>
