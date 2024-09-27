@@ -278,3 +278,23 @@ export interface TProfileData {
   team: string
   project: string
 }
+export interface TProject {
+  id: number
+  title: string
+  technologies: string[]
+  server: string
+  documentation: string
+  deadline: string
+  clientId: string
+  createdAt: string
+  updatedAt: string
+  users: TProjectUser[]
+}
+
+export interface TProjectUser {
+  createdAt: string
+  projectId: number
+  updatedAt: string
+  user: TUser
+  userId: number
+}
