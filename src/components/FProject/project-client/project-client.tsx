@@ -1,10 +1,8 @@
 import { Popconfirm, Form, Button, Select } from 'antd'
-import { FC, useContext, useEffect, useState } from 'react'
+import { FC, useContext, useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import * as projectAPI from '../../../utils/api/project-api'
 import { NotificationContext } from '../../notification-provider/notification-provider'
-import * as userAPI from '../../../utils/api/user-api'
-import clsx from 'clsx'
 import { TUser } from '../../../utils/typesFromBackend'
 import Table, { ColumnsType } from 'antd/es/table'
 
@@ -12,27 +10,18 @@ interface IProjectClient {
   pathRest: string
   token: string
   t: (arg0: string) => string
-  dark: boolean
+  theme: string
   style: object
 }
 
-const ProjectClient: FC<IProjectClient> = ({ token, pathRest, t, dark }) => {
+const ProjectClient: FC<IProjectClient> = ({ token, pathRest, t, theme }) => {
   const { openNotification } = useContext(NotificationContext)
-  const [users, setUsers] = useState<TUser[]>([])
   const history = useHistory()
   const [project] = useState<any>(null)
   const layout = {
     labelCol: { span: 6 },
     wrapperCol: { span: 12 }
   }
-  useEffect(() => {
-    userAPI
-      .getUsers(token)
-      .then((res: TUser[]) => {
-        setUsers(res)
-      })
-      .catch((e) => openNotification(e.message, 'topRight'))
-  }, [token, openNotification])
 
   const confirm = (): void => {
     projectAPI
@@ -73,7 +62,6 @@ const ProjectClient: FC<IProjectClient> = ({ token, pathRest, t, dark }) => {
       )
     }
   ]
-  const theme = clsx(dark ? 'black' : 'white')
 
   return (
     <Form
@@ -85,7 +73,7 @@ const ProjectClient: FC<IProjectClient> = ({ token, pathRest, t, dark }) => {
       <Form.Item label={t('add-client')} name='client'>
         <Select placeholder={t('select-client')}></Select>
       </Form.Item>
-      <Table columns={columns} dataSource={users} rowKey='id' />
+      <Table columns={columns} rowKey='id' />
       <Form.Item
         wrapperCol={{ ...layout.wrapperCol, offset: 6 }}
         style={{ textAlign: 'center' }}

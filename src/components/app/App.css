@@ -7,14 +7,32 @@
   height: auto !important;
   margin-top: 1.5rem;
 }
+
 .black {
   .h4 {
     color: #fff !important;
   }
+
+  .ant-form-item .ant-form-item-label > label {
+    background-color: #0a0e14 !important;
+    color: #ffffff !important;
+  }
+
+  .ant-segmented-group {
+    background-color: #0a0e14 !important;
+    color: #fff !important;
+  }
+
+  .ant-segmented-item-selected {
+    background-color: #8d8f91 !important;
+    color: #fff !important;
+  }
+
   .ant-select-selector {
     background-color: #0a0e14 !important;
     color: #fff !important;
   }
+
   .ant-form-item-label {
     background-color: #0a0e14 !important;
     color: #fff !important;
@@ -25,30 +43,32 @@
   .ant-table-wrapper {
     color: #0a0e14 !important;
   }
+
   .ant-table-cell {
     background-color: #0a0e14 !important;
     color: #fff !important;
     border: #fff;
   }
-  .ant-input {
-    color: #0a0e14 !important;
-  }
+
   .ant-form-item-control-input-content {
     color: #ffffff !important;
   }
+
   .text-blue-500 {
     color: #071de3 !important;
   }
+
   .ant-form-item-explain-error {
     color: #e3070e !important;
   }
+
   * {
+    background-color: #0a0e14 !important;
     color: #fff !important;
   }
 }
-:where(.css-dev-only-do-not-override-1ij74fp).ant-menu-light:not(
-    .ant-menu-horizontal
-  )
+
+.ant-menu-light:not(.ant-menu-horizontal)
   .ant-menu-item:not(.ant-menu-item-selected):hover {
   background-color: #fff !important;
 }

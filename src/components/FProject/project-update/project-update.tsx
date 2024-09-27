@@ -9,16 +9,16 @@ interface IProjectUpdate {
   pathRest: string
   token: string
   t: (arg0: string) => string
-  dark: boolean
   style: object
+  theme: string
 }
 
 const ProjectUpdate: FC<IProjectUpdate> = ({
   token,
   pathRest,
   t,
-  dark,
-  style
+  style,
+  theme
 }) => {
   const { openNotification } = useContext(NotificationContext)
   const [project, setProject] = React.useState<TProject>({} as TProject)
@@ -71,6 +71,7 @@ const ProjectUpdate: FC<IProjectUpdate> = ({
     <Form
       {...layout}
       form={form}
+      className={theme}
       onFinish={onFinish}
       layout='vertical'
       style={{ marginTop: '20px', maxWidth: '50%', ...style }}

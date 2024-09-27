@@ -4,7 +4,6 @@ import { Link, useHistory } from 'react-router-dom'
 import * as projectAPI from '../../../utils/api/project-api'
 import { NotificationContext } from '../../notification-provider/notification-provider'
 import * as userAPI from '../../../utils/api/user-api'
-import clsx from 'clsx'
 import { TUser } from '../../../utils/typesFromBackend'
 import Table, { ColumnsType } from 'antd/es/table'
 
@@ -12,7 +11,7 @@ interface IProjectExecutor {
   pathRest: string
   token: string
   t: (arg0: string) => string
-  dark: boolean
+  theme: string
   style: object
 }
 
@@ -20,7 +19,7 @@ const ProjectExecutor: FC<IProjectExecutor> = ({
   token,
   pathRest,
   t,
-  dark
+  theme
 }) => {
   const { openNotification } = useContext(NotificationContext)
   const [users, setUsers] = useState<TUser[]>([])
@@ -78,7 +77,6 @@ const ProjectExecutor: FC<IProjectExecutor> = ({
       )
     }
   ]
-  const theme = clsx(dark ? 'black' : 'white')
 
   return (
     <Form
