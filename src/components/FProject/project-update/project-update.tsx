@@ -1,9 +1,8 @@
 import { Popconfirm, Form, Button, Input, DatePicker } from 'antd'
-import React, { FC, useContext, useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import React, { FC, useContext } from 'react'
+import { useHistory, useLocation, useRouteMatch } from 'react-router-dom'
 import * as projectAPI from '../../../utils/api/project-api'
 import { NotificationContext } from '../../notification-provider/notification-provider'
-import clsx from 'clsx'
 import { TProject } from '../../../utils/typesFromBackend'
 
 interface IProjectUpdate {
@@ -14,72 +13,39 @@ interface IProjectUpdate {
   style: object
 }
 
-const ProjectUpdate: FC<IProjectUpdate> = ({ token, pathRest, t, dark }) => {
+const ProjectUpdate: FC<IProjectUpdate> = ({
+  token,
+  pathRest,
+  t,
+  dark,
+  style
+}) => {
   const { openNotification } = useContext(NotificationContext)
-  const [projects] = useState<any>(null)
   const [project, setProject] = React.useState<TProject>({} as TProject)
   const [form] = Form.useForm()
   const history = useHistory()
+  const pathname = useLocation().pathname
+  const match = useRouteMatch<{ id: string }>(pathname)
+  const id = match?.params.id
   const layout = {
-    labelCol: { span: 6 },
-    wrapperCol: { span: 12 }
+    labelCol: { span: 4 },
+    wrapperCol: { span: 14 }
   }
-  const [formData, setFormData] = React.useState(() => {
-    const storedFormDataString = localStorage.getItem('formDataProject')
-    return storedFormDataString ? JSON.parse(storedFormDataString) : null
-  })
-
-  const handleFormChange = (): void => {
-    const allValues = form.getFieldsValue()
-    const updateallValues = { ...allValues, _id: project.id }
-    setFormData(updateallValues)
-  }
-
   React.useEffect(() => {
-    if (project.id) {
-      const values = formData || project
-      form.setFieldsValue({
-        title: values.title,
-        technologies: values.technologies,
-        server: values.server,
-        documentation: values.documentation
+    projectAPI
+      .getProject(token, Number(id))
+      .then((res: TProject) => {
+        setProject(res)
+        form.setFieldsValue({
+          title: res.title,
+          technologies: res.technologies,
+          server: res.server,
+          documentation: res.documentation
+        })
       })
-    }
-  }, [project, formData])
+      .catch((e) => openNotification(e.message, 'topRight'))
+  }, [token, form, openNotification])
 
-  React.useEffect(() => {
-    const storedFormDataString = localStorage.getItem('formDataProject')
-    const parsedFormData = storedFormDataString
-      ? JSON.parse(storedFormDataString)
-      : null
-    if (parsedFormData && parsedFormData.id === project.id) {
-      form.setFieldsValue({
-        title: parsedFormData.title
-      })
-      form.setFieldsValue({
-        technologies: parsedFormData.technologies
-      })
-      form.setFieldsValue({
-        server: parsedFormData.server
-      })
-      form.setFieldsValue({
-        documentation: parsedFormData.documentation
-      })
-    } else {
-      form.setFieldsValue({
-        title: project.title
-      })
-      form.setFieldsValue({
-        technologies: project.technologies
-      })
-      form.setFieldsValue({
-        server: project.server
-      })
-      form.setFieldsValue({
-        documentation: project.documentation
-      })
-    }
-  }, [project])
   const onFinish = (values: any): void => {
     const updateProject = {
       name: values.name,
@@ -97,23 +63,17 @@ const ProjectUpdate: FC<IProjectUpdate> = ({ token, pathRest, t, dark }) => {
 
   const confirm = (): void => {
     projectAPI
-      .deleteProject(token, projects.id.toString())
+      .deleteProject(token, project.id)
       .then(() => history.push(`/${pathRest}/project`))
       .catch((e) => openNotification(e, 'topRight'))
   }
-
-  const theme = clsx(dark ? 'black' : 'white')
   return (
     <Form
+      {...layout}
       form={form}
       onFinish={onFinish}
       layout='vertical'
-      style={{
-        marginTop: '20px',
-        maxWidth: '50%'
-      }}
-      className={theme}
-      onValuesChange={handleFormChange}
+      style={{ marginTop: '20px', maxWidth: '50%', ...style }}
     >
       <Form.Item label={t('project-name')} name='name'>
         <Input />
@@ -130,21 +90,19 @@ const ProjectUpdate: FC<IProjectUpdate> = ({ token, pathRest, t, dark }) => {
       <Form.Item label={t('date-end')} name='date-end'>
         <DatePicker />
       </Form.Item>
-      <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 6 }}>
+      <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 4 }}>
         <Button type='primary' htmlType='submit'>
           {t('save')}
         </Button>
       </Form.Item>
-      <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 6 }}>
+      <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 4 }}>
         <Popconfirm
           title={t('you-sure-want-delete')}
           onConfirm={confirm}
           okText={t('yes')}
           cancelText={t('no')}
         >
-          <Button danger className={theme} htmlType='button'>
-            {t('delete')}
-          </Button>
+          <Button htmlType='button'>{t('delete')}</Button>
         </Popconfirm>
       </Form.Item>
     </Form>

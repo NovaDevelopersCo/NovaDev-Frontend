@@ -83,13 +83,7 @@ const ProjectClient: FC<IProjectClient> = ({ token, pathRest, t, dark }) => {
       className={theme}
     >
       <Form.Item label={t('add-client')} name='client'>
-        <Select placeholder={t('select-client')}>
-          {users.map((user: TUser) => (
-            <Select.Option value={user.id} key={user.id}>
-              {user.info.full_name}
-            </Select.Option>
-          ))}
-        </Select>
+        <Select placeholder={t('select-client')}></Select>
       </Form.Item>
       <Table columns={columns} dataSource={users} rowKey='id' />
       <Form.Item

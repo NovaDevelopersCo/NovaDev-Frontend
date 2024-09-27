@@ -4,6 +4,7 @@ import clsx from 'clsx'
 import ProjectUpdate from '../../../components/FProject/project-update/project-update'
 import ProjectExecutor from '../../../components/FProject/project-executor/project-executor'
 import ProjectClient from '../../../components/FProject/project-client/project-client'
+import { useParams } from 'react-router-dom'
 
 interface IEditorPage {
   pathRest: string
@@ -14,6 +15,7 @@ interface IEditorPage {
 }
 
 const Project: FC<IEditorPage> = ({ token, pathRest, t, dark, style }) => {
+  const { projectName } = useParams<{ projectName: string }>()
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [activeTab, setActiveTab] = useState<string>(t('project'))
   const handleModalClose = (): void => {
@@ -46,7 +48,7 @@ const Project: FC<IEditorPage> = ({ token, pathRest, t, dark, style }) => {
           padding: '15px'
         }}
       >
-        {t('info-project')}
+        {projectName}
       </h4>
       <Segmented
         block
@@ -60,8 +62,8 @@ const Project: FC<IEditorPage> = ({ token, pathRest, t, dark, style }) => {
             token={token}
             pathRest={pathRest}
             t={t}
-            style={style}
             dark={dark}
+            style={style}
           />
         )}
         {activeTab === t('executors') && (
