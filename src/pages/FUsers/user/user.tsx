@@ -1,6 +1,6 @@
 import React, { FC, useContext, useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
-import { Form, Input, Button, Popconfirm, Modal, Select } from 'antd'
+import { Form, Input, Button, Popconfirm, Modal } from 'antd'
 import { NotificationContext } from '../../../components/notification-provider/notification-provider'
 import * as UserInfoAPI from '../../../utils/api/user-api'
 import { TUser } from '../../../utils/typesFromBackend'
@@ -92,7 +92,7 @@ const UserEditPage: FC<IUserEditPage> = ({
         style={{ maxWidth: '500px' }}
       >
         <Form.Item name='role' label={t('role')}>
-          <Select placeholder={t('select-role')}></Select>
+          <Input />
         </Form.Item>
         <Form.Item name='public_nickname' label={t('public-nickname')}>
           <Input />
