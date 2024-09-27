@@ -4,21 +4,29 @@ import { Form, Input, Button, Popconfirm, Modal, Select } from 'antd'
 import { NotificationContext } from '../../../components/notification-provider/notification-provider'
 import * as UserInfoAPI from '../../../utils/api/user-api'
 import { TUser } from '../../../utils/typesFromBackend'
-
+import clsx from 'clsx'
 interface IUserEditPage {
   token: string
   pathRest: string
   t: (arg0: string) => string
+  style: object
+  dark: boolean
 }
 
-const UserEditPage: FC<IUserEditPage> = ({ token, pathRest, t }) => {
+const UserEditPage: FC<IUserEditPage> = ({
+  token,
+  pathRest,
+  t,
+  style,
+  dark
+}) => {
   const { openNotification } = useContext(NotificationContext)
   const [form] = Form.useForm()
   const history = useHistory()
   const { id } = useParams<{ id: string }>()
   const [user, setUser] = useState<TUser | null>(null)
   const [isModalVisible, setIsModalVisible] = useState(false)
-
+  const theme = clsx(dark ? 'black' : 'white')
   React.useEffect(() => {
     UserInfoAPI.getUser(token, Number(id))
       .then((res: TUser) => {
@@ -80,6 +88,7 @@ const UserEditPage: FC<IUserEditPage> = ({ token, pathRest, t }) => {
         form={form}
         onFinish={onFinish}
         layout='vertical'
+        className={theme}
         style={{ maxWidth: '500px' }}
       >
         <Form.Item name='role' label={t('role')}>
