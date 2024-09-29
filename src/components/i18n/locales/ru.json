@@ -341,5 +341,6 @@
   "delete-client": "Удалить клиента",
   "select-executors": "Выберите исполнителей",
   "clients": "Клиенты",
-  "select-client": "Выберите клиента"
+  "select-client": "Выберите клиента",
+  "edit-info-project": "Изменить информацию об проекте"
 }

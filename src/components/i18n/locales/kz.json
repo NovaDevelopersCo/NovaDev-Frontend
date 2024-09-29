@@ -363,5 +363,6 @@
   "add-executors": "Орындаушыларды қосу",
   "delete-executors": "Орындаушыларды жою",
   "clients": "Клиенттер",
-  "select-client": "Клиентті таңдаңыз"
+  "select-client": "Клиентті таңдаңыз",
+  "edit-info-project": "Жоба ақпаратын өңдеу"
 }

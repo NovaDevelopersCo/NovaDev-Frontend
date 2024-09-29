@@ -361,5 +361,6 @@
   "select-executors": "Select executors",
   "add-executors": "Add executors",
   "clients": "Clients",
-  "select-client": "Select client"
+  "select-client": "Select client",
+  "edit-info-project": "Edit info about project"
 }

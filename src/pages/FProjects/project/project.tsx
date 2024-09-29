@@ -1,10 +1,13 @@
-import { FC, useState } from 'react'
+import React, { FC, useState, useEffect, useContext } from 'react'
 import { Button, Modal, Segmented } from 'antd'
 import ProjectUpdate from '../../../components/FProject/project-update/project-update'
 import ProjectExecutor from '../../../components/FProject/project-executor/project-executor'
 import ProjectClient from '../../../components/FProject/project-client/project-client'
-import { useParams } from 'react-router-dom'
 import clsx from 'clsx'
+import { TProject } from '../../../utils/typesFromBackend'
+import * as projectAPI from '../../../utils/api/project-api'
+import { useParams } from 'react-router-dom'
+import { NotificationContext } from '../../../components/notification-provider/notification-provider'
 
 interface IEditorPage {
   pathRest: string
@@ -15,13 +18,27 @@ interface IEditorPage {
 }
 
 const Project: FC<IEditorPage> = ({ token, pathRest, t, dark, style }) => {
-  const { projectName } = useParams<{ projectName: string }>()
+  const [project, setProject] = useState<TProject | null>(null)
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [activeTab, setActiveTab] = useState<string>(t('project'))
   const theme = clsx(dark ? 'black' : 'white')
+  const { id } = useParams<{ id: string }>()
+  const { openNotification } = useContext(NotificationContext)
+
   const handleModalClose = (): void => {
     setIsModalVisible(false)
   }
+
+  useEffect(() => {
+    if (id) {
+      projectAPI
+        .getProject(token, Number(id))
+        .then((res: TProject) => {
+          setProject(res)
+        })
+        .catch((e: Error) => openNotification(e.message, 'topRight'))
+    }
+  }, [token, id, openNotification])
 
   return (
     <>
@@ -47,7 +64,7 @@ const Project: FC<IEditorPage> = ({ token, pathRest, t, dark, style }) => {
           padding: '15px'
         }}
       >
-        {projectName}
+        {project?.title ?? t('edit-info-project')}
       </h4>
       <Segmented
         block

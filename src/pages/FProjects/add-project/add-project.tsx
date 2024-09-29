@@ -1,6 +1,6 @@
 import { FC, useContext, useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import { Form, Input, Button, Modal, DatePicker, Select } from 'antd'
+import { Form, Input, Button, Modal, DatePicker } from 'antd'
 import { NotificationContext } from '../../../components/notification-provider/notification-provider'
 import * as projectAPI from '../../../utils/api/project-api'
 import clsx from 'clsx'
@@ -18,7 +18,6 @@ const AddProject: FC<IAddProject> = ({ token, pathRest, t, dark }) => {
   const [form] = Form.useForm()
   const history = useHistory()
   const [isModalVisible, setIsModalVisible] = useState(false)
-
   const layout = {
     labelCol: { span: 4 },
     wrapperCol: { span: 14 }
@@ -30,18 +29,16 @@ const AddProject: FC<IAddProject> = ({ token, pathRest, t, dark }) => {
   }
   const onFinish = (values: any): void => {
     const newProject = {
-      name: values.name,
-      technologies: values.technologies,
+      title: values.title,
+      technologies: values.technologies.split(','),
       server: values.server,
       documentation: values.documentation,
-      client: values.client,
-      executors: values.executors,
-      dateEnd: values['date-end'].format('YYYY-MM-DD')
+      deadline: values.deadline
     }
 
     projectAPI
       .createProject(token, newProject)
-      .then(() => history.push(`/${pathRest}/projects`))
+      .then(() => history.push(`/${pathRest}/project`))
       .catch((e) => openNotification(e.message, 'topRight'))
   }
 
@@ -89,7 +86,7 @@ const AddProject: FC<IAddProject> = ({ token, pathRest, t, dark }) => {
         <Form.Item
           label={t('project-name')}
           rules={[{ required: true }]}
-          name='name'
+          name='title'
         >
           <Input />
         </Form.Item>
@@ -115,19 +112,9 @@ const AddProject: FC<IAddProject> = ({ token, pathRest, t, dark }) => {
           <Input />
         </Form.Item>
         <Form.Item
-          label={t('client')}
-          rules={[{ required: true }]}
-          name='client'
-        >
-          <Input />
-        </Form.Item>
-        <Form.Item label={t('users')} rules={[{ required: true }]} name='users'>
-          <Select placeholder={t('select-users')}></Select>
-        </Form.Item>
-        <Form.Item
           label={t('date-end')}
           rules={[{ required: true }]}
-          name='date-end'
+          name='deadline'
         >
           <DatePicker />
         </Form.Item>
