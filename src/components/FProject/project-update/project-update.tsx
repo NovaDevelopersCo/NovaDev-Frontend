@@ -32,19 +32,21 @@ const ProjectUpdate: FC<IProjectUpdate> = ({
     wrapperCol: { span: 14 }
   }
   React.useEffect(() => {
-    projectAPI
-      .getProject(token, Number(id))
-      .then((res: TProject) => {
-        setProject(res)
-        form.setFieldsValue({
-          title: res.title,
-          technologies: res.technologies,
-          server: res.server,
-          documentation: res.documentation
+    if (id) {
+      projectAPI
+        .getProject(token, id)
+        .then((res: TProject) => {
+          setProject(res)
+          form.setFieldsValue({
+            title: res.title,
+            technologies: res.technologies,
+            server: res.server,
+            documentation: res.documentation
+          })
         })
-      })
-      .catch((e) => openNotification(e.message, 'topRight'))
-  }, [token, form, openNotification])
+        .catch((e) => openNotification(e.message, 'topRight'))
+    }
+  }, [token, form, openNotification, id])
 
   const onFinish = (values: any): void => {
     const updateProject = {

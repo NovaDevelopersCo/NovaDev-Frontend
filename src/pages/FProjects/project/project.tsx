@@ -32,7 +32,7 @@ const Project: FC<IEditorPage> = ({ token, pathRest, t, dark, style }) => {
   useEffect(() => {
     if (id) {
       projectAPI
-        .getProject(token, Number(id))
+        .getProject(token, id)
         .then((res: TProject) => {
           setProject(res)
         })
@@ -64,7 +64,7 @@ const Project: FC<IEditorPage> = ({ token, pathRest, t, dark, style }) => {
           padding: '15px'
         }}
       >
-        {project?.title ?? t('edit-info-project')}
+        {project ? project.title : t('edit-info-project')}
       </h4>
       <Segmented
         block

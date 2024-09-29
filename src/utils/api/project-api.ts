@@ -13,7 +13,7 @@ export const getAllProjects = async (token: string) => {
   }).then(async (res) => await handleResponse(res))
 }
 
-export const getProject = async (token: string, id: number) => {
+export const getProject = async (token: string, id: string) => {
   return await fetch(`${BASE_URL}/project/${id}`, {
     method: 'GET',
     headers: {
