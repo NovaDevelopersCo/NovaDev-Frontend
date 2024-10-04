@@ -21,40 +21,89 @@ const ProjectUpdate: FC<IProjectUpdate> = ({
   theme
 }) => {
   const { openNotification } = useContext(NotificationContext)
-  const [project, setProject] = React.useState<TProject>({} as TProject)
   const [form] = Form.useForm()
   const history = useHistory()
-  const pathname = useLocation().pathname
-  const match = useRouteMatch<{ id: string }>(pathname)
-  const id = match?.params.id
   const layout = {
     labelCol: { span: 4 },
     wrapperCol: { span: 14 }
   }
-  React.useEffect(() => {
-    if (id) {
-      projectAPI
-        .getProject(token, id)
-        .then((res: TProject) => {
-          setProject(res)
-          form.setFieldsValue({
-            title: res.title,
-            technologies: res.technologies,
-            server: res.server,
-            documentation: res.documentation
-          })
-        })
-        .catch((e) => openNotification(e.message, 'topRight'))
-    }
-  }, [token, form, openNotification, id])
+  // eslint-disable-next-line prefer-regex-literals
+  const pathname = useLocation().pathname
+  const match = useRouteMatch(pathname)
+  const roleId = Object.keys(match?.params as string)[0]
+  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+  const [project, setProject] = React.useState<TProject>({} as TProject)
 
+  const [formData, setFormData] = React.useState(() => {
+    const storedFormDataString = localStorage.getItem('formDataTeam')
+    return storedFormDataString ? JSON.parse(storedFormDataString) : null
+  })
+
+  const handleFormChange = (): void => {
+    const allValues = form.getFieldsValue()
+    const updateallValues = { ...allValues, _id: project.id }
+    setFormData(updateallValues)
+  }
+  React.useEffect(() => {
+    if (Object.keys(project).length > 0 && formData) {
+      if (project.id !== formData._id) {
+        localStorage.removeItem('formDataAdmin')
+      }
+    }
+    localStorage.setItem('formDataAdmin', JSON.stringify(formData))
+  }, [formData])
+
+  React.useEffect(() => {
+    projectAPI
+      .getProjectById(token, roleId)
+      .then((res: TProject) => {
+        setProject(res)
+      })
+      .catch((e) => openNotification(e, 'topRight'))
+  }, [])
+  React.useEffect(() => {
+    const storedFormDataString = localStorage.getItem('formDataAdmin')
+    const parsedFormData = storedFormDataString
+      ? JSON.parse(storedFormDataString)
+      : null
+    if (parsedFormData && parsedFormData.id === project.id) {
+      form.setFieldsValue({
+        title: parsedFormData.title
+      })
+      form.setFieldsValue({
+        technologies: parsedFormData.technologies
+      })
+      form.setFieldsValue({
+        documentation: parsedFormData.documentation
+      })
+      form.setFieldsValue({
+        server: parsedFormData.server
+      })
+    } else {
+      form.setFieldsValue({
+        title: project.title
+      })
+      form.setFieldsValue({
+        technologies: project.technologies
+      })
+      form.setFieldsValue({
+        documentation: project.documentation
+      })
+      form.setFieldsValue({
+        server: project.server
+      })
+    }
+  }, [project])
+  const validateMessages = {
+    // eslint-disable-next-line no-template-curly-in-string
+    required: '${label} ' + `${t('it-is-necessary-to-fill-in')}!`
+  }
   const onFinish = (values: any): void => {
-    const updateProject = {
+    const updateProject: any = {
       name: values.name,
       technologies: values.technologies,
       server: values.server,
-      documentation: values.documentation,
-      deadline: values['date-end']?.format('YYYY-MM-DD')
+      documentation: values.documentation
     }
 
     projectAPI
@@ -72,11 +121,13 @@ const ProjectUpdate: FC<IProjectUpdate> = ({
   return (
     <Form
       {...layout}
+      onFinish={onFinish}
+      validateMessages={validateMessages}
+      name='project'
       form={form}
       className={theme}
-      onFinish={onFinish}
-      layout='vertical'
       style={{ marginTop: '20px', maxWidth: '50%', ...style }}
+      onValuesChange={handleFormChange}
     >
       <Form.Item label={t('project-name')} name='name'>
         <Input />

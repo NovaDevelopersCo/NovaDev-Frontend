@@ -12,8 +12,7 @@ export const getAllProjects = async (token: string) => {
     }
   }).then(async (res) => await handleResponse(res))
 }
-
-export const getProject = async (token: string, id: string) => {
+export const getProjectById = async (token: string, id: string) => {
   return await fetch(`${BASE_URL}/project/${id}`, {
     method: 'GET',
     headers: {
@@ -22,7 +21,6 @@ export const getProject = async (token: string, id: string) => {
     }
   }).then(async (res) => await handleResponse(res))
 }
-
 export const createProject = async (token: string, data: any) => {
   return await fetch(`${BASE_URL}/project`, {
     method: 'POST',

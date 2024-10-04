@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect, useContext } from 'react'
+import React, { FC, useContext } from 'react'
 import { Button, Modal, Segmented } from 'antd'
 import ProjectUpdate from '../../../components/FProject/project-update/project-update'
 import ProjectExecutor from '../../../components/FProject/project-executor/project-executor'
@@ -6,7 +6,7 @@ import ProjectClient from '../../../components/FProject/project-client/project-c
 import clsx from 'clsx'
 import { TProject } from '../../../utils/typesFromBackend'
 import * as projectAPI from '../../../utils/api/project-api'
-import { useParams } from 'react-router-dom'
+import { useLocation, useRouteMatch } from 'react-router-dom'
 import { NotificationContext } from '../../../components/notification-provider/notification-provider'
 
 interface IEditorPage {
@@ -18,44 +18,31 @@ interface IEditorPage {
 }
 
 const Project: FC<IEditorPage> = ({ token, pathRest, t, dark, style }) => {
-  const [project, setProject] = useState<TProject | null>(null)
-  const [isModalVisible, setIsModalVisible] = useState(false)
-  const [activeTab, setActiveTab] = useState<string>(t('project'))
-  const theme = clsx(dark ? 'black' : 'white')
-  const { id } = useParams<{ id: string }>()
   const { openNotification } = useContext(NotificationContext)
+  const pathname = useLocation().pathname
+  const match = useRouteMatch(pathname)
+  const restId = Object.keys(match?.params as string)[0]
+  const [project, setProject] = React.useState<TProject>({} as TProject)
+  const [isProject, setIsProject] = React.useState(false)
+  const [value, setValue] = React.useState<string | number>(t('project'))
+  const [isModalVisible, setIsModalVisible] = React.useState(false)
+  const theme = clsx(dark ? 'black' : 'white')
+  React.useEffect(() => {
+    projectAPI
+      .getProjectById(token, restId)
+      .then((res: TProject) => {
+        setIsProject(true)
+        setProject(res)
+      })
+      .catch((e) => openNotification(e, 'topRight'))
+  }, [])
 
   const handleModalClose = (): void => {
     setIsModalVisible(false)
   }
-
-  useEffect(() => {
-    if (id) {
-      projectAPI
-        .getProject(token, id)
-        .then((res: TProject) => {
-          setProject(res)
-        })
-        .catch((e: Error) => openNotification(e.message, 'topRight'))
-    }
-  }, [token, id, openNotification])
-
   return (
     <>
-      <Modal
-        className={theme}
-        title={t('alert')}
-        open={isModalVisible}
-        footer={
-          <Button key='ok' type='primary' onClick={handleModalClose}>
-            {t('close')}
-          </Button>
-        }
-      >
-        {t('field_must_not_empty')}
-      </Modal>
       <h4
-        className={theme}
         style={{
           marginBottom: '15px',
           marginTop: '0',
@@ -64,17 +51,17 @@ const Project: FC<IEditorPage> = ({ token, pathRest, t, dark, style }) => {
           padding: '15px'
         }}
       >
-        {project ? project.title : t('edit-info-project')}
+        {project?.title ? project.title : ''}
       </h4>
       <Segmented
         block
         options={[t('project'), t('executors'), t('clients')]}
-        value={activeTab}
+        value={value}
         className={theme}
-        onChange={(value) => setActiveTab(value.toString())}
-      />
-      <>
-        {activeTab === t('project') && (
+        onChange={setValue}
+      />{' '}
+      {isProject ? (
+        value === t('project') ? (
           <ProjectUpdate
             token={token}
             pathRest={pathRest}
@@ -82,8 +69,14 @@ const Project: FC<IEditorPage> = ({ token, pathRest, t, dark, style }) => {
             style={style}
             theme={theme}
           />
-        )}
-        {activeTab === t('executors') && (
+        ) : (
+          ''
+        )
+      ) : (
+        ''
+      )}
+      {isProject ? (
+        value === t('executors') ? (
           <ProjectExecutor
             token={token}
             pathRest={pathRest}
@@ -91,8 +84,14 @@ const Project: FC<IEditorPage> = ({ token, pathRest, t, dark, style }) => {
             style={style}
             theme={theme}
           />
-        )}
-        {activeTab === t('clients') && (
+        ) : (
+          ''
+        )
+      ) : (
+        ''
+      )}
+      {isProject ? (
+        value === t('clients') ? (
           <ProjectClient
             token={token}
             pathRest={pathRest}
@@ -100,8 +99,26 @@ const Project: FC<IEditorPage> = ({ token, pathRest, t, dark, style }) => {
             style={style}
             theme={theme}
           />
-        )}
-      </>
+        ) : (
+          ''
+        )
+      ) : (
+        ''
+      )}
+      {
+        <Modal
+          title={t('alert')}
+          open={isModalVisible}
+          closable={false}
+          footer={
+            <Button key='ok' type='primary' onClick={handleModalClose}>
+              {t('close')}
+            </Button>
+          }
+        >
+          {t('field_must_not_empty')}
+        </Modal>
+      }
     </>
   )
 }
