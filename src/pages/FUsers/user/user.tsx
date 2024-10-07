@@ -31,14 +31,8 @@ const UserEditPage: FC<IUserEditPage> = ({
     UserInfoAPI.getUser(token, Number(id))
       .then((res: TUser) => {
         setUser(res)
-        form.setFieldsValue({
-          public_nickname: res.info?.public_nickname,
-          full_name: res.info?.full_name,
-          email: res.info?.email,
-          role: res.role?.title
-        })
       })
-      .catch((e: Error) => openNotification(e.message, 'topRight'))
+      .catch((e) => openNotification(e, 'topRight'))
   }, [])
 
   const onFinish = (values: any): void => {
@@ -56,7 +50,7 @@ const UserEditPage: FC<IUserEditPage> = ({
         openNotification('User updated successfully!', 'topRight')
         history.push(`/${pathRest}/users`)
       })
-      .catch((e: Error) => openNotification(e.message, 'topRight'))
+      .catch((e) => openNotification(e, 'topRight'))
   }
 
   const handleDelete = (): void => {
@@ -65,7 +59,7 @@ const UserEditPage: FC<IUserEditPage> = ({
         openNotification('User deleted successfully!', 'topRight')
         history.push(`/${pathRest}/users`)
       })
-      .catch((e: Error) => openNotification(e.message, 'topRight'))
+      .catch((e) => openNotification(e, 'topRight'))
   }
 
   const handleModalClose = (): void => {

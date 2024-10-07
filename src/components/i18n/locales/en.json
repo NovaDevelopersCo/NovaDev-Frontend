@@ -333,5 +333,7 @@
   "your-list-roles": "List of roles",
   "add-role": "Add a role",
   "add-user": "Add user",
-  "add-role-to-user": "Add a role to a user"
+  "add-role-to-user": "Add a role to a user",
+  "edit-info-user": "Edit user info",
+  "delete-user": "Delete user"
 }
