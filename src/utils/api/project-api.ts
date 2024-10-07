@@ -40,9 +40,10 @@ export const updateProject = async (
     server: string
     documentation: string
     deadline: string
-  }
+  },
+  id: string
 ) => {
-  return await fetch(`${BASE_URL}/project/update`, {
+  return await fetch(`${BASE_URL}/project/${id}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',

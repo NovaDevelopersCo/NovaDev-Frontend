@@ -33,7 +33,6 @@ const ProjectUpdate: FC<IProjectUpdate> = ({
   const roleId = Object.keys(match?.params as string)[0]
   // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
   const [project, setProject] = React.useState<TProject>({} as TProject)
-
   const [formData, setFormData] = React.useState(() => {
     const storedFormDataString = localStorage.getItem('formDataTeam')
     return storedFormDataString ? JSON.parse(storedFormDataString) : null
@@ -107,9 +106,12 @@ const ProjectUpdate: FC<IProjectUpdate> = ({
     }
 
     projectAPI
-      .updateProject(token, updateProject)
-      .then(() => history.push(`/${pathRest}/project`))
-      .catch((e) => openNotification(e.message, 'topRight'))
+      .updateProject(token, updateProject, project.id.toString())
+      .then((res: TProject) => {
+        localStorage.removeItem('formDataAdmin')
+        history.push(`/${pathRest}/roles`)
+      })
+      .catch((e) => openNotification(e, 'topRight'))
   }
 
   const confirm = (): void => {

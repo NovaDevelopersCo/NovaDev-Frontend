@@ -30,7 +30,7 @@ const Projects: FC<IProjects> = ({ token, pathRest, t, dark }) => {
         )
         setTechnologies(allTechnologies)
       })
-      .catch((e: Error) => openNotification(e.message, 'topRight'))
+      .catch((e) => openNotification(e.message, 'topRight'))
   }, [token, openNotification])
 
   const columns: ColumnsType<TProject> = [
@@ -38,14 +38,14 @@ const Projects: FC<IProjects> = ({ token, pathRest, t, dark }) => {
       title: `${t('title')}`,
       dataIndex: 'title',
       key: 'title',
-      render: (title: string, project: TProject) => (
-        <Link to={`/${pathRest}/project/${project.id}`}>{title}</Link>
+      render: (title, project) => (
+        <Link to={`/${pathRest}/project/:${project.id}`}>{title}</Link>
       ),
-      sorter: (a: TProject, b: TProject) => {
+      sorter: (a, b) => {
         try {
           return (a.title ?? '').localeCompare(b.title ?? '')
         } catch (error: any) {
-          openNotification(error.message, 'topRight')
+          openNotification(error, 'topRight')
           return 0
         }
       }
