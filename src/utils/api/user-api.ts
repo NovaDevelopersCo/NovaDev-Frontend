@@ -35,3 +35,13 @@ export const updateUser = async (token: string, id: number, data: object) => {
     })
   }).then(async (res) => await handleResponse(res))
 }
+
+export const deleteUser = async (token: string, id: number) => {
+  return await fetch(`${BASE_URL}/users/${id}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    }
+  }).then(async (res) => await handleResponse(res))
+}

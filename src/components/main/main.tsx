@@ -7,7 +7,7 @@ import fullscreenIcon from '../../assets/images/fullscreen.svg'
 import Autorization from '../../pages/autorization/autorization'
 import NotFound from '../../pages/not-found/not-found'
 import Customers from '../../pages/customers/customers'
-import AllUsers from '../../pages/users/users'
+import AllUsers from '../../pages/FUsers/users/users'
 import { ECountry } from '../../utils/typesFromBackend'
 import { useTranslation } from 'react-i18next'
 import { NotificationProvider } from '../notification-provider/notification-provider'
@@ -15,7 +15,6 @@ import i18n from '../i18n/i18n'
 import ChoiseLanguage from '../choise-language/choise-language'
 import ProtectedRoute from '../protected-route/protected-route'
 import Sidebar from '../sidebar/sidebar'
-import Users from '../../pages/tasks/tasks'
 import Admins from '../../pages/categories/categories'
 import AddAdmin from '../../pages/add-category/add-category'
 import Admin from '../../pages/category/category'
@@ -29,6 +28,7 @@ import AddCustomer from '../../pages/add-customer/add-customer'
 import Roles from '../../pages/FRoles/roles/roles'
 import Role from '../../pages/FRoles/role/role'
 import AddRole from '../../pages/FRoles/add-role/add-role'
+import UserEditPage from '../../pages/FUsers/user/user'
 
 const { Header, Sider, Content } = Layout
 
@@ -259,7 +259,13 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
                   isLoggedIn={isLoggedIn}
                   pathRest={pathRest}
                 >
-                  <Role dark={dark} token={token} pathRest={pathRest} t={t} style={style} />
+                  <Role
+                    dark={dark}
+                    token={token}
+                    pathRest={pathRest}
+                    t={t}
+                    style={style}
+                  />
                 </ProtectedRoute>
                 <ProtectedRoute
                   path={`/:${pathRest}/add/role`}
@@ -308,21 +314,25 @@ const Main: FC<IMain> = ({ token, pathRest, setToken }) => {
                   isLoggedIn={isLoggedIn}
                   pathRest={pathRest}
                 >
-                  <AllUsers token={token} pathRest={pathRest} t={t} />
+                  <AllUsers
+                    token={token}
+                    pathRest={pathRest}
+                    t={t}
+                    dark={dark}
+                  />
                 </ProtectedRoute>
                 <ProtectedRoute
-                  path={`/:${pathRest}/user`}
+                  path={`/:${pathRest}/user/:userId`}
                   exact
                   isLoggedIn={isLoggedIn}
                   pathRest={pathRest}
                 >
-                  <Users
-                    dark={dark}
-                    style={style}
+                  <UserEditPage
                     token={token}
                     pathRest={pathRest}
                     t={t}
-                    language={language}
+                    style={style}
+                    dark={dark}
                   />
                 </ProtectedRoute>
                 <ProtectedRoute
